@@ -1,0 +1,8 @@
+*.o
+.DS_Store
+obj/
+libft/obj/
+libft/libft.a
+.vscode/
+a.out
+*.dSYM/
