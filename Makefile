@@ -49,7 +49,7 @@ OBJ_ASM	= $(addprefix $(OBJ_ASM_DIR), $(OBJ_ASM_LIST))
 #######################################
 
 ################## VM #################
-SRC_VM_DIR = ./src/asm/
+SRC_VM_DIR = ./src/vm/
 SRC_VM_LIST =	op.c \
 
 
