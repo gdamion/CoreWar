@@ -27,7 +27,7 @@
 # include <stdio.h>
 # include <string.h>
 
-*/
+/*
 ** We can use:
 ** open read lseek write close malloc
 ** realloc free perror strerror exit
