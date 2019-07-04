@@ -6,7 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
-#    Updated: 2019/07/04 23:27:04 by gdamion-         ###   ########.fr        #
+#    Updated: 2019/07/04 23:30:27 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ $(OBJ_VM_DIR):
 	@mkdir -p $(OBJ_VM_DIR)
 	@echo "$(VM_NAME): $(GREEN)$(OBJ_VM_DIR) was created$(RESET)"
 
-$(OBJ_VM_DIR)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+$(OBJ_VM_DIR)%.o : $(SRC_VM_DIR)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INC) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
 	@echo "\n$(VM_NAME): $(GREEN)object files were created$(RESET)"
