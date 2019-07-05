@@ -12,8 +12,9 @@
 
 #include "com.h"
 
-int main()
+int main(int ac, char **av)
 {
-	printf("hey");
+	if (ac == 2)
+		read_file(av[1]);
 	return (0);
 }

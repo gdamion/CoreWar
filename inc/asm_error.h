@@ -19,6 +19,10 @@
 
 # include "com.h"
 
-
+# define ERR_OPEN_FILE   "Error: Can\'t open file"
+# define ERR_READING     "Error: Can\'t read file"
+# define ERR_INIT_DATA   "Error: Can\'t init data"
+# define ERR_INIT_TOKEN  "Error: Can\'t init token"
+# define ERR_NAME_LENGTH "Error: Name is too large"
 
 #endif
