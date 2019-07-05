@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:38:55 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/04 22:01:04 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/05 12:53:12 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ typedef struct		header_s
   char				prog_name[PROG_NAME_LENGTH + 1];
   unsigned int		prog_size;
   char				comment[COMMENT_LENGTH + 1];
-};
+}header_t;
 
 #endif
