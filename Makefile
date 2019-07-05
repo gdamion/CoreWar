@@ -6,7 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
-#    Updated: 2019/07/05 13:38:35 by gdamion-         ###   ########.fr        #
+#    Updated: 2019/07/05 15:58:02 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ INC_LIB_DIR = $(LIB_DIR)includes/
 
 INC_LIST =	com.h \
 			asm.h \
-			corewar.h \
+			asm_error.h \
+			asm_ops.h \
 			op.h
 
 INC_DIR = ./inc/
@@ -39,7 +40,7 @@ HEADERS = $(addprefix $(INC_DIR), $(INC_LIST))
 OBJ_DIR = obj/
 ################# ASM #################
 SRC_ASM_DIR = ./src/asm/
-SRC_ASM_LIST =	op.c \
+SRC_ASM_LIST =	main.c \
 
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))
@@ -51,7 +52,7 @@ OBJ_ASM	= $(addprefix $(OBJ_ASM_DIR), $(OBJ_ASM_LIST))
 
 ################## VM #################
 SRC_VM_DIR = ./src/vm/
-SRC_VM_LIST =	op.c \
+SRC_VM_LIST =	main.c \
 
 
 SRC_VM = $(addprefix $(SRC_VM_DIR), $(SRC_VM_LIST))
