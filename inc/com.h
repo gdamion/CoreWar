@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:57 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/05 15:58:39 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/06 12:36:11 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include "libft.h"
 
+# include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -34,6 +35,5 @@
 ** open read lseek write close malloc
 ** realloc free perror strerror exit
 */
-
 
 #endif
