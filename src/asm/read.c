@@ -26,7 +26,7 @@ void		get_str(t_data *data, char *line)
 			&& get_next_line(data->fd, &temp))
 		ft_catpro(line, temp);
 	if ((i = ft_findchar(line + data->cursor, '\"')) > PROG_NAME_LENGTH)
-		print_error(ERR_NAME_LENGTH);
+		error(ERR_CHNAME_LEN, {str}, {col}); //add str and col
 	token_add(data, STRING);
 	data->token->content = ft_strsub(line, data->cursor, i);
 }
@@ -60,7 +60,7 @@ void		syntax_analyzer(t_data *data)
 							&& !(data->cursor = 0))
 	{
 		if (size == -1)
-			print_error(ERR_READING);
+			error(ERR_READING);
 		skip_whitespaces(data, line);
 		skip_comment(data, line);
 		if (line[data->cursor])
@@ -68,7 +68,7 @@ void		syntax_analyzer(t_data *data)
 		ft_strdel(&line);
 	}
 	if (size == -1)
-		print_error(ERR_READING);
+		error(ERR_READING);
 }
 
 void		read_file(char *filename)
@@ -76,8 +76,7 @@ void		read_file(char *filename)
 	int		fd;
 	t_data	*data;
 
-	if ((fd = open(filename, O_RDONLY)) == -1)
-		terminate();
-	data_init(&data, fd);
+	((fd = open(filename, O_RDONLY)) == -1) ? \
+		error(ERR_FOPEN, 0, 0) : data_init(&data, fd);
 	syntax_analyzer(data);
 }

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:43:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/06 15:50:54 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/06 16:11:25 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define ERR_FNAME "Given file has wrong name format"
 # define ERR_FOPEN "Can\'t open file" // sys error
 # define ERR_READING "Can\'t read file" // sys error
-# define ERR_INIT_DATA "Can\'t allocate memory" // sys error
+# define ERR_ALLOC "Can\'t allocate memory" // sys error
 # define ERR_CHNAME_LEN "Champion\'s name is too large"
 # define ERR_NO_CHNAME "Champion\'s name doesn't exist"
 # define ERR_CHCOMM_LEN "Champion\'s comment is too large"

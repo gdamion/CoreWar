@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:38:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/06 13:02:40 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/06 16:11:48 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int ac, char **av)
 {
-	if (ac == 2)
-		read_file(av[1]);
+	(ac == 2) ? \
+		read_file(av[1]) : error(ERR_NOFILE, 0, 0);
 	return (0);
 }
