@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:43:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 15:43:30 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 16:42:53 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define ERR_NO_CHNAME "Champion\'s name doesn't exist"
 # define ERR_CHCOMM_LEN "Champion\'s comment is too large"
 # define ERR_NO_CHCOMM "Champion\'s comment doesn't exist"
+# define ERR_NAMECOM "Wrong number of champion\'s names/comments"
 # define ERR_SYM "Wrong symbol"
 # define ERR_OP "This operator doesn\'t exist"
 # define ERR_ARGNO "Wrong number of operator\'s arguments"
