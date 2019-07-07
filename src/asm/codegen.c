@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 14:21:22 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 17:26:38 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	comment_to_code(char *chcomm)
 	write_to_buf();
 }
 
-void	op_to_code(t_token op)
+void	op_to_code(t_token *op)
 {
 
 	write_to_buf();

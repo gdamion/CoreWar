@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 16:52:50 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 17:29:10 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ void	ch_champinfo(t_token **run, int *len)
 	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
 }
 
+int	ch_op_exist(char *op)
+{
+
+	else
+		error(ERR_OP);
+}
+
+int	ch_arg()
+{
+
+}
+
 /*
 ** Check operation
 ** 1) Op name exists
@@ -54,10 +66,23 @@ void	ch_champinfo(t_token **run, int *len)
 
 void	ch_op(t_token **run, int *len)
 {
+	int		i;
+	int		type;
+	t_token	*op;
 
+	op = *run;
+	type = ch_op_exist((*run)->content); //1) Op name exists
+	i = g_op_tab[type].args_num;
+	while (i > 0) // 2) Right number of args
+	{
+		if (!ch_arg(run)) //3) Right format of args
+			error();
+		i--;
+	}
+	op_to_code(op);
 }
 
-void	pass_label()
+void	pass_label() //пропустить метку. ее проверять не надо (или надо????)
 {
 
 }
