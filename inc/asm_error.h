@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:43:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/06 16:11:25 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 14:07:26 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@
 # define ERR_LABEL_CH "Wrong characters in the label\'s name"
 # define ERR_LABEL_ECH "Wrong ending label character"
 # define ERR_ZERO_REG "Register r0 (r00) is used, but it doesn\'t exist"
+# define ERR_BIGEX "Executable code has size bigger than a limit"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 10:37:59 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 14:01:18 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum			e_type
 	COMMAND,
 	STRING,
 	LABEL,
-	OPERATOR,
+	INSTRUCTION,
 	REGISTER,
 	DIRECT,
 	DIRECT_LABEL,

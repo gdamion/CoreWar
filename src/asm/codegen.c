@@ -1,34 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntaxical.c                                       :+:      :+:    :+:   */
+/*   codegen.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 14:34:34 by gdamion-         ###   ########.fr       */
+/*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
+/*   Updated: 2019/07/07 14:21:22 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	synt_analiser(t_data *data)
+void	write_to_buf(char* hex, int *place)
 {
-	t_token	*run;
-	int		len;
 
-	write_to_buff(COREWAR_EXEC_MAGIC, &len);
-	len = 0;
-	run = data->token;
-	ch_name_comm();
-	while (run)
-	{
-		if (run->type == INSTRUCTION)
-			ch_op(run, &len);
-		else if (run->type == LABEL)
-			pass_label(&len);
-		else
-			error(ERR_SYM);
-		run = run->prev;
-	}
+	if (len > CHAMP_MAX_SIZE)
+		error(ERR_BIGEX);
 }
+
+void	name_to_code(char *chname)
+{
+
+	if (len > PROG_NAME_LENGTH)
+		error(ERR_CHNAME_LEN);
+	write_to_buf();
+}
+
+void	comment_to_code(char *chcomm)
+{
+
+	if (len > COMMENT_LENGTH)
+		error(ERR_CHCOMM_LEN);
+	write_to_buf();
+}
+
+void	op_to_code(t_token op)
+{
+
+	write_to_buf();
+}
+
