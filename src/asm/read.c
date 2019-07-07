@@ -39,8 +39,8 @@ void		get_cmd(t_data *data, char *line)
 }
 
 /*
-		while (ft_findchar(LABEL_CHARS, *(line + data->cursor)))
-				data->cursor++;
+	while (ft_findchar(LABEL_CHARS, *(line + data->cursor)))
+		data->cursor++;
 */
 
 void		tokenizing(t_data *data, char *line)
@@ -71,11 +71,23 @@ void		syntax_analyzer(t_data *data)
 		error(ERR_READING);
 }
 
+void	ch_fname(char *fname)
+{
+	while(*fname != '\0')
+	{
+		if (*fname == '.')
+			break;
+		fname++;
+	}
+	ft_strcmp(fname, ".s") ? error(ERR_FNAME) : 1;
+}
+
 void		read_file(char *filename)
 {
 	int		fd;
 	t_data	*data;
 
+	check_fname(filename); // is name of file correct?
 	((fd = open(filename, O_RDONLY)) == -1) ? \
 		error(ERR_FOPEN, 0, 0) : data_init(&data, fd);
 	syntax_analyzer(data);

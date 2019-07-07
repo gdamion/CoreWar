@@ -6,15 +6,14 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:38:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/06 16:11:48 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 10:19:40 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
-	(ac == 2) ? \
-		read_file(av[1]) : error(ERR_NOFILE, 0, 0);
+	(ac == 2) ? read_file(av[1]) : error(ERR_NOFILE, 0, 0);
 	return (0);
 }

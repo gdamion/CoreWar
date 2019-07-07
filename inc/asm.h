@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/05 14:56:03 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 10:37:59 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef enum			e_type
 typedef struct			s_data
 {
 	int					fd;
-	char				*name;
+	char				*ch_name;
+	char				*ch_com;
 	unsigned			cursor;
 	t_token				*token;
 }						t_data;
@@ -45,6 +46,8 @@ typedef struct			s_token
 {
 	char				*content;
 	t_type				type;
+	int					str;
+	int					col;
 	struct s_token		*next;
 	struct s_token		*prev;
 }						t_token;
