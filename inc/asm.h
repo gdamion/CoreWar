@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 14:01:18 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 15:05:14 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "com.h"
 # include "asm_error.h"
 # include "asm_ops.h"
+
+char					g_buf[CHAMP_MAX_SIZE + 1];
 
 typedef enum			e_type
 {
@@ -33,11 +35,17 @@ typedef enum			e_type
 	END
 }						t_type;
 
+typedef struct			s_label
+{
+	char				*name;
+	t_token				*point;
+	struct s_label		*next;
+}						t_label;
+
 typedef struct			s_data
 {
 	int					fd;
-	char				*ch_name;
-	char				*ch_com;
+	char				*f_name;
 	unsigned			cursor;
 	t_token				*token;
 }						t_data;

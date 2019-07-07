@@ -6,11 +6,26 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 14:34:34 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/07 14:45:54 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
+
+void	ch_champinfo(t_token **run, int *len)
+{
+
+}
+
+void	ch_op(t_token **run, int *len)
+{
+
+}
+
+void	pass_label()
+{
+
+}
 
 void	synt_analiser(t_data *data)
 {
@@ -20,11 +35,11 @@ void	synt_analiser(t_data *data)
 	write_to_buff(COREWAR_EXEC_MAGIC, &len);
 	len = 0;
 	run = data->token;
-	ch_name_comm();
+	ch_champinfo(&run, &len);
 	while (run)
 	{
 		if (run->type == INSTRUCTION)
-			ch_op(run, &len);
+			ch_op(&run, &len);
 		else if (run->type == LABEL)
 			pass_label(&len);
 		else

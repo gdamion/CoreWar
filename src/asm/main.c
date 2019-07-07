@@ -14,6 +14,7 @@
 
 int		main(int ac, char **av)
 {
+	ft_bzero(g_buf, CHAMP_MAX_SIZE); // буфер для сохранения перед записью в файл
 	(ac == 2) ? read_file(av[1]) : error(ERR_NOFILE, 0, 0);
 	return (0);
 }
