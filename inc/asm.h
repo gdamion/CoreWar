@@ -35,11 +35,22 @@ typedef enum			e_type
 	END
 }						t_type;
 
+typedef struct			s_token
+{
+	char				*content;
+	t_type				type;
+	int					str;
+	int					col;
+	struct s_token		*next;
+	struct s_token		*prev;
+}						t_token;
+
 typedef struct			s_label
 {
 	char				*name;
 	t_token				*point;
 	struct s_label		*next;
+	struct s_label		*prev;
 }						t_label;
 
 typedef struct			s_data
@@ -52,28 +63,19 @@ typedef struct			s_data
 	t_label				*label;
 }						t_data;
 
-typedef struct			s_token
-{
-	char				*content;
-	t_type				type;
-	int					str;
-	int					col;
-	struct s_token		*next;
-	struct s_token		*prev;
-}						t_token;
+# define Q(c) (c == '\0')
+# define W(c) (c == '\n')
+# define E(c) (c == '\"')
+# define R(c) (c == DIRECT_CHAR)
+# define T(c) (c == SEPARATOR_CHAR)
+# define Y(c) (c == COMMENT_CHAR)
+# define U(c) (SP(c))
 
-# define A(c) (c == '\0')
-# define B(c) (c == '\n')
-# define C(c) (c == '\"')
-# define D(c) (c == DIRECT_CHAR)
-# define I(c) (c == SEPARATOR_CHAR)
-# define F(c) (c == COMMENT_CHAR)
-# define G(c) (SP(c))
-
-# define DELIMITER(c) (A(c) || B(c) || C(c) || D(c) || I(c) || F(c))
+# define DELIMITER(c) (Q(c) || W(c) || E(c) || R(c) || T(c) || Y(c) || U(c))
 
 # define INIT_DATA (!(temp = (t_data*)ft_memalloc(sizeof(t_data))))
 # define INIT_TOKEN (!(new = (t_token*)ft_memalloc(sizeof(t_token))))
+# define INIT_LABEL (!(new = (t_label*)ft_memalloc(sizeof(t_label))))
 
 void		read_file(char *filename);
 void		data_init(t_data **data, int fd);
@@ -84,5 +86,7 @@ void		token_add(t_data *data, t_type type);
 void		label_add(t_data *data);
 _Bool		is_reg(char *line, int len);
 
+
+void	error(char *err_place, int str_no, int col_no, t_data *data);
 
 #endif

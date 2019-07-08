@@ -20,7 +20,7 @@ void	ch_fname(char *fname)
 			break;
 		fname++;
 	}
-	ft_strcmp(fname, ".s") ? error(ERR_FNAME) : 1;
+	ft_strcmp(fname, ".s") ? print_error(ERR_FNAME) : 1;
 }
 
 void		read_file(char *filename)
@@ -28,10 +28,12 @@ void		read_file(char *filename)
 	int		fd;
 	t_data	*data;
 
-
+	data = 0;
 	ch_fname(filename); // is name of the file correct?
-	((fd = open(filename, O_RDONLY)) == -1) ? \
-		error(ERR_FOPEN, 0, 0) : data_init(&data, fd);
+	if ((fd = open(filename, O_RDONLY)) == -1)
+		print_error(ERR_FOPEN);
+	else
+		data_init(&data, fd);
 	data->f_name = filename;
 	lexical_analyzer(data);
 }
