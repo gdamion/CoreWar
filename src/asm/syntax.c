@@ -87,7 +87,7 @@ void	pass_label() //пропустить метку. ее проверять н�
 
 }
 
-void	synt_analiser(t_data *data)
+void	syntax_analiser(t_data *data)
 {
 	t_token	*temp;
 	int		len;
