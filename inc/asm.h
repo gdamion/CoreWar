@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 15:05:14 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/08 22:41:47 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct			s_token
 {
 	char				*content;
 	t_type				type;
-	int					str;
-	int					col;
+	int					x;
+	int					y;
 	struct s_token		*next;
 	struct s_token		*prev;
 }						t_token;
@@ -62,6 +62,14 @@ typedef struct			s_data
 	t_token				*token;
 	t_label				*label;
 }						t_data;
+
+// typedef struct			s_op
+// {
+// 	char				type_a1[2];
+// 	char				type_a2[2];
+// 	char				type_a3[2];
+
+// }
 
 # define Q(c) (c == '\0')
 # define W(c) (c == '\n')
