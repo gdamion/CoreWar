@@ -12,7 +12,7 @@
 
 #include "com.h"
 
-void	ch_champinfo(t_token **run, int *len)
+void	ch_champinfo(t_token **temp, int *len)
 {
 	int i;
 	int name;
@@ -23,21 +23,21 @@ void	ch_champinfo(t_token **run, int *len)
 	i = 2;
 	while (i)
 	{
-		if (strcmp((*run)->content, "comment"))
-			if ((*run)->next->type == STRING)
+		if (strcmp((*temp)->content, "comment"))
+			if ((*temp)->next->type == STRING)
 			{
-				comment_to_code((*run)->next->content);
+				comment_to_code((*temp)->next->content);
 				comm--;
-				*run = (*run)->next->next;
+				*temp = (*temp)->next->next;
 			}
 			else
 				error(ERR_NO_CHCOMM);
-		else if (strcmp((*run)->content, "name"))
-			if ((*run)->next->type == STRING)
+		else if (strcmp((*temp)->content, "name"))
+			if ((*temp)->next->type == STRING)
 			{
-				name_to_code((*run)->next->content);
+				name_to_code((*temp)->next->content);
 				name--;
-				*run = (*run)->next->next;
+				*temp = (*temp)->next->next;
 			}
 			else
 				error(ERR_NO_CHNAME);
@@ -64,18 +64,18 @@ int	ch_arg()
 ** 3) Right format of args
 */
 
-void	ch_op(t_token **run, int *len)
+void	ch_op(t_token **temp, int *len)
 {
 	int		i;
 	int		type;
 	t_token	*op;
 
-	op = *run;
-	type = ch_op_exist((*run)->content); //1) Op name exists
+	op = *temp;
+	type = ch_op_exist((*temp)->content); //1) Op name exists
 	i = g_op_tab[type].args_num;
 	while (i > 0) // 2) Right number of args
 	{
-		if (!ch_arg(run)) //3) Right format of args
+		if (!ch_arg(temp)) //3) Right format of args
 			error();
 		i--;
 	}
@@ -89,21 +89,21 @@ void	pass_label() //пропустить метку. ее проверять н�
 
 void	synt_analiser(t_data *data)
 {
-	t_token	*run;
+	t_token	*temp;
 	int		len;
 
 	write_to_buff(COREWAR_EXEC_MAGIC, &len);
 	len = 0;
-	run = data->token;
-	ch_champinfo(&run, &len);
-	while (run)
+	temp = data->token;
+	ch_champinfo(&temp, &len);
+	while (temp)
 	{
-		if (run->type == INSTRUCTION)
-			ch_op(&run, &len);
-		else if (run->type == LABEL)
+		if (temp->type == INSTRUCTION)
+			ch_op(&temp, &len);
+		else if (temp->type == LABEL)
 			pass_label(&len);
 		else
 			error(ERR_SYM);
-		run = run->prev;
+		temp = temp->prev;
 	}
 }

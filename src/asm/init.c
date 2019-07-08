@@ -36,3 +36,17 @@ void		token_add(t_data *data, t_type type)
 	new->next = data->token;
 	data->token = new;
 }
+
+void		label_add(t_data *data)
+{
+	t_label	*new;
+
+	if (INIT_TOKEN)
+		error(ERR_ALLOC);
+	ft_bzero(new, sizeof(new));
+	data->token->type = LABEL;
+	if (data->token)
+		data->token->prev = new;
+	new->next = data->token;
+	data->token = new;
+}

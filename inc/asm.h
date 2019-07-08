@@ -49,6 +49,7 @@ typedef struct			s_data
 	int					fd;
 	char				*f_name;
 	t_token				*token;
+	t_label				*label;
 }						t_data;
 
 typedef struct			s_token
@@ -61,13 +62,27 @@ typedef struct			s_token
 	struct s_token		*prev;
 }						t_token;
 
+# define A(c) (c == '\0')
+# define B(c) (c == '\n')
+# define C(c) (c == '\"')
+# define D(c) (c == DIRECT_CHAR)
+# define I(c) (c == SEPARATOR_CHAR)
+# define F(c) (c == COMMENT_CHAR)
+# define G(c) (SP(c))
+
+# define DELIMITER(c) (A(c) || B(c) || C(c) || D(c) || I(c) || F(c))
 
 # define INIT_DATA (!(temp = (t_data*)ft_memalloc(sizeof(t_data))))
 # define INIT_TOKEN (!(new = (t_token*)ft_memalloc(sizeof(t_token))))
 
 void		read_file(char *filename);
 void		data_init(t_data **data, int fd);
+void		lexical_analyzer(t_data *data);
+void		skip_whitespaces(t_data *data, char *line);
+void		skip_comment(t_data *data, char *line);
 void		token_add(t_data *data, t_type type);
+void		label_add(t_data *data);
+_Bool		is_reg(char *line, int len);
 
 
 #endif

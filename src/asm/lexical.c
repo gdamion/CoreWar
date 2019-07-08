@@ -12,30 +12,7 @@
 
 #include "com.h"
 
-# define A(c) (c == '\0')
-# define B(c) (c == '\n')
-# define C(c) (c == '\"')
-# define D(c) (c == DIRECT_CHAR)
-# define I(c) (c == SEPARATOR_CHAR)
-# define F(c) (c == COMMENT_CHAR)
-# define G(c) (SP(c))
-
-# define DELIMITER(c) (A(c) || B(c) || C(c) || D(c) || I(c) || F(c))
-
-void		skip_whitespaces(t_data *data, char *line)
-{
-	while(SP(line[data->x]))
-		data->x++;
-}
-
-void		skip_comment(t_data *data, char *line)
-{
-	if (line[data->x] == COMMENT_CHAR)
-		while(line[data->x] && line[data->x] != "\n")
-			data->x++;
-}
-
-void		get_string(t_data *data, char **line)
+static void	get_string(t_data *data, char **line)
 {
 	int		len;
 	int		size;
@@ -59,21 +36,7 @@ void		get_string(t_data *data, char **line)
 	data->token->content = ft_strsub(str, data->x, len);
 }
 
-_Bool	is_reg(char *line, int len)
-{
-	int	i;
-
-	i = 0;
-	if (2 <= len && len <= 3 && line[i] == 'r')
-	{
-		while (ft_isdigit(line[++i]) && i < len)
-			;
-		return (i == len && ft_atoi(&line[1]) > 0);
-	}
-	return (FALSE);
-}
-
-void		get_text(t_data *data, char *line, t_type type)
+static void		get_text(t_data *data, char *line, t_type type)
 {
 	int		temp;
 
@@ -83,7 +46,7 @@ void		get_text(t_data *data, char *line, t_type type)
 			ft_findchar(LABEL_CHARS, line[data->x]))
 		data->x++;
 	if ((data->x - temp) && line[data->x] == LABEL_CHAR)
-		data->token->type = LABEL;
+		label_add(data);
 	else if ((data->x - temp) && DELIMITER(line[data->x]))
 	{
 		if (type == INDIRECT)
@@ -93,9 +56,10 @@ void		get_text(t_data *data, char *line, t_type type)
 	else
 		error("GET_TEXT", data->x, data->y);
 	data->token->content = ft_strsub(line, temp, data->x - temp);
+	data->label->name = data->token->content;
 }
 
-void		get_number(t_data *data, char *line, t_type type)
+static void		get_number(t_data *data, char *line, t_type type)
 {
 	int		temp;
 
@@ -111,14 +75,14 @@ void		get_number(t_data *data, char *line, t_type type)
 	}
 	else if (type == INDIRECT)
 	{
-		data->x -= temp;
+		data->x = temp;
 		get_text(data, line, INDIRECT);
 	}
 	else
 		error("GET_NUMBER", data->x, data->y);
 }
 
-void		tokenizing(t_data *data, char *line)
+static void		tokenizing(t_data *data, char *line)
 {
 	if (line[data->x] == SEPARATOR_CHAR && data->x++)
 		token_add(data, SEPARATOR);
