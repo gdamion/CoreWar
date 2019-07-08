@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:54:46 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/05 15:57:53 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/08 22:40:53 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct		s_op
 	unsigned int	t_dir_size;
 }					t_op;
 
-static t_op			g_op_tab[16] = {
+static t_op			g_op_tab[17] = {
 	{
 		.name = "live",
 		.code = 0x01,
