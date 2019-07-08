@@ -44,9 +44,10 @@ typedef struct			s_label
 
 typedef struct			s_data
 {
+	int					x;
+	int					y;
 	int					fd;
 	char				*f_name;
-	unsigned			cursor;
 	t_token				*token;
 }						t_data;
 
