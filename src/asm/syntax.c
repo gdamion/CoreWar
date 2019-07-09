@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   synt.c                                             :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/08 22:21:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/09 17:06:11 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	valid_champion_info(t_token **temp, int *len)
 		{
 			if ((*temp)->next->type == STRING)
 			{
-				comment_to_code((*temp)->next->content);
+				write_name((*temp)->next->content, len);
 				comm--;
 				*temp = (*temp)->next->next;
 			}
@@ -38,7 +38,7 @@ void	valid_champion_info(t_token **temp, int *len)
 		{
 			if ((*temp)->next->type == STRING)
 			{
-				name_to_code((*temp)->next->content);
+				write_comment((*temp)->next->content, len);
 				name--;
 				*temp = (*temp)->next->next;
 			}
@@ -52,11 +52,11 @@ void	valid_champion_info(t_token **temp, int *len)
 int	op_exist(char *op_name)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < count)
 	{
-		
+
 	}
 	else
 		error(ERR_OP);
@@ -112,18 +112,18 @@ void	pass_label() //пропустить метку. ее проверять н�
 void	syntax_analiser(t_data *data)
 {
 	t_token	*temp;
-	int		len;
+	int		cursor;
 
-	write_to_buff(COREWAR_EXEC_MAGIC, &len);
-	len = 0;
+	cursor = 0;
+	write_magic(COREWAR_EXEC_MAGIC, &cursor, temp);
 	temp = data->token;
-	valid_champion_info(&temp, &len);
+	valid_champion_info(&temp, &cursor);
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)
 			valid_instruction(temp);
 		else if (temp->type == LABEL)
-			pass_label(&len);
+			pass_label(&cursor);
 		else
 			error(ERR_SYM, temp->x, temp->y);
 		temp = temp->prev;
