@@ -25,7 +25,7 @@ typedef struct		s_op
 	unsigned int	t_dir_size;
 }					t_op;
 
-static t_op			g_op_tab[17] = {
+static t_op			g_op_tab[REG_NUMBER] = {
 	{
 		.name = "live",
 		.code = 0x01,

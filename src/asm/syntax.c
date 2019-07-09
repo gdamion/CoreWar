@@ -12,7 +12,7 @@
 
 #include "com.h"
 
-void	ch_champinfo(t_token **temp, int *len)
+void	valid_champion_info(t_token **temp, int *len)
 {
 	int i;
 	int name;
@@ -24,6 +24,7 @@ void	ch_champinfo(t_token **temp, int *len)
 	while (i)
 	{
 		if (strcmp((*temp)->content, "comment"))
+		{
 			if ((*temp)->next->type == STRING)
 			{
 				comment_to_code((*temp)->next->content);
@@ -32,7 +33,9 @@ void	ch_champinfo(t_token **temp, int *len)
 			}
 			else
 				error(ERR_NO_CHCOMM);
+		}
 		else if (strcmp((*temp)->content, "name"))
+		{
 			if ((*temp)->next->type == STRING)
 			{
 				name_to_code((*temp)->next->content);
@@ -41,20 +44,22 @@ void	ch_champinfo(t_token **temp, int *len)
 			}
 			else
 				error(ERR_NO_CHNAME);
+		}
 	}
 	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
 }
 
-int	ch_op_exist(char *op)
+int	op_exist(char *op_name)
 {
-
+	int	i;
+	
+	i = 0;
+	while (i < count)
+	{
+		
+	}
 	else
 		error(ERR_OP);
-}
-
-int	ch_arg()
-{
-
 }
 
 /*
@@ -64,20 +69,18 @@ int	ch_arg()
 ** 3) Right format of args
 */
 
-void	ch_op(t_token **temp, int *len)
+void		valid_instruction(t_token **temp, int *len)
 {
-	int		i;
-	int		type;
+	int		args;
 	t_token	*op;
 
 	op = *temp;
-	type = ch_op_exist((*temp)->content); //1) Op name exists
-	i = g_op_tab[type].args_num;
-	while (i > 0) // 2) Right number of args
+	args = g_op_tab[op_exist((*temp)->content)].args_num;
+	while (args > 0)
 	{
-		if (!ch_arg(temp)) //3) Right format of args
+		if (!valid_arg(temp))
 			error();
-		i--;
+		args--;
 	}
 	op_to_code(op);
 }
@@ -95,11 +98,11 @@ void	syntax_analiser(t_data *data)
 	write_to_buff(COREWAR_EXEC_MAGIC, &len);
 	len = 0;
 	temp = data->token;
-	ch_champinfo(&temp, &len);
+	valid_champion_info(&temp, &len);
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)
-			ch_op(&temp, &len);
+			valid_instruction(temp);
 		else if (temp->type == LABEL)
 			pass_label(&len);
 		else

@@ -30,6 +30,8 @@ void		token_add(t_data *data, t_type type)
 	if (INIT_TOKEN)
 		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
+	new->x = data->x;
+	new->y = data->y;
 	new->type = type;
 	if (data->token)
 		data->token->prev = new;
@@ -44,6 +46,8 @@ void		label_add(t_data *data)
 	if (INIT_LABEL)
 		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
+	new->x = data->x;
+	new->y = data->y;
 	data->token->type = LABEL;
 	if (data->label)
 		data->label->prev = new;

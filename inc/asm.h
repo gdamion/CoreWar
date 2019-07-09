@@ -37,16 +37,18 @@ typedef enum			e_type
 
 typedef struct			s_token
 {
-	char				*content;
-	t_type				type;
 	int					x;
 	int					y;
+	t_type				type;
 	struct s_token		*next;
 	struct s_token		*prev;
+	char				*content;
 }						t_token;
 
 typedef struct			s_label
 {
+	int					x;
+	int					y;
 	char				*name;
 	t_token				*point;
 	struct s_label		*next;

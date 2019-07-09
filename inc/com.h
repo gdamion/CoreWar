@@ -19,7 +19,7 @@
 # include "op.h"
 # include "asm.h"
 
-//# include "libft.h"
+# include "libft.h"
 
 # include <errno.h>
 # include <sys/types.h>
