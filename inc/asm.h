@@ -93,8 +93,9 @@ void		skip_comment(t_data *data, char *line);
 void		token_add(t_data *data, t_type type);
 void		label_add(t_data *data);
 _Bool		is_reg(char *line, int len);
+void		syntax_analiser(t_data *data);
 
 
-void	error(char *err_place, int str_no, int col_no, t_data *data);
+void		error(char *err_place, int str_no, int col_no, t_data *data);
 
 #endif

@@ -26,11 +26,11 @@ static void	get_string(t_data *data, char **line)
 		&& (size = get_next_line(data->fd, &temp)) && data->y++)
 		ft_catpro(&str, temp);
 	if (size == -1)
-		error(ERR_READING, data->x, data->y);
+		error(ERR_READING, data->x, data->y, data);
 	if (size == 0)
-		error(ERR_READING, data->x, data->y);
+		error(ERR_READING, data->x, data->y, data);
 	if (!len)
-		error(ERR_READING, data->x, data->y);
+		error(ERR_READING, data->x, data->y, data);
 	*line = str;
 	token_add(data, STRING);
 	data->token->content = ft_strsub(str, data->x, len);
@@ -54,7 +54,7 @@ static void		get_text(t_data *data, char *line, t_type type)
 											? REGISTER : INSTRUCTION;
 	}
 	else
-		error("GET_TEXT", data->x, data->y);
+		error("GET_TEXT", data->x, data->y, data);
 	data->token->content = ft_strsub(line, temp, data->x - temp);
 	data->label->name = data->token->content;
 }
@@ -79,7 +79,7 @@ static void		get_number(t_data *data, char *line, t_type type)
 		get_text(data, line, INDIRECT);
 	}
 	else
-		error("GET_NUMBER", data->x, data->y);
+		error("GET_NUMBER", data->x, data->y, data);
 }
 
 static void		tokenizing(t_data *data, char *line)
@@ -116,8 +116,6 @@ void		lexical_analyzer(t_data *data)
 	{
 		while (line[data->x])
 		{
-			if (size == -1)
-				error(ERR_READING);
 			skip_whitespaces(data, line);
 			skip_comment(data, line);
 			if (line[data->x])
@@ -126,6 +124,6 @@ void		lexical_analyzer(t_data *data)
 		ft_strdel(&line);
 	}
 	if (size == -1)
-		error(ERR_READING);
+		print_error(ERR_READING);
 	token_add(data, END);
 }
