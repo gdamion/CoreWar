@@ -6,13 +6,13 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/09 17:06:11 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/09 19:43:40 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	valid_champion_info(t_token **temp, int *len)
+void	valid_champion_info(t_token **temp)
 {
 	int i;
 	int name;
@@ -27,7 +27,7 @@ void	valid_champion_info(t_token **temp, int *len)
 		{
 			if ((*temp)->next->type == STRING)
 			{
-				write_name((*temp)->next->content, len);
+				write_name((*temp)->next->content, 8);
 				comm--;
 				*temp = (*temp)->next->next;
 			}
@@ -38,7 +38,7 @@ void	valid_champion_info(t_token **temp, int *len)
 		{
 			if ((*temp)->next->type == STRING)
 			{
-				write_comment((*temp)->next->content, len);
+				write_comment((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2);
 				name--;
 				*temp = (*temp)->next->next;
 			}
@@ -104,7 +104,7 @@ void		valid_instruction(t_token **temp, int *len)
 	op_to_code(op);
 }
 
-void	pass_label() //пропустить метку. ее проверять не надо (или надо????)
+void	valid_label() //проверить, что такая метка содержит правильные символы, добавить ее в список???
 {
 
 }
@@ -114,18 +114,23 @@ void	syntax_analiser(t_data *data)
 	t_token	*temp;
 	int		cursor;
 
-	cursor = 0;
-	write_magic(COREWAR_EXEC_MAGIC, &cursor, temp);
+////////////////// DONT TOUCH
+	write_magic(COREWAR_EXEC_MAGIC, 0); //add magic header
+	write_magic("", 8 + PROG_NAME_LENGTH * 2); //add 8 zeros as separator
+	write_magic("", 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2); //add 8 zeros as separator
 	temp = data->token;
-	valid_champion_info(&temp, &cursor);
+	valid_champion_info(&temp);
+	cursor = 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2 + 8; //cursor stays on code place
+//////////////////
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)
-			valid_instruction(temp);
+			valid_instruction(&temp, &cursor);
 		else if (temp->type == LABEL)
-			pass_label(&cursor);
+			valid_label(&cursor);
 		else
 			error(ERR_SYM, temp->x, temp->y);
 		temp = temp->prev;
 	}
+	write_magic(???, 8 + PROG_NAME_LENGTH * 2 + 8); //add exec code size
 }
