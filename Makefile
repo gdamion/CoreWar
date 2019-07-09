@@ -6,7 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
-#    Updated: 2019/07/08 14:59:01 by gdamion-         ###   ########.fr        #
+#    Updated: 2019/07/09 15:44:34 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,16 +17,15 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra
 
 ################# LIB #################
-LIB = -L$(LIB_DIR)
 LIB_DIR = ./libft/
 LIB_NAME = libft.a
-LIB_FILE = $(LIB)$(LIB_NAME)
+LIB_FILE = $(LIB_DIR)$(LIB_NAME)
+LIB = -L$(LIB_DIR)
 #######################################
 
 ################# INC #################
-INC = -I$(INC_DIR) -I$(INC_LIB_DIR)
-INC_LIB_DIR = $(LIB_DIR)includes/
 
+INC_LIB_DIR = $(LIB_DIR)includes/
 INC_LIST =	com.h \
 			asm.h \
 			asm_error.h \
@@ -34,6 +33,7 @@ INC_LIST =	com.h \
 			op.h
 
 INC_DIR = ./inc/
+INC = -I$(INC_DIR) -I$(INC_LIB_DIR)
 HEADERS = $(addprefix $(INC_DIR), $(INC_LIST))
 #######################################
 
@@ -54,7 +54,7 @@ OBJ_ASM	= $(addprefix $(OBJ_ASM_DIR), $(OBJ_ASM_LIST))
 
 ################## VM #################
 SRC_VM_DIR = ./src/vm/
-SRC_VM_LIST =	main.c \
+SRC_VM_LIST =	main.c
 
 
 SRC_VM = $(addprefix $(SRC_VM_DIR), $(SRC_VM_LIST))
@@ -70,11 +70,12 @@ RESET = \033[0m
 
 .PHONY: all clean fclean re
 
-all: $(LIB_DIR)$(LIB_NAME) $(ASM_NAME) $(VM_NAME)
+all: $(LIB_FILE) $(ASM_NAME) $(VM_NAME)
 
 ################ ASM COMPILE #################
 $(ASM_NAME): $(OBJ_ASM_DIR) $(OBJ_ASM)
-	@$(CC) $(FLAGS) $(LIB) $(INC) $(OBJ_ASM) -o $(ASM_NAME)
+	@echo "\n$(ASM_NAME): $(GREEN)Object files were created$(RESET)"
+	@$(CC) $(LIB_FILE) $(FLAGS) $(LIB) $(INC) $(OBJ_ASM) -o $(ASM_NAME)
 	@echo "$(ASM_NAME): $(GREEN)$(ASM_NAME) binary was created!$(RESET)"
 
 $(OBJ_ASM_DIR):
@@ -84,12 +85,12 @@ $(OBJ_ASM_DIR):
 $(OBJ_ASM_DIR)%.o : $(SRC_ASM_DIR)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INC) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
-	@echo "\n$(ASM_NAME): $(GREEN)Object files were created$(RESET)"
 ##############################################
 
 ################# VM COMPILE #################
 $(VM_NAME): $(OBJ_VM_DIR) $(OBJ_VM)
-	@$(CC) $(FLAGS) $(LIB) $(INC) $(OBJ_VM) -o $(VM_NAME)
+	@echo "\n$(VM_NAME): $(GREEN)Object files were created$(RESET)"
+	@$(CC) $(LIB_FILE) $(FLAGS) $(LIB) $(INC) $(OBJ_VM) -o $(VM_NAME)
 	@echo "$(VM_NAME): $(GREEN)$(VM_NAME) binary was created$(RESET)"
 
 $(OBJ_VM_DIR):
@@ -99,7 +100,6 @@ $(OBJ_VM_DIR):
 $(OBJ_VM_DIR)%.o : $(SRC_VM_DIR)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INC) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
-	@echo "\n$(VM_NAME): $(GREEN)Object files were created$(RESET)"
 ##############################################
 
 $(LIB_DIR)$(LIB_NAME):

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:57 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/08 22:41:26 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/09 15:00:54 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define TRUE 1
 # define FALSE 0
+
+# include "libft.h"
 
 # include "op.h"
 # include "asm.h"

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntaxical.c                                       :+:      :+:    :+:   */
+/*   synt.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/08 16:10:58 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/08 22:21:12 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,25 @@ int	op_exist(char *op_name)
 }
 
 /*
+** Arg types
+** 1) Label (check existense)
+** 2) DIR
+** 3) INDIR
+*/
+
+int	ch_arg(t_token **temp)
+{
+	if ((*temp)->type == LABEL)
+		ch_label_exist();
+	else if ((*temp)->type == INDIRECT)
+		ch_ind_arg();
+	else if ((*temp)->type == DIRECT)
+		ch_dir_arg();
+	else
+		error(ERR_ARGTP, (*temp)->x, (*temp)->y);
+}
+
+/*
 ** Check operation
 ** 1) Op name exists
 ** 2) Right number of args
@@ -106,7 +125,7 @@ void	syntax_analiser(t_data *data)
 		else if (temp->type == LABEL)
 			pass_label(&len);
 		else
-			error(ERR_SYM);
+			error(ERR_SYM, temp->x, temp->y);
 		temp = temp->prev;
 	}
 }
