@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/09 19:43:40 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:51:16 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ int	op_exist(char *op_name)
 	int	i;
 
 	i = 0;
-	while (i < count)
+	while (i < 16)
 	{
-
+		if (!strcmp(op_name, g_op_tab[i].name))
+			break ;
+		i++;
 	}
-	else
-		error(ERR_OP);
+	if (i == 16)
+		return (-1);
+	return (i);
 }
 
 /*
@@ -68,18 +71,6 @@ int	op_exist(char *op_name)
 ** 2) DIR
 ** 3) INDIR
 */
-
-int	ch_arg(t_token **temp)
-{
-	if ((*temp)->type == LABEL)
-		ch_label_exist();
-	else if ((*temp)->type == INDIRECT)
-		ch_ind_arg();
-	else if ((*temp)->type == DIRECT)
-		ch_dir_arg();
-	else
-		error(ERR_ARGTP, (*temp)->x, (*temp)->y);
-}
 
 int					valid_arg(t_token *arg, int mask)
 {
@@ -103,6 +94,7 @@ void				valid_instruction(t_token **operations, int *len)
 
 	temp = (*operations)->next;
 	op_n = op_exist(temp->content);
+	op_n == -1 ? error(ERR_OP, temp->x, temp->y) : 1;
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
 	while ((temp->type < 3 || temp->type == 4) && args--)
