@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/10 21:02:03 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/10 21:43:22 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,10 @@ void	valid_instruction(t_token **operations, int *cursor)
 	}
 	(args || args < 0) ? errorr(ERR_ARGNO, temp->x, temp->y) : 1;
 	g_op_tab[op_n].args_types_code ? just_write(arg_type_code(arg_types), cursor) : 1;
-	args_to_code(operations, &cursor, g_op_tab[op_n].t_dir_size); // здесь будут выводиться аргументы, сюда нужно передать t_token, возможно
-
+	args_to_code(operations, &cursor, op_n); // здесь будут выводиться аргументы, сюда нужно передать t_token, возможно
 }
 
-void	valid_label() //проверить, что такая метка содержит правильные символы, добавить ее в список???
+void	valid_label() //проверить, что такая метка содержит правильные символы, что название не повторяется добавить ее в список???
 {
 
 }
@@ -137,7 +136,10 @@ void	syntax_analiser(t_data *data)
 		if (temp->type == INSTRUCTION)
 			valid_instruction(&temp, &cursor);
 		else if (temp->type == LABEL)
+		{
 			valid_label(&cursor);
+			temp = temp->next;
+		}
 		else
 			errorr(ERR_SYM, temp->x, temp->y);
 		temp = temp->prev;

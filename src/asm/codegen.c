@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/10 21:08:34 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/10 21:25:48 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,16 +171,27 @@ void	process_label(t_token *label, int byte_num, int *place) //преобраз�
 	write_arg(move, byte_num, place);
 }
 
-void	args_to_code(t_token **temp, int *place, int dir_size)
+void	args_to_code(t_token **temp, int *place, int op_n)
 {
-	while ()
+	int	dir_size;
+	int	arg_n;
+
+	dir_size = g_op_tab[op_n].t_dir_size;
+	arg_n = g_op_tab[op_n].args_num;
+	while (arg_n)
 	{
 		if ((*temp)->type == LABEL)
 		{
 			process_label(*temp, dir_size, place);
 			*temp = (*temp)->next;
+			arg_n--;
+		}
+		else if ((*temp)->type == T_DIR || (*temp)->type == T_IND)
+		{
+			write_arg(ft_atoi((*temp)->content), dir_size, place);
+			arg_n--;
 		}
 		else
-			write_arg(ft_atoi((*temp)->content), dir_size, place);
+			*temp = (*temp)->next;
 	}
 }
