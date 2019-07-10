@@ -6,11 +6,34 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/09 19:55:02 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/10 21:08:34 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
+
+char	*arg_type_code(int arg_types[3])
+{
+	int i;
+	int bin;
+	char res[3];
+
+	i = 0;
+	bin = 0;
+	while (i < 3)
+	{
+		if (arg_types[i] == T_REG)
+			bin = bin | (1 << (3 - i) * 2);
+		else if (arg_types[i] == T_DIR)
+			bin = bin | (2 << (3 - i) * 2);
+		else if (arg_types[i] == T_IND)
+			bin = bin | (3 << (3 - i) * 2);
+	}
+	res[0] = bin / 16;
+	res[1] = bin % 16;
+	res[2] = '\0';
+	return (res);
+}
 
 void	write_magic(char* hex, int place)
 {
@@ -108,16 +131,56 @@ void	write_comment(char *chcomm, int place)
 	free(hex);
 }
 
-
-void	print_op()
+void	just_write(char *hex, int *place)
 {
+	int i;
 
+	if (hex[0] == '0' && hex[1] == 'x')
+		i += 2;
+	while (hex[i] != '\0')
+	{
+		// if (*place > CHAMP_MAX_SIZE * 2)
+		// 	error(ERR_BIGEX, 0, 0);
+		g_buf[*place] = hex[i];
+		(*place)++;
+		hex[i]++;
+	}
 }
 
-
-void	op_to_code(t_token *op)
+void	write_arg(int arg, int byte_num, int *place)
 {
+	char	*hex;
+	int		len;
+	int		zeros;
+	int		i;
 
-	write_to_buf();
+	hex = ft_itoa_base(arg, 16, 0);
+	len = ft_strlen(hex);
+	zeros = byte_num * 2 - len;
+	while (zeros--)
+		g_buf[(*place)++] = '0';
+	just_write(hex, place);
+	free(hex);
 }
 
+void	process_label(t_token *label, int byte_num, int *place) //преобразование метки в число и печать числа
+{
+	int move;
+
+	move = ...;
+	write_arg(move, byte_num, place);
+}
+
+void	args_to_code(t_token **temp, int *place, int dir_size)
+{
+	while ()
+	{
+		if ((*temp)->type == LABEL)
+		{
+			process_label(*temp, dir_size, place);
+			*temp = (*temp)->next;
+		}
+		else
+			write_arg(ft_atoi((*temp)->content), dir_size, place);
+	}
+}
