@@ -26,3 +26,12 @@ void	error(char *err_place, int str_no, int col_no, t_data *data)
 	free_info(data);
 	exit(1);
 }
+
+void	errorr(char *err_place, int str_no, int col_no)
+{
+	//ft_printf("Error: %s, string %d col %d\n", err_place, str_no, col_no);
+	// print_error(err_place);
+	// fclose(data->fd); //close file
+	// free_info(data);
+	exit(1);
+}

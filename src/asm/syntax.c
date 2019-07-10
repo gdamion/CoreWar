@@ -81,6 +81,12 @@ int	ch_arg(t_token **temp)
 		error(ERR_ARGTP, (*temp)->x, (*temp)->y);
 }
 
+int					valid_arg(t_token *arg, int mask)
+{
+	if (arg->type != (arg->type & mask))
+		errorr(ERR_ARGTP, arg->x, arg->y);
+}
+
 /*
 ** Check operation
 ** 1) Op name exists
@@ -88,19 +94,26 @@ int	ch_arg(t_token **temp)
 ** 3) Right format of args
 */
 
-void		valid_instruction(t_token **temp, int *len)
+void				valid_instruction(t_token **operations, int *len)
 {
-	int		args;
-	t_token	*op;
+	int				op_n;
+	unsigned int	args;
+	unsigned int	*types;
+	t_token			*temp;
 
-	op = *temp;
-	args = g_op_tab[op_exist((*temp)->content)].args_num;
-	while (args > 0)
+	temp = (*operations)->next;
+	op_n = op_exist(temp->content);
+	args = g_op_tab[op_n].args_num;
+	types = g_op_tab[op_n].args_types;
+	while ((temp->type < 3 || temp->type == 4) && args--)
 	{
-		if (!valid_arg(temp))
-			error();
-		args--;
+		valid_arg(temp, (*types)++);
+		if (temp->next->type != SEPARATOR)
+			errorr(ERR_TOKEN, temp->next->x, temp->next->y);
+		temp = temp->next->next;
 	}
+	if (args || args < 0)
+		errorr(ERR_ARGNO, temp->x, temp->y);
 	op_to_code(op);
 }
 
@@ -129,7 +142,7 @@ void	syntax_analiser(t_data *data)
 		else if (temp->type == LABEL)
 			valid_label(&cursor);
 		else
-			error(ERR_SYM, temp->x, temp->y);
+			error(ERR_SYM, temp->x, temp->y, data);
 		temp = temp->prev;
 	}
 	write_magic(???, 8 + PROG_NAME_LENGTH * 2 + 8); //add exec code size

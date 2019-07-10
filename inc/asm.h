@@ -21,14 +21,14 @@ char					g_buf[CHAMP_MAX_SIZE * 2 + 1];
 
 typedef enum			e_type
 {
+	REGISTER = 1,
+	DIRECT,
 	COMMAND,
+	INDIRECT,
 	STRING,
 	LABEL,
 	INSTRUCTION,
-	REGISTER,
-	DIRECT,
 	DIRECT_LABEL,
-	INDIRECT,
 	INDIRECT_LABEL,
 	SEPARATOR,
 	NEW_LINE,
@@ -90,8 +90,8 @@ typedef struct			s_data
 void		read_file(char *filename);
 void		data_init(t_data **data, int fd);
 void		lexical_analyzer(t_data *data);
-void		skip_whitespaces(t_data *data, char *line);
-void		skip_comment(t_data *data, char *line);
+int			skip_whitespaces(char *line, int cursor);
+int			skip_comment(char *line, int cursor);
 void		token_add(t_data *data, t_type type);
 void		label_add(t_data *data);
 _Bool		is_reg(char *line, int len);
@@ -99,5 +99,6 @@ void		syntax_analiser(t_data *data);
 
 
 void		error(char *err_place, int str_no, int col_no, t_data *data);
+void		errorr(char *err_place, int str_no, int col_no);
 
 #endif

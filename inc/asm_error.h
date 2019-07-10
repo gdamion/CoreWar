@@ -30,6 +30,7 @@
 # define ERR_NO_CHCOMM "Champion\'s comment doesn't exist"
 # define ERR_NAMECOM "Wrong number of champion\'s names/comments"
 # define ERR_SYM "Wrong symbol"
+# define ERR_TOKEN "It should be sepatated char"
 # define ERR_OP "This operator doesn\'t exist"
 # define ERR_ARGNO "Wrong number of operator\'s arguments"
 # define ERR_ARGTP "Wrong type of operator\'s arguments"

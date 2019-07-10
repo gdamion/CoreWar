@@ -116,8 +116,8 @@ void		lexical_analyzer(t_data *data)
 	{
 		while (line[data->x])
 		{
-			skip_whitespaces(data, line);
-			skip_comment(data, line);
+			data->x = skip_whitespaces(line, data->x);
+			data->x = skip_comment(line, data->x);
 			if (line[data->x])
 				tokenizing(data, line);
 		}

@@ -42,7 +42,8 @@ OBJ_DIR = obj/
 SRC_ASM_DIR = ./src/asm/
 SRC_ASM_LIST =	main.c \
 				read.c \
-				init.c
+				init.c \
+				syntax.c
 
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))
