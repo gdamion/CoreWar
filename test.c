@@ -1,41 +1,80 @@
 #include "libft/includes/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <limits.h>
 
-unsigned int reverseBits(short num)
+#define VAR_TO_STR_BIN(x) obj_to_bin((char [sizeof(x)*8 + 1]){""}, &(x), sizeof (x))
+
+void print_bytes(void *ptr, int size)
 {
-    unsigned int  NO_OF_BITS = sizeof(short) * 8;
-    unsigned int reverse_num = 0, i, temp;
-
-    for (i = 0; i < NO_OF_BITS; i++)
-    {
-        temp = (num & (1 << i));
-        if(temp)
-            reverse_num |= (1 << ((NO_OF_BITS - 1) - i));
+    unsigned char *p = ptr;
+    int i;
+    for (i=0; i<size; i++) {
+        printf("%02hhX ", p[i]);
     }
-    return reverse_num;
+    printf("\n");
 }
 
-char					*ft_itoa_base_min(int dec, int base, int up)
+char *obj_to_bin(char *dest, void *object, size_t osize)
 {
-	char				*nbr;
-	char *buf;
-	int a;
-	int b = 1;
+  const unsigned char *p = (const unsigned char *) object;
+  p += osize;
+  char *s = dest;
+  while (osize-- > 0) {
+    p--;
+    unsigned i = 8;
+    while (i-- > 0) {
+      *s++ = ((*p >> i) & 1) + '0';
+    }
+  }
+  *s = '\0';
+  return dest;
+}
+
+char					*ft_itoa_base_min(short dec, int base, int up)
+{
+	char *nbr;
+	short a;
+	nbr = NULL;
+int igr = 0;
+	int i = sizeof(dec) * 8;
 
 	dec *= -1;
-	printf("dec 1 = %d\n", dec);
-	a = dec;
-	dec = a ^ b;
-	printf("dec 2 = %d\n", dec);
+	printf("mem1: %s\n", VAR_TO_STR_BIN(dec));
+
+	a = 1;
+	while (i--)
+	{
+		dec = dec ^ a;
+		a = a << 1;
+	}
+	printf("mem2: %s\n", VAR_TO_STR_BIN(dec));
+
 	dec += 1;
-	printf("dec 3 = %d\n", dec);
-	nbr = ft_itoa_base(dec, base, up);
+	printf("mem2: %s\n", VAR_TO_STR_BIN(dec));
+	printf("dec = %d\n",(int)dec);
+
+
+	igr = igr | 1;
+	i = sizeof(dec) * 8;
+	a = 1;
+	while (i--)
+	{
+		if (dec & 1)
+			igr = igr | a;
+		dec = dec << 1;
+		a = a << 1;
+	}
+	printf("igr: %s\n", VAR_TO_STR_BIN(igr));
+	printf("igr = %d\n",igr);
+	//nbr = ft_itoa_base((int)(*f), base, up);
 	return (nbr);
 }
 
 int main()
 {
+	printf("65517 = %d\n", (short)65517);
 	char *res = ft_itoa_base_min(-19, 16, 0);
 	printf("%s - result\nffed - required\n",res);
 	return (0);
