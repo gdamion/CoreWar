@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/10 21:25:48 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/11 17:07:11 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,15 @@ void	just_write(char *hex, int *place)
 	}
 }
 
+char					*ft_itoa_base_min(int dec, int base, int up)
+{
+	char				*nbr;
+
+	dec = !dec + 1;
+	nbr = ft_itoa_base(dec, base, up);
+	return (nbr);
+}
+
 void	write_arg(int arg, int byte_num, int *place)
 {
 	char	*hex;
@@ -154,7 +163,7 @@ void	write_arg(int arg, int byte_num, int *place)
 	int		zeros;
 	int		i;
 
-	hex = ft_itoa_base(arg, 16, 0);
+	hex = (arg < 0) ? ft_itoa_base: ft_itoa_base(arg, 16, 0);
 	len = ft_strlen(hex);
 	zeros = byte_num * 2 - len;
 	while (zeros--)
