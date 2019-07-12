@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:31 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 15:31:51 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/12 13:54:52 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void		read_file(char *filename)
 	else
 		data_init(&data, fd);
 	data->f_name = filename;
+
 	lexical_analyzer(data);
 }

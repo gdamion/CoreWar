@@ -32,50 +32,45 @@ char *obj_to_bin(char *dest, void *object, size_t osize)
   return dest;
 }
 
-char					*ft_itoa_base_min(short dec, int base, int up)
+char					*ft_itoa_base_min(intmax_t dec, int base, int up, int dir_size)
 {
 	char *nbr;
-	short a;
-	nbr = NULL;
-int igr = 0;
-	int i = sizeof(dec) * 8;
+	uintmax_t r;
 
-	dec *= -1;
-	printf("mem1: %s\n", VAR_TO_STR_BIN(dec));
+	if (dir_size == 2)
+		r = (u_int16_t)(dec);
+	else if (dir_size = 4)
+		r = (u_int32_t)(dec);
+	else if (dir_size = 8)
+		r = (u_int16_t)(dec);
+	else
+		errorr("Wrong size of DIR argument", 0, 0);
 
-	a = 1;
-	while (i--)
-	{
-		dec = dec ^ a;
-		a = a << 1;
-	}
-	printf("mem2: %s\n", VAR_TO_STR_BIN(dec));
-
-	dec += 1;
-	printf("mem2: %s\n", VAR_TO_STR_BIN(dec));
-	printf("dec = %d\n",(int)dec);
-
-
-	igr = igr | 1;
-	i = sizeof(dec) * 8;
-	a = 1;
-	while (i--)
-	{
-		if (dec & 1)
-			igr = igr | a;
-		dec = dec << 1;
-		a = a << 1;
-	}
-	printf("igr: %s\n", VAR_TO_STR_BIN(igr));
-	printf("igr = %d\n",igr);
-	//nbr = ft_itoa_base((int)(*f), base, up);
-	return (nbr);
+	printf("r = %ju\n",r);
+	return (ft_itoa_base(r, base, up));
 }
 
 int main()
 {
-	printf("65517 = %d\n", (short)65517);
-	char *res = ft_itoa_base_min(-19, 16, 0);
+	printf("|65517 = %d|\n", (short)65517);
+	char *res = ft_itoa_base_min(-19, 16, 0, 2);
 	printf("%s - result\nffed - required\n",res);
 	return (0);
 }
+
+
+	// printf("mem0: %s\n", VAR_TO_STR_BIN(dec));
+	// dec *= -1;
+	// printf("mem1: %s\n", VAR_TO_STR_BIN(dec));
+
+	// a = 1;
+	// i = sizeof(dec) * 8;
+	// while (i--)
+	// {
+	// 	dec = dec ^ a;
+	// 	a = a << 1;
+	// }
+	// printf("mem2: %s\n", VAR_TO_STR_BIN(dec));
+
+	// dec += 1;
+	// printf("mem2: %s\n", VAR_TO_STR_BIN(dec));
