@@ -37,14 +37,15 @@ char					*ft_itoa_base_min(intmax_t dec, int base, int up, int dir_size)
 	char *nbr;
 	uintmax_t r;
 
+	printf("%s\n", VAR_TO_STR_BIN(dec));
 	if (dir_size == 2)
 		r = (u_int16_t)(dec);
-	else if (dir_size = 4)
+	else if (dir_size == 4)
 		r = (u_int32_t)(dec);
-	else if (dir_size = 8)
+	else if (dir_size == 8)
 		r = (u_int16_t)(dec);
-	else
-		errorr("Wrong size of DIR argument", 0, 0);
+	// else
+	// 	errorr("Wrong size of DIR argument", 0, 0);
 
 	printf("r = %ju\n",r);
 	return (ft_itoa_base(r, base, up));
@@ -53,7 +54,7 @@ char					*ft_itoa_base_min(intmax_t dec, int base, int up, int dir_size)
 int main()
 {
 	printf("|65517 = %d|\n", (short)65517);
-	char *res = ft_itoa_base_min(-19, 16, 0, 2);
+	char *res = ft_itoa_base_min(-19, 16, 0, 4);
 	printf("%s - result\nffed - required\n",res);
 	return (0);
 }
