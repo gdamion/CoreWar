@@ -15,7 +15,8 @@
 int		main(int ac, char **av)
 {
 	errno = 0;
+	g_data = NULL;
 	ft_bzero(g_buf, CHAMP_MAX_SIZE * 2 + 1); // буфер для сохранения перед записью в файл
-	(ac == 2) ? read_file(av[1]) : print_error(ERR_NOFILE);
+	(ac == 2) ? read_file(av[1]) : errorr(ERR_NOFILE, 0, 0);
 	return (0);
 }

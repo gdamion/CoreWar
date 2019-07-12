@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/09 18:57:01 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/12 19:01:29 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "asm_ops.h"
 
 char					g_buf[CHAMP_MAX_SIZE * 2 + 1];
+t_data					*g_data;
 
 typedef enum			e_type
 {
@@ -65,14 +66,6 @@ typedef struct			s_data
 	t_label				*label;
 }						t_data;
 
-// typedef struct			s_op
-// {
-// 	char				type_a1[2];
-// 	char				type_a2[2];
-// 	char				type_a3[2];
-
-// }
-
 # define Q(c) (c == '\0')
 # define W(c) (c == '\n')
 # define E(c) (c == '\"')
@@ -87,18 +80,77 @@ typedef struct			s_data
 # define INIT_TOKEN (!(new = (t_token*)ft_memalloc(sizeof(t_token))))
 # define INIT_LABEL (!(new = (t_label*)ft_memalloc(sizeof(t_label))))
 
-void		read_file(char *filename);
-void		data_init(t_data **data, int fd);
-void		lexical_analyzer(t_data *data);
-int			skip_whitespaces(char *line, int cursor);
-int			skip_comment(char *line, int cursor);
-void		token_add(t_data *data, t_type type);
-void		label_add(t_data *data);
-_Bool		is_reg(char *line, int len);
-void		syntax_analiser(t_data *data);
+/*
+** read_file.c
+*/
+
+void					read_file(char *filename);
+void					ch_fname(char *fname);
+
+/*
+** init.c
+*/
+
+void					data_init(int fd);
+void					token_add(t_type type);
+void					label_add();
 
 
-void		error(char *err_place, int str_no, int col_no, t_data *data);
-void		errorr(char *err_place, int str_no, int col_no);
+/*
+** lexical.c
+*/
+
+void					lexical_analyzer(t_data *data);
+
+/*
+** syntax.c
+*/
+
+int						syntax_analiser(t_data *data);
+void					valid_champion_info(t_token **temp);
+int						valid_arg(t_token *arg, int mask);
+void					valid_instruction(t_token **operations);
+
+/*
+** codegen1.c
+*/
+
+void					args_to_code(t_token **temp, int *place, int op_n);
+void					process_label(t_token *label, int byte_num, int *place);
+void					write_arg(int arg, int byte_num, int *place);
+char					*num_to_hex(int32_t dec, int dir_size);
+void					just_write(char *hex, int *place);
+
+/*
+** codegen2.c
+*/
+
+void					write_comment(char *chcomm, int place);
+void					write_name(char *chname, int place);
+char					*str_to_code(char *str);
+void					write_magic(char* hex, int place);
+char					*arg_type_code(int arg_types[3]);
+
+/*
+** buf_write.c
+*/
+
+void	translate(t_token *code_start);
+
+
+/*
+** filegen.c
+*/
+
+void					write_to_file(t_data *data);
+char					*newn_create(char *f_name);
+
+
+/*
+** error.c
+*/
+void	errorr(char *event, int str_no, int col_no);
+void	place_write(int str_no, int col_no);
+void	free_info(t_data *data);
 
 #endif

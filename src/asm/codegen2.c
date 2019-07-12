@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codegen.c                                          :+:      :+:    :+:   */
+/*   codegen2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/11 17:07:11 by gdamion-         ###   ########.fr       */
+/*   Created: 2019/07/12 18:32:59 by gdamion-          #+#    #+#             */
+/*   Updated: 2019/07/12 18:33:35 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,78 +129,4 @@ void	write_comment(char *chcomm, int place)
 		i++;
 	}
 	free(hex);
-}
-
-void	just_write(char *hex, int *place)
-{
-	int i;
-
-	if (hex[0] == '0' && hex[1] == 'x')
-		i += 2;
-	while (hex[i] != '\0')
-	{
-		// if (*place > CHAMP_MAX_SIZE * 2)
-		// 	error(ERR_BIGEX, 0, 0);
-		g_buf[*place] = hex[i];
-		(*place)++;
-		hex[i]++;
-	}
-}
-
-char					*ft_itoa_base_min(int dec, int base, int up)
-{
-	char				*nbr;
-
-	dec = !dec + 1;
-	nbr = ft_itoa_base(dec, base, up);
-	return (nbr);
-}
-
-void	write_arg(int arg, int byte_num, int *place)
-{
-	char	*hex;
-	int		len;
-	int		zeros;
-	int		i;
-
-	hex = (arg < 0) ? ft_itoa_base: ft_itoa_base(arg, 16, 0);
-	len = ft_strlen(hex);
-	zeros = byte_num * 2 - len;
-	while (zeros--)
-		g_buf[(*place)++] = '0';
-	just_write(hex, place);
-	free(hex);
-}
-
-void	process_label(t_token *label, int byte_num, int *place) //преобразование метки в число и печать числа
-{
-	int move;
-
-	move = ...;
-	write_arg(move, byte_num, place);
-}
-
-void	args_to_code(t_token **temp, int *place, int op_n)
-{
-	int	dir_size;
-	int	arg_n;
-
-	dir_size = g_op_tab[op_n].t_dir_size;
-	arg_n = g_op_tab[op_n].args_num;
-	while (arg_n)
-	{
-		if ((*temp)->type == LABEL)
-		{
-			process_label(*temp, dir_size, place);
-			*temp = (*temp)->next;
-			arg_n--;
-		}
-		else if ((*temp)->type == T_DIR || (*temp)->type == T_IND)
-		{
-			write_arg(ft_atoi((*temp)->content), dir_size, place);
-			arg_n--;
-		}
-		else
-			*temp = (*temp)->next;
-	}
 }

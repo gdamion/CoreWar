@@ -6,27 +6,11 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 15:47:00 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/12 18:36:12 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
-
-char	*newn_create(char *f_name)
-{
-	int		len;
-	char	*new_name;
-	int		i;
-
-	len = ft_findchar(f_name, '.');
-	new_name = (char*)malloc(len + 5);
-	new_name[len + 4] = '\0';
-	i = -1;
-	while (++i < len)
-		new_name[i] = f_name[i];
-	ft_strcpy(&(new_name[i]), ".cor");
-	return (new_name);
-}
 
 void	write_to_file(t_data *data)
 {
@@ -43,4 +27,20 @@ void	write_to_file(t_data *data)
 		error(ERR_WRFHEX);
 	}
 	close(fd);
+}
+
+char	*newn_create(char *f_name)
+{
+	int		len;
+	char	*new_name;
+	int		i;
+
+	len = ft_findchar(f_name, '.');
+	new_name = (char*)malloc(len + 5);
+	new_name[len + 4] = '\0';
+	i = -1;
+	while (++i < len)
+		new_name[i] = f_name[i];
+	ft_strcpy(&(new_name[i]), ".cor");
+	return (new_name);
 }
