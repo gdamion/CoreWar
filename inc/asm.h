@@ -40,6 +40,7 @@ typedef struct			s_token
 	int					x;
 	int					y;
 	t_type				type;
+	int					bytes;
 	struct s_token		*next;
 	struct s_token		*prev;
 	char				*content;
@@ -93,9 +94,9 @@ void		lexical_analyzer(t_data *data);
 int			skip_whitespaces(char *line, int cursor);
 int			skip_comment(char *line, int cursor);
 void		token_add(t_data *data, t_type type);
-void		label_add(t_data *data);
+void		label_add(t_data *data, char *line, int start);
 _Bool		is_reg(char *line, int len);
-void		syntax_analiser(t_data *data);
+int			syntax_analiser(t_data *data);
 
 
 void		error(char *err_place, int str_no, int col_no, t_data *data);

@@ -61,7 +61,7 @@ int		op_exist(char *op_name)
 		i++;
 	}
 	if (i == 16)
-		return (-1);
+		; //error
 	return (i);
 }
 
@@ -72,9 +72,14 @@ int		op_exist(char *op_name)
 ** 3) INDIR
 */
 
-int		valid_arg(t_token *arg, int mask) //!!! а что если тип будет LABEL???
+/*
+** Is arg valid?
+** If it is DIRECT_LABEL - check if mark, on which we point, is exist
+** And it should return number of bytes
+*/
+int		valid_arg(t_token *arg, int mask)
 {
-	if (arg->type != (arg->type & mask) && arg->type != LABEL)
+	if (arg->type != (arg->type & mask))
 		errorr(ERR_ARGTP, arg->x, arg->y);
 }
 
@@ -85,25 +90,37 @@ int		valid_arg(t_token *arg, int mask) //!!! а что если тип буде�
 ** 3) Right format of args
 */
 
-void	valid_instruction(t_token **operations)
+/*
+** Take token - operation
+** Read while !(\n)
+** \n - should NOT be skiped
+*/
+int8_t				valid_instruction(t_token **operations)
 {
 	int				op_n;
+	int8_t			bytes;
 	unsigned int	args;
 	unsigned int	*types;
 	t_token			*temp;
 
-	temp = (*operations)->next;
-	(op_n = op_exist(temp->content)) == -1 ? \
-		errorr(ERR_OP, temp->x, temp->y) : 1;
+	bytes = 1;
+	temp = (*operations);
+	op_n = op_exist(temp->content);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
-	while ((temp->type < 3 || temp->type == 4) && args--)
+	while ((temp = temp->prev) && 
+			(temp->type < 3 || temp->type == 4) && args--)
 	{
-		valid_arg(temp, (*types)++);
-		(temp->next->type != SEPARATOR) ? errorr(ERR_TOKEN, \
-			temp->next->x, temp->next->y) : (temp = temp->next->next);
+		bytes += valid_arg(temp, (*types)++);
+		if (temp->prev->type == SEPARATOR)
+			temp = temp->prev->prev;
+		else
+			break;
 	}
-	(args || args < 0) ? errorr(ERR_ARGNO, temp->x, temp->y) : 1;
+	if (args || args < 0 && temp && temp->type != NEW_LINE)
+		errorr(ERR_ARGNO, temp->x, temp->y);
+	*operations = temp;
+	return (bytes);
 }
 
 void	valid_label() //проверить, что такая метка содержит правильные символы, что название не повторяется добавить ее в список???
@@ -111,20 +128,26 @@ void	valid_label() //проверить, что такая метка содер
 
 }
 
+/*
+** Dont forget that the data->token point to the last token
+** We should run to previous elem_list
+*/
 int		syntax_analiser(t_data *data) //return exec code size in bytes
 {
 	t_token	*temp;
 	t_token *op;
+	int		bytes;
 
+	bytes = 0;
+	temp = data->token;
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)
-			valid_instruction(&temp);
+			bytes += valid_instruction(&temp);
 		else if (temp->type == LABEL)
-		{
-			valid_label(/*&cursor*/);
-			temp = temp->next;
-		}
+			temp->bytes = bytes;
+		else if (temp->type == NEW_LINE)
+			;
 		else
 			errorr(ERR_SYM, temp->x, temp->y);
 		temp = temp->prev;

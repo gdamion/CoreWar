@@ -35,6 +35,7 @@ void		read_file(char *filename)
 	else
 		data_init(&data, fd);
 	data->f_name = filename;
-
 	lexical_analyzer(data);
+	valid_champion_info(data);
+	syntax_analiser(data);
 }

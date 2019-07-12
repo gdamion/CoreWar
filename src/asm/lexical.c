@@ -46,7 +46,7 @@ static void		get_text(t_data *data, char *line, t_type type)
 			ft_findchar(LABEL_CHARS, line[data->x]))
 		data->x++;
 	if ((data->x - temp) && line[data->x] == LABEL_CHAR)
-		label_add(data);
+		label_add(data, line, temp);
 	else if ((data->x - temp) && DELIMITER(line[data->x]))
 	{
 		if (type == INDIRECT)
