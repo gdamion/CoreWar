@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 14:37:06 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/12 18:23:29 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	valid_champion_info(t_token **temp)
 	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
 }
 
-int		op_exist(char *op_name)
+static int		op_exist(char *op_name)
 {
 	int	i;
 
