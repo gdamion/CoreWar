@@ -19,6 +19,7 @@
 
 char					g_buf[CHAMP_MAX_SIZE * 2 + 1];
 t_data					*g_data;
+int						g_bytes;
 
 typedef enum			e_type
 {
@@ -62,7 +63,7 @@ typedef struct			s_data
 	int					x;
 	int					y;
 	int					fd;
-	char				*f_name;
+	char				*filename;
 	t_token				*token;
 	t_label				*label;
 }						t_data;
@@ -86,7 +87,7 @@ typedef struct			s_data
 */
 
 void					read_file(char *filename);
-void					ch_fname(char *fname);
+void					valid_filename(char *fname);
 
 /*
 ** init.c
@@ -94,22 +95,22 @@ void					ch_fname(char *fname);
 
 void					data_init(int fd);
 void					token_add(t_type type);
-void					label_add();
+void					label_add(char *line, int start);
 
 
 /*
 ** lexical.c
 */
 
-void					lexical_analyzer(t_data *data);
+void					lexical_analyzer(void);
 
 /*
 ** syntax.c
 */
 
-int						syntax_analiser(t_data *data);
+void					syntax_analiser(void);
 void					valid_champion_info(t_token **temp);
-int						valid_arg(t_token *arg, int mask);
+void					valid_arg(t_token *arg, int mask);
 void					valid_instruction(t_token **operations);
 
 /*
@@ -143,15 +144,15 @@ void	translate(t_token *code_start);
 ** filegen.c
 */
 
-void					write_to_file(t_data *data);
-char					*newn_create(char *f_name);
+void					write_file(void);
+char					*newn_create(char *filename);
 
 
 /*
 ** error.c
 */
-void	errorr(char *event, int str_no, int col_no);
-void	place_write(int str_no, int col_no);
+void	errorr(char *event, int y, int x);
+void	place_write(int y, int x);
 void	free_info(t_data *data);
 
 #endif

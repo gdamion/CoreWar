@@ -130,3 +130,40 @@ void	write_comment(char *chcomm, int place)
 	}
 	free(hex);
 }
+
+void	valid_champion_info(t_token **temp)
+{
+	int i;
+	int name;
+	int comm;
+
+	name = 1;
+	comm = 1;
+	i = 2;
+	while (i)
+	{
+		if (strcmp((*temp)->content, "comment"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_name((*temp)->next->content, 8);
+				comm--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				error(ERR_NO_CHCOMM);
+		}
+		else if (strcmp((*temp)->content, "name"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_comment((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2);
+				name--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				error(ERR_NO_CHNAME);
+		}
+	}
+	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
+}

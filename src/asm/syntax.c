@@ -12,43 +12,6 @@
 
 #include "com.h"
 
-void	valid_champion_info(t_token **temp)
-{
-	int i;
-	int name;
-	int comm;
-
-	name = 1;
-	comm = 1;
-	i = 2;
-	while (i)
-	{
-		if (strcmp((*temp)->content, "comment"))
-		{
-			if ((*temp)->next->type == STRING)
-			{
-				write_name((*temp)->next->content, 8);
-				comm--;
-				*temp = (*temp)->next->next;
-			}
-			else
-				error(ERR_NO_CHCOMM);
-		}
-		else if (strcmp((*temp)->content, "name"))
-		{
-			if ((*temp)->next->type == STRING)
-			{
-				write_comment((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2);
-				name--;
-				*temp = (*temp)->next->next;
-			}
-			else
-				error(ERR_NO_CHNAME);
-		}
-	}
-	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
-}
-
 static int		op_exist(char *op_name)
 {
 	int	i;
@@ -77,10 +40,30 @@ static int		op_exist(char *op_name)
 ** If it is DIRECT_LABEL - check if mark, on which we point, is exist
 ** And it should return number of bytes
 */
-int		valid_arg(t_token *arg, int mask)
+void		valid_arg(t_token *arg, int mask)
 {
 	if (arg->type != (arg->type & mask))
 		errorr(ERR_ARGTP, arg->x, arg->y);
+}
+
+void		update_bytes(int op_n)
+{
+	int		i;
+	unsigned int	types[3];
+
+	i = 0;
+	types = g_op_tab[op_n].args_types;
+	g_bytes += 1 + g_op_tab[op_n].args_types_code ? 1 : 0;
+	while (i < 3)
+	{
+		if (types[i] == T_REG)
+			g_bytes++;
+		else if (types[i] == T_DIR)
+			g_bytes += g_op_tab[op_n].t_dir_size;
+		else if (types[i] == T_IND)
+			g_bytes += 2;
+		i++;
+	}
 }
 
 /*
@@ -95,15 +78,13 @@ int		valid_arg(t_token *arg, int mask)
 ** Read while !(\n)
 ** \n - should NOT be skiped
 */
-int8_t				valid_instruction(t_token **operations)
+void				valid_instruction(t_token **operations)
 {
 	int				op_n;
-	int8_t			bytes;
 	unsigned int	args;
 	unsigned int	*types;
 	t_token			*temp;
 
-	bytes = 1;
 	temp = (*operations);
 	op_n = op_exist(temp->content);
 	args = g_op_tab[op_n].args_num;
@@ -111,41 +92,35 @@ int8_t				valid_instruction(t_token **operations)
 	while ((temp = temp->prev) && 
 			(temp->type < 3 || temp->type == 4) && args--)
 	{
-		bytes += valid_arg(temp, (*types)++);
+		valid_arg(temp, (*types)++);
 		if (temp->prev->type == SEPARATOR)
-			temp = temp->prev->prev;
+			temp = temp->prev;
 		else
 			break;
 	}
 	if (args || args < 0 && temp && temp->type != NEW_LINE)
 		errorr(ERR_ARGNO, temp->x, temp->y);
+	update_bytes(op_n);
 	*operations = temp;
-	return (bytes);
-}
-
-void	valid_label() //проверить, что такая метка содержит правильные символы, что название не повторяется добавить ее в список???
-{
-
 }
 
 /*
-** Dont forget that the data->token point to the last token
+** Dont forget that the g_data->token point to the last token
 ** We should run to previous elem_list
+** Return exec code size in bytes     // Sasha
 */
-int		syntax_analiser(t_data *data) //return exec code size in bytes
+void		syntax_analiser(void)
 {
 	t_token	*temp;
 	t_token *op;
-	int		bytes;
 
-	bytes = 0;
-	temp = data->token;
+	temp = g_data->token;
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)
-			bytes += valid_instruction(&temp);
+			valid_instruction(&temp);
 		else if (temp->type == LABEL)
-			temp->bytes = bytes;
+			temp->bytes = g_bytes;
 		else if (temp->type == NEW_LINE)
 			;
 		else
