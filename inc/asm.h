@@ -41,6 +41,7 @@ typedef struct			s_token
 	int					x;
 	int					y;
 	t_type				type;
+	int					bytes;
 	struct s_token		*next;
 	struct s_token		*prev;
 	char				*content;

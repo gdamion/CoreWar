@@ -32,10 +32,10 @@ _Bool	is_reg(char *line, int len)
 	int	i;
 
 	i = 0;
-	if (2 <= len && len <= 3 && line[i] == 'r')
+	if ((2 == len || len == 3) && line[i++] == 'r')
 	{
-		while (ft_isdigit(line[++i]) && i < len)
-			;
+		while (ft_isdigit(line[i]) && i < len)
+			i++;
 		return (i == len && ft_atoi(&line[1]) > 0);
 	}
 	return (FALSE);

@@ -39,12 +39,25 @@ void		token_add(t_type type)
 	g_data->token = new;
 }
 
-void		label_add()
+void		check_duplicates(t_label *label)
+{
+	t_label	*temp;
+
+	temp = label->next;
+	while (temp)
+	{
+		if (!ft_strcmp(label->name, temp->name))
+			; //error
+		temp = temp->next;
+	}
+}
+
+void		label_add(t_data *data, char *line, int start)
 {
 	t_label	*new;
 
 	if (INIT_LABEL)
-		print_error(ERR_ALLOC);
+		print_error(ERR_ALLOC);	
 	ft_bzero(new, sizeof(new));
 	new->x = g_data->x;
 	new->y = g_data->y;
@@ -53,4 +66,5 @@ void		label_add()
 		g_data->label->prev = new;
 	new->next = g_data->label;
 	g_data->label = new;
+	check_duplicates(data->label);
 }
