@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 19:01:29 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 13:16:24 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include "asm_error.h"
 # include "asm_ops.h"
 
-char					g_buf[CHAMP_MAX_SIZE * 2 + 1];
+char					g_buf[(4 + PROG_NAME_LENGTH + 4 + 4 \
+							+ COMMENT_LENGTH + 4 + CHAMP_MAX_SIZE) * 2 + 1];
 t_data					*g_data;
 int						g_bytes;
 
@@ -108,7 +109,7 @@ void					lexical_analyzer(void);
 ** syntax.c
 */
 
-void					syntax_analiser(void);
+void					syntax_analiser(t_token	*code_start);
 void					valid_champion_info(t_token **temp);
 void					valid_arg(t_token *arg, int mask);
 void					valid_instruction(t_token **operations);
@@ -144,7 +145,7 @@ void	translate(t_token *code_start);
 ** filegen.c
 */
 
-void					write_file(void);
+void					write_to_file(void);
 char					*newn_create(char *filename);
 
 
@@ -153,6 +154,6 @@ char					*newn_create(char *filename);
 */
 void	errorr(char *event, int y, int x);
 void	place_write(int y, int x);
-void	free_info(t_data *data);
+void	free_info(void);
 
 #endif

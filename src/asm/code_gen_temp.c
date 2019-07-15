@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codegen2.c                                         :+:      :+:    :+:   */
+/*   code_gen_temp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:32:59 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:33:35 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 13:10:30 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	write_comment(char *chcomm, int place)
 	free(hex);
 }
 
-void	valid_champion_info(t_token **temp)
+t_token	valid_champion_info(t_token **temp)
 {
 	int i;
 	int name;

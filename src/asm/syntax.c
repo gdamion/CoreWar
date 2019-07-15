@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:23:29 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 13:13:25 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void				valid_instruction(t_token **operations)
 	op_n = op_exist(temp->content);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
-	while ((temp = temp->prev) && 
+	while ((temp = temp->prev) &&
 			(temp->type < 3 || temp->type == 4) && args--)
 	{
 		valid_arg(temp, (*types)++);
@@ -109,12 +109,12 @@ void				valid_instruction(t_token **operations)
 ** We should run to previous elem_list
 ** Return exec code size in bytes     // Sasha
 */
-void		syntax_analiser(void)
+void		syntax_analiser(t_token *code_start)
 {
 	t_token	*temp;
 	t_token *op;
 
-	temp = g_data->token;
+	temp = code_start;
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)

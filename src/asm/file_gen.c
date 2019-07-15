@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filegen.c                                          :+:      :+:    :+:   */
+/*   file_gen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:36:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 13:14:28 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	write_file(void)
+void	write_to_file(void)
 {
 	int		fd;
 	char	*new_name;
@@ -36,7 +36,8 @@ char	*newn_create(char *filename)
 	int		i;
 
 	len = ft_findchar(filename, '.');
-	new_name = (char*)malloc(len + 5);
+	if (!(new_name = (char*)malloc(len + 5)))
+		errorr(ERR_ALLOC, 0, 0);
 	new_name[len + 4] = '\0';
 	i = -1;
 	while (++i < len)
