@@ -78,7 +78,8 @@ void				syntax_analyser(t_token *token)
 		else if (token->type == NEW_LINE)
 			;
 		else
-			errorr(ERR_SYM, token->x, token->y);
+			ft_printf("SOS\n");
+			// errorr(ERR_SYM, token->x, token->y);
 		token = token->prev;
 	}
 }

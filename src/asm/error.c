@@ -12,21 +12,7 @@
 
 #include "com.h"
 
-void	errorr(char *event, int y, int x)
-{
-	char *place;
-
-	if (x != -1 && y != -1)
-		place_write(y, x);
-	ft_putendl_fd(place, 2);
-	print_error(event);
-	if (g_data->fd)
-		close(g_data->fd);
-	free_info();
-	exit(1);
-}
-
-void	place_write(int y, int x)
+static void	place_write(int y, int x)
 {
 	write(2, "\nLn ", 5);
 	ft_putnbr(y);
@@ -35,18 +21,7 @@ void	place_write(int y, int x)
 	write(2, "\n", 1);
 }
 
-void	free_data(t_data *data)
-{
-	if (data->filename)
-		free(data->filename);
-	if (data->token)
-		free_token(data->token);
-	if (data->label)
-		free_label(data->label);
-	free(data);
-}
-
-void	free_token(t_token *token)
+static void	free_token(t_token *token)
 {
 	t_token	*temp;
 
@@ -59,16 +34,34 @@ void	free_token(t_token *token)
 	}
 }
 
-void	free_label(t_label *label)
+static void	free_label(t_label *label)
 {
 	t_label	*temp;
 
 	while (label)
 	{
-		free(label->name);
 		temp = label;
 		label = label->next;
 		free(temp);
 	}
 }
 
+void		free_data(t_data *data)
+{
+	if (data->filename)
+		free(data->filename);
+	if (data->token)
+		free_token(data->token);
+	if (data->label)
+		free_label(data->label);
+	free(data);
+}
+
+void	errorr(char *event, int y, int x)
+{
+	if (x != -1 && y != -1)
+		place_write(y, x);
+	print_error(event);
+	if (g_data->fd)
+		close(g_data->fd);
+}

@@ -87,7 +87,7 @@ void					valid_filename(char *fname);
 /*
 ** init.c
 */
-void					data_init(int fd);
+void					data_init();
 void					token_add(t_type type);
 void					label_add(void);
 
@@ -136,8 +136,6 @@ char					*new_filename(char *filename);
 ** error.c
 */
 void					errorr(char *event, int y, int x);
-void					place_write(int y, int x);
-void					free_info(void);
 
 
 _Bool					is_reg(char *line, int len);

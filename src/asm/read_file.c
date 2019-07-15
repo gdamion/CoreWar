@@ -12,26 +12,6 @@
 
 #include "com.h"
 
-void		read_file(char *filename)
-{
-	int			fd;
-	t_token		*code;
-
-	valid_filename(filename);
-	if ((fd = open(filename, O_RDONLY)) == -1)
-		errorr(ERR_FOPEN, 0, 0);
-	else
-		data_init(fd);
-	g_data->filename = filename;
-	lexical_analyzer();
-	code = g_data->token;
-	valid_champion_info(&code);
-	// syntax_analyser(code);
-	// translate(code, g_bytes);
-	// write_to_file();
-	// free_info();
-}
-
 void	valid_filename(char *fname)
 {
 	while(*fname != '\0')
@@ -42,4 +22,29 @@ void	valid_filename(char *fname)
 	}
 	if (ft_strcmp(fname, ".s"))
 		print_error(ERR_FNAME);
+}
+
+void		read_file(char *filename)
+{
+	t_token		*code;
+
+	data_init();
+	valid_filename(filename);
+	if ((g_data->fd = open(filename, O_RDONLY)) == -1)
+		errorr(ERR_FOPEN, 0, 0);
+	g_data->filename = filename;
+	lexical_analyzer();
+	code = g_data->token;
+	// valid_champion_info(&code);
+	// ft_printf("out\n");
+	// while (code)
+	// {
+	// 	ft_printf("%s\n", code->content);
+	// 	code = code->next;
+	// }
+	
+	// syntax_analyser(code);
+	// translate(code, g_bytes);
+	// write_to_file();
+	// free_info();
 }

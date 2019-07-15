@@ -12,14 +12,13 @@
 
 #include "com.h"
 
-void		data_init(int fd)
+void		data_init(void)
 {
 	t_data	*temp;
 
 	if (INIT_DATA)
 		print_error(ERR_ALLOC);
 	ft_bzero(temp, sizeof(temp));
-	temp->fd = fd;
 	g_data = temp;
 }
 

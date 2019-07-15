@@ -16,12 +16,13 @@ void	just_write(char *hex, int *place)
 {
 	int i;
 
+	i = 0;
 	if (hex[0] == '0' && hex[1] == 'x')
 		i += 2;
 	while (hex[i] != '\0')
 	{
 		if (*place > FULL_SIZE)
-			error(ERR_BIGEX, 0, 0);
+			errorr(ERR_BIGEX, 0, 0);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;
@@ -54,10 +55,9 @@ char					*num_to_hex(int32_t dec, int dir_size)
 
 void	write_arg(int32_t arg, int byte_num, int *place)
 {
-	char	*hex;
 	int		len;
+	char	*hex;
 	int		zeros;
-	int		i;
 
 	hex = num_to_hex(arg, byte_num);
 	len = ft_strlen(hex);
@@ -68,43 +68,6 @@ void	write_arg(int32_t arg, int byte_num, int *place)
 	free(hex);
 }
 
-void	valid_champion_info(t_token **temp)
-{
-	int i;
-	int name;
-	int comm;
-
-	name = 1;
-	comm = 1;
-	i = 2;
-	while (i)
-	{
-		if (strcmp((*temp)->content, "comment"))
-		{
-			if ((*temp)->next->type == STRING)
-			{
-				write_name_or_comm((*temp)->next->content, 8, 0);
-				comm--;
-				*temp = (*temp)->next->next;
-			}
-			else
-				error(ERR_NO_CHCOMM);
-		}
-		else if (strcmp((*temp)->content, "name"))
-		{
-			if ((*temp)->next->type == STRING)
-			{
-				write_name_or_comm((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2, 1);
-				name--;
-				*temp = (*temp)->next->next;
-			}
-			else
-				error(ERR_NO_CHNAME);
-		}
-	}
-	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
-}
-
 void	write_name_or_comm(char *chname, int place, _Bool type)
 {
 	char	*hex;
@@ -112,14 +75,14 @@ void	write_name_or_comm(char *chname, int place, _Bool type)
 	int		i;
 	int		max;
 
+	i = 0;
 	hex = str_to_code(chname);
 	len = ft_strlen(hex);
 	max = (type ? PROG_NAME_LENGTH : COMMENT_LENGTH ) * 2;
 	if (type)
-		len > max ? error(ERR_CHNAME_LEN, 0, 0) : 1;
+		(len > max) ? errorr(ERR_CHNAME_LEN, 0, 0) : 1;
 	else
-		len > max ? error(ERR_CHCOMM_LEN, 0, 0) : 1;
-	i = 0;
+		(len > max) ? errorr(ERR_CHCOMM_LEN, 0, 0) : 1;
 	while (i < max)
 	{
 		if (len > 0)
@@ -144,7 +107,7 @@ char	*str_to_code(char *str)
 	i = 0;
 	len = ft_strlen(str) * 2;
 	!(res = (char*)malloc(len + 1)) ? \
-		error(ERR_ALLOC, 0, 0) : (res[len + 1] = '\0');
+		errorr(ERR_ALLOC, 0, 0) : (res[len + 1] = '\0');
 	while (i < len)
 	{
 		res[i] = (buf = *str / 16) < 10 ? \
@@ -169,7 +132,7 @@ void	write_magic(char* hex, int place)
 	while (hex[i] != '\0')
 	{
 		if (place > FULL_SIZE)
-			error(ERR_BIGEX, 0, 0);
+			errorr(ERR_BIGEX, 0, 0);
 		if (add_zero > 0)
 			g_buf[place++] = '0';
 		else
@@ -178,4 +141,42 @@ void	write_magic(char* hex, int place)
 		i++;
 	}
 	free(hex);
+}
+
+void	valid_champion_info(t_token **temp)
+{
+	int i;
+	int name;
+	int comm;
+
+	name = 1;
+	comm = 1;
+	i = 2;
+	while (i)
+	{
+		if (strcmp((*temp)->content, "comment"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_name_or_comm((*temp)->next->content, 8, 0);
+				comm--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				errorr(ERR_NO_CHCOMM, 0, 0);
+		}
+		else if (strcmp((*temp)->content, "name"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				ft_printf("SOS\n");
+				write_name_or_comm((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2, 1);
+				name--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				errorr(ERR_NO_CHNAME, 0, 0);
+		}
+	}
+	(name != 0 || comm != 0) ? errorr(ERR_NAMECOM, 0, 0) : 1;
 }

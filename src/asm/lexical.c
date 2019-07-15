@@ -25,18 +25,14 @@ static void	get_string(char **line)
 	while (!(len = ft_findchar(str + g_data->x, '\"'))
 		&& (size = get_next_line(g_data->fd, &temp)) && g_data->y++)
 		ft_catpro(&str, temp);
-	if (size == -1)
-		errorr(ERR_READING, g_data->x, g_data->y);
-	if (size == 0)
-		errorr(ERR_READING, g_data->x, g_data->y);
-	if (!len)
+	if (size || !len)
 		errorr(ERR_READING, g_data->x, g_data->y);
 	*line = str;
 	token_add(STRING);
 	g_data->token->content = ft_strsub(str, g_data->x, len);
 }
 
-static void		get_text(char *line, t_type type)
+static void	get_text(char *line, t_type type)
 {
 	int		temp;
 
@@ -58,7 +54,7 @@ static void		get_text(char *line, t_type type)
 		errorr("GET_TEXT", g_data->x, g_data->y);
 }
 
-static void		get_number(char *line, t_type type)
+static void	get_number(char *line, t_type type)
 {
 	int		temp;
 
@@ -81,24 +77,24 @@ static void		get_number(char *line, t_type type)
 		errorr("GET_NUMBER", g_data->x, g_data->y);
 }
 
-static void		tokenizing(char *line)
+static void	tokenizing(char *line)
 {
-	if (line[g_data->x] == SEPARATOR_CHAR && g_data->x++)
+	if (line[g_data->x] == SEPARATOR_CHAR && ++g_data->x)
 		token_add(SEPARATOR);
-	else if (line[g_data->x] == '\n' && g_data->x++)
+	else if (line[g_data->x] == '\n' && ++g_data->x)
 		token_add(NEW_LINE);
-	else if (line[g_data->x] == '.' && g_data->x++)
+	else if (line[g_data->x] == '.' && ++g_data->x)
 		get_text(line, COMMAND);
-	else if (line[g_data->x] == DIRECT_CHAR && g_data->x++)
+	else if (line[g_data->x] == DIRECT_CHAR && ++g_data->x)
 	{
-		if (line[g_data->x] == LABEL_CHAR && g_data->x++)
+		if (line[g_data->x] == LABEL_CHAR && ++g_data->x)
 			get_text(line, DIRECT_LABEL);
 		else
 			get_number(line, DIRECT);
 	}
-	else if (line[g_data->x] == '\"' && g_data->x++)
+	else if (line[g_data->x] == '\"' && ++g_data->x)
 		get_string(&line);
-	else if (line[g_data->x] == LABEL_CHAR && g_data->x++)
+	else if (line[g_data->x] == LABEL_CHAR && ++g_data->x)
 		get_text(line, INDIRECT_LABEL);
 	else
 		get_number(line, INDIRECT);
@@ -111,9 +107,8 @@ void		lexical_analyzer(void)
 
 	while ((size = get_next_line(g_data->fd, &line))
 							&& !(g_data->x = 0)
-							&& (g_data->y++))
+							&& (++g_data->y))
 	{
-		ft_printf("SOS\n");
 		while (line[g_data->x])
 		{
 			skip_whitespaces(line);
