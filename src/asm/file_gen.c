@@ -18,18 +18,18 @@ void	write_to_file(void)
 	char	*new_name;
 
 	new_name = newn_create(g_data->filename);
-	if ((fd = open(new_name, O_CREAT|O_WRONLY)) == -1)
-			error(ERR_CRFHEX);
+	if ((fd = open(new_name, O_CREAT | O_WRONLY)) == -1)
+			errorr(ERR_CRFHEX, 0, 0);
 	free(new_name);
 	if (write(fd, g_buf, FULL_SIZE) == -1)
 	{
 		close(fd);
-		error(ERR_WRFHEX);
+		errorr(ERR_WRFHEX, 0, 0);
 	}
 	close(fd);
 }
 
-char	*newn_create(char *filename)
+char	*new_filename(char *filename)
 {
 	int		len;
 	char	*new_name;

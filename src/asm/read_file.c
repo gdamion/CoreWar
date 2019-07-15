@@ -15,20 +15,21 @@
 void		read_file(char *filename)
 {
 	int			fd;
-	t_token		*code_start;
-	u_int32_t	code_size;
+	t_token		*code;
 
 	valid_filename(filename);
-	(fd = open(filename, O_RDONLY)) == -1 ? \
-		errorr(ERR_FOPEN, 0, 0) : data_init(fd);
+	if ((fd = open(filename, O_RDONLY)) == -1)
+		errorr(ERR_FOPEN, 0, 0);
+	else
+		data_init(fd);
 	g_data->filename = filename;
 	lexical_analyzer();
-	code_start = g_data->token;
-	valid_champion_info(&code_start);
-	syntax_analyser(code_start);
-	translate(code_start, g_bytes);
-	write_to_file();
-	free_info();
+	code = g_data->token;
+	valid_champion_info(&code);
+	// syntax_analyser(code);
+	// translate(code, g_bytes);
+	// write_to_file();
+	// free_info();
 }
 
 void	valid_filename(char *fname)
@@ -39,5 +40,6 @@ void	valid_filename(char *fname)
 			break;
 		fname++;
 	}
-	ft_strcmp(fname, ".s") ? print_error(ERR_FNAME) : 1;
+	if (ft_strcmp(fname, ".s"))
+		print_error(ERR_FNAME);
 }

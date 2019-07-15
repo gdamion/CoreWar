@@ -13,16 +13,12 @@
 #ifndef ASM_H
 # define ASM_H
 
-# include "com.h"
 # include "asm_error.h"
 # include "asm_ops.h"
 
 # define FULL_SIZE ((4 + PROG_NAME_LENGTH + 4 + 4 \
 						+ COMMENT_LENGTH + 4 + CHAMP_MAX_SIZE) * 2 + 1)
 
-char					g_buf[FULL_SIZE];
-t_data					*g_data;
-u_int16_t				g_bytes;
 
 typedef enum			e_type
 {
@@ -45,7 +41,7 @@ typedef struct			s_token
 	int					x;
 	int					y;
 	t_type				type;
-	int					bytes;
+	uint32_t			bytes;
 	struct s_token		*next;
 	struct s_token		*prev;
 	char				*content;
@@ -53,20 +49,10 @@ typedef struct			s_token
 
 typedef struct			s_label
 {
-	int					x;
-	int					y;
-	char				*name;
 	t_token				*point;
 	struct s_label		*next;
 	struct s_label		*prev;
 }						t_label;
-
-typedef struct			s_op_type
-{
-	u_int8_t			type;
-	struct s_op_type	*next;
-}						t_op_type;
-
 
 typedef struct			s_data
 {
@@ -76,7 +62,6 @@ typedef struct			s_data
 	char				*filename;
 	t_token				*token;
 	t_label				*label;
-	t_op_type			*op_type
 }						t_data;
 
 # define Q(c) (c == '\0')
@@ -104,8 +89,7 @@ void					valid_filename(char *fname);
 */
 void					data_init(int fd);
 void					token_add(t_type type);
-void					label_add(char *line, int start);
-void					op_add(t_op_type **curr);
+void					label_add(void);
 
 /*
 ** lexical.c
@@ -115,10 +99,7 @@ void					lexical_analyzer(void);
 /*
 ** syntax.c
 */
-void					syntax_analiser(t_token	*code_start);
-void					valid_champion_info(t_token **temp);
-void					valid_arg(t_token *arg, int mask);
-void					valid_instruction(t_token **operations, t_op_type *op);
+void					syntax_analyser(t_token	*code_start);
 
 /*
 ** codegen1.c
@@ -136,6 +117,7 @@ void					write_name(char *chname, int place);
 char					*str_to_code(char *str);
 void					write_magic(char* hex, int place);
 char					*arg_type_code(int arg_types[3]);
+void					valid_champion_info(t_token **temp);
 
 /*
 ** buf_write.c
@@ -147,7 +129,7 @@ int32_t					process_label(u_int32_t bytes, char *label_name);
 ** filegen.c
 */
 void					write_to_file(void);
-char					*newn_create(char *filename);
+char					*new_filename(char *filename);
 
 
 /*
@@ -156,5 +138,10 @@ char					*newn_create(char *filename);
 void					errorr(char *event, int y, int x);
 void					place_write(int y, int x);
 void					free_info(void);
+
+
+_Bool					is_reg(char *line, int len);
+void					skip_whitespaces(char *line);
+void					skip_comment(char *line);
 
 #endif

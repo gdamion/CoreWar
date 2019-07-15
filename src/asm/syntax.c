@@ -12,73 +12,36 @@
 
 #include "com.h"
 
-static int		op_exist(char *op_name)
+static int			op_exist(t_token *operation)
 {
-	int	i;
+	int				i;
 
 	i = 0;
 	while (i < 16)
-	{
-		if (!ft_strcmp(op_name, g_op_tab[i].name))
+		if (!ft_strcmp(operation->content, g_op_tab[i++].name))
 			break ;
-		i++;
-	}
 	if (i == 16)
-		errorr(ERR_OP, 0, 0); //error
+		errorr(ERR_OP, 0, 0);
+	operation->bytes = i;
 	return (i);
 }
 
-/*
-** Arg types
-** 1) Label (check existense)
-** 2) DIR
-** 3) INDIR
-*/
-
-/*
-** Is arg valid?
-** If it is DIRECT_LABEL - check if mark, on which we point, is exist
-** And it should return number of bytes
-*/
-void			valid_arg(t_token *arg, int mask)
+static void			valid_arg(int op_n, t_token *arg, int mask)
 {
 	if (arg->type != (arg->type & mask))
 		errorr(ERR_ARGTP, arg->x, arg->y);
-}
-
-void			update_bytes(int op_n)
-{
-	int		i;
-	unsigned int	types[3];
-
-	i = 0;
-	types = g_op_tab[op_n].args_types;
-	g_bytes += 1 + g_op_tab[op_n].args_types_code ? 1 : 0;
-	while (i < 3)
+	if (arg->type == T_REG)
+		g_bytes++;
+	else if (arg->type == T_IND)
+		g_bytes += 2;
+	else if (arg->type == T_DIR)
 	{
-		if (types[i] == T_REG)
-			g_bytes++;
-		else if (types[i] == T_DIR)
-			g_bytes += g_op_tab[op_n].t_dir_size;
-		else if (types[i] == T_IND)
-			g_bytes += 2;
-		i++;
+		arg->bytes = g_bytes;
+		g_bytes += g_op_tab[op_n].t_dir_size;
 	}
 }
 
-/*
-** Check operation
-** 1) Op name exists
-** 2) Right number of args
-** 3) Right format of args
-*/
-
-/*
-** Take token - operation
-** Read while !(\n)
-** \n - should NOT be skiped
-*/
-void			valid_instruction(t_token **operations, t_op_type *op)
+static void			valid_instruction(t_token **operations)
 {
 	int				op_n;
 	unsigned int	args;
@@ -86,53 +49,36 @@ void			valid_instruction(t_token **operations, t_op_type *op)
 	t_token			*temp;
 
 	temp = (*operations);
-	op_n = op_exist(temp->content);
-	op->type = op_n;
+	op_n = op_exist(temp);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
+	g_bytes += 1 + (g_op_tab[op_n].args_types_code ? 1 : 0);
 	while ((temp = temp->prev) &&
 			(temp->type < 3 || temp->type == 4) && args--)
 	{
-		valid_arg(temp, (*types)++);
+		valid_arg(op_n, temp, (*types)++);
 		if (temp->prev->type == SEPARATOR)
 			temp = temp->prev;
 		else
 			break;
 	}
-	if (args || args < 0 && temp && temp->type != NEW_LINE)
+	if ((args || args < 0) && temp && temp->type != NEW_LINE)
 		errorr(ERR_ARGNO, temp->x, temp->y);
-	update_bytes(op_n);
 	*operations = temp;
 }
 
-/*
-** Dont forget that the g_data->token point to the last token
-** We should run to previous elem_list
-** Return exec code size in bytes     // Sasha
-*/
-void			syntax_analyser(t_token *code_start) //return size of future code
+void				syntax_analyser(t_token *token)
 {
-	t_token		*temp;
-	t_op_type	*op;
-
-	if (!(op = (t_op_type*)malloc(sizeof(t_op_type))))
-		errorr(ERR_ALLOC, 0, 0);
-	ft_bzero(op, sizeof(t_op_type));
-	g_data->op_type = op;
-	temp = code_start;
-	while (temp)
+	while (token)
 	{
-		if (temp->type == INSTRUCTION)
-		{
-			valid_instruction(&temp, op);
-			op_add(&op);
-		}
-		else if (temp->type == LABEL)
-			temp->bytes = g_bytes;
-		else if (temp->type == NEW_LINE)
+		if (token->type == INSTRUCTION)
+			valid_instruction(&token);
+		else if (token->type == LABEL)
+			token->bytes = g_bytes;
+		else if (token->type == NEW_LINE)
 			;
 		else
-			errorr(ERR_SYM, temp->x, temp->y);
-		temp = temp->prev;
+			errorr(ERR_SYM, token->x, token->y);
+		token = token->prev;
 	}
 }

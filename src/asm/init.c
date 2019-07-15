@@ -39,40 +39,33 @@ void		token_add(t_type type)
 	g_data->token = new;
 }
 
-void		check_duplicates(t_label *label)
+void		lable_duplicates(void)
 {
+	char	*origin;
 	t_label	*temp;
 
-	temp = label->next;
+	origin = g_data->label->point->content;
+	temp = g_data->label->next;
 	while (temp)
 	{
-		if (!ft_strcmp(label->name, temp->name))
-			; //error
+		if (!ft_strcmp(origin, temp->point->content))
+			print_error("CHECK_DUP_LAB");
 		temp = temp->next;
 	}
 }
 
-void		label_add(char *line, int start)
+void		label_add(void)
 {
 	t_label	*new;
 
 	if (INIT_LABEL)
 		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
-	new->x = g_data->x;
-	new->y = g_data->y;
 	g_data->token->type = LABEL;
+	new->point = g_data->token;
 	if (g_data->label)
 		g_data->label->prev = new;
 	new->next = g_data->label;
 	g_data->label = new;
-	check_duplicates(g_data->label);
-}
-
-void	op_add(t_op_type **curr)
-{
-	if (!((*curr)->next = (t_op_type*)malloc(sizeof(t_op_type))))
-		errorr(ERR_ALLOC, 0, 0);
-	ft_bzero((*curr)->next, sizeof(t_op_type));
-	*curr = (*curr)->next;
+	lable_duplicates();
 }
