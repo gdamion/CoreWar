@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:32:59 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 13:10:30 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:39:10 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,16 +122,23 @@ void	write_comment(char *chcomm, int place)
 		{
 			g_buf[place] = hex[i];
 			len--;
-		}
-		else
-			g_buf[place++] = '0';
+			write_arg(process_label(), )
 
-		i++;
-	}
-	free(hex);
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+
+
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
 }
 
-t_token	valid_champion_info(t_token **temp)
+void	valid_champion_info(t_token **temp)
 {
 	int i;
 	int name;

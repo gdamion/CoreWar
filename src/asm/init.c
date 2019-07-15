@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:22 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:14:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:10:57 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		label_add(char *line, int start)
 	t_label	*new;
 
 	if (INIT_LABEL)
-		print_error(ERR_ALLOC);	
+		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
 	new->x = g_data->x;
 	new->y = g_data->y;
@@ -67,4 +67,12 @@ void		label_add(char *line, int start)
 	new->next = g_data->label;
 	g_data->label = new;
 	check_duplicates(g_data->label);
+}
+
+void	op_add(t_op_type **curr)
+{
+	if (!((*curr)->next = (t_op_type*)malloc(sizeof(t_op_type))))
+		errorr(ERR_ALLOC, 0, 0);
+	ft_bzero((*curr)->next, sizeof(t_op_type));
+	*curr = (*curr)->next;
 }

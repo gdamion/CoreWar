@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 13:13:25 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:16:32 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		update_bytes(int op_n)
 ** Read while !(\n)
 ** \n - should NOT be skiped
 */
-void				valid_instruction(t_token **operations)
+void				valid_instruction(t_token **operations, t_op_type *op)
 {
 	int				op_n;
 	unsigned int	args;
@@ -87,6 +87,7 @@ void				valid_instruction(t_token **operations)
 
 	temp = (*operations);
 	op_n = op_exist(temp->content);
+	op->type = op_n;
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
 	while ((temp = temp->prev) &&
@@ -109,16 +110,23 @@ void				valid_instruction(t_token **operations)
 ** We should run to previous elem_list
 ** Return exec code size in bytes     // Sasha
 */
-void		syntax_analiser(t_token *code_start)
+u_int32_t			syntax_analiser(t_token *code_start) //return size of future code
 {
-	t_token	*temp;
-	t_token *op;
+	t_token		*temp;
+	t_op_type	*op;
 
+	if (!(op = (t_op_type*)malloc(sizeof(t_op_type))))
+		errorr(ERR_ALLOC, 0, 0);
+	ft_bzero(op, sizeof(t_op_type));
+	g_data->op_type = op;
 	temp = code_start;
 	while (temp)
 	{
 		if (temp->type == INSTRUCTION)
-			valid_instruction(&temp);
+		{
+			valid_instruction(&temp, op);
+			op_add(&op);
+		}
 		else if (temp->type == LABEL)
 			temp->bytes = g_bytes;
 		else if (temp->type == NEW_LINE)

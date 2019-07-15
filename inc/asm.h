@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 13:16:24 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:16:00 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include "asm_error.h"
 # include "asm_ops.h"
 
-char					g_buf[(4 + PROG_NAME_LENGTH + 4 + 4 \
-							+ COMMENT_LENGTH + 4 + CHAMP_MAX_SIZE) * 2 + 1];
+# define FULL_SIZE ((4 + PROG_NAME_LENGTH + 4 + 4 \
+						+ COMMENT_LENGTH + 4 + CHAMP_MAX_SIZE) * 2 + 1)
+
+char					g_buf[FULL_SIZE];
 t_data					*g_data;
 int						g_bytes;
 
@@ -59,6 +61,13 @@ typedef struct			s_label
 	struct s_label		*prev;
 }						t_label;
 
+typedef struct			s_op_type
+{
+	u_int8_t			type;
+	struct s_op_type	*next;
+}						t_op_type;
+
+
 typedef struct			s_data
 {
 	int					x;
@@ -67,6 +76,7 @@ typedef struct			s_data
 	char				*filename;
 	t_token				*token;
 	t_label				*label;
+	t_op_type			*op_type
 }						t_data;
 
 # define Q(c) (c == '\0')
@@ -97,7 +107,7 @@ void					valid_filename(char *fname);
 void					data_init(int fd);
 void					token_add(t_type type);
 void					label_add(char *line, int start);
-
+void					op_add(t_op_type **curr);
 
 /*
 ** lexical.c
@@ -109,10 +119,10 @@ void					lexical_analyzer(void);
 ** syntax.c
 */
 
-void					syntax_analiser(t_token	*code_start);
+u_int32_t				syntax_analiser(t_token	*code_start);
 void					valid_champion_info(t_token **temp);
 void					valid_arg(t_token *arg, int mask);
-void					valid_instruction(t_token **operations);
+void				valid_instruction(t_token **operations, t_op_type *op);
 
 /*
 ** codegen1.c
@@ -138,7 +148,7 @@ char					*arg_type_code(int arg_types[3]);
 ** buf_write.c
 */
 
-void	translate(t_token *code_start);
+void	translate(t_token *code_start, int code_size);
 
 
 /*

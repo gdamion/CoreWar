@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 13:14:28 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 13:23:02 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	write_to_file(void)
 	if ((fd = open(new_name, O_CREAT|O_WRONLY)) == -1)
 			error(ERR_CRFHEX);
 	free(new_name);
-	if (write(fd, g_buf, CHAMP_MAX_SIZE) == -1)
+	if (write(fd, g_buf, FULL_SIZE) == -1)
 	{
 		close(fd);
 		error(ERR_WRFHEX);

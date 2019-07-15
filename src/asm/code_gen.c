@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 12:50:18 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:45:55 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	write_arg(int arg, int byte_num, int *place)
 	free(hex);
 }
 
+
 void	process_label(t_token *label, int byte_num, int *place) //преобразование метки в число и печать числа
 {
 	int move;
@@ -75,7 +76,6 @@ void	process_label(t_token *label, int byte_num, int *place) //преобраз�
 	move = ...;
 	write_arg(move, byte_num, place);
 }
-
 
 
 void	args_to_code(t_token **temp, int *place, int op_n)
