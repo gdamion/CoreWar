@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 14:16:32 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:17:31 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		op_exist(char *op_name)
 		i++;
 	}
 	if (i == 16)
-		; //error
+		errorr(ERR_OP, 0, 0); //error
 	return (i);
 }
 
@@ -40,13 +40,13 @@ static int		op_exist(char *op_name)
 ** If it is DIRECT_LABEL - check if mark, on which we point, is exist
 ** And it should return number of bytes
 */
-void		valid_arg(t_token *arg, int mask)
+void			valid_arg(t_token *arg, int mask)
 {
 	if (arg->type != (arg->type & mask))
 		errorr(ERR_ARGTP, arg->x, arg->y);
 }
 
-void		update_bytes(int op_n)
+void			update_bytes(int op_n)
 {
 	int		i;
 	unsigned int	types[3];
@@ -78,7 +78,7 @@ void		update_bytes(int op_n)
 ** Read while !(\n)
 ** \n - should NOT be skiped
 */
-void				valid_instruction(t_token **operations, t_op_type *op)
+void			valid_instruction(t_token **operations, t_op_type *op)
 {
 	int				op_n;
 	unsigned int	args;
@@ -110,7 +110,7 @@ void				valid_instruction(t_token **operations, t_op_type *op)
 ** We should run to previous elem_list
 ** Return exec code size in bytes     // Sasha
 */
-u_int32_t			syntax_analiser(t_token *code_start) //return size of future code
+void			syntax_analyser(t_token *code_start) //return size of future code
 {
 	t_token		*temp;
 	t_op_type	*op;

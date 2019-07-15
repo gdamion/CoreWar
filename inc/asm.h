@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 14:16:00 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:16:04 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 char					g_buf[FULL_SIZE];
 t_data					*g_data;
-int						g_bytes;
+u_int16_t				g_bytes;
 
 typedef enum			e_type
 {
@@ -96,14 +96,12 @@ typedef struct			s_data
 /*
 ** read_file.c
 */
-
 void					read_file(char *filename);
 void					valid_filename(char *fname);
 
 /*
 ** init.c
 */
-
 void					data_init(int fd);
 void					token_add(t_type type);
 void					label_add(char *line, int start);
@@ -112,22 +110,19 @@ void					op_add(t_op_type **curr);
 /*
 ** lexical.c
 */
-
 void					lexical_analyzer(void);
 
 /*
 ** syntax.c
 */
-
-u_int32_t				syntax_analiser(t_token	*code_start);
+void					syntax_analiser(t_token	*code_start);
 void					valid_champion_info(t_token **temp);
 void					valid_arg(t_token *arg, int mask);
-void				valid_instruction(t_token **operations, t_op_type *op);
+void					valid_instruction(t_token **operations, t_op_type *op);
 
 /*
 ** codegen1.c
 */
-
 void					args_to_code(t_token **temp, int *place, int op_n);
 void					process_label(t_token *label, int byte_num, int *place);
 void					write_arg(int arg, int byte_num, int *place);
@@ -137,7 +132,6 @@ void					just_write(char *hex, int *place);
 /*
 ** codegen2.c
 */
-
 void					write_comment(char *chcomm, int place);
 void					write_name(char *chname, int place);
 char					*str_to_code(char *str);
@@ -147,14 +141,12 @@ char					*arg_type_code(int arg_types[3]);
 /*
 ** buf_write.c
 */
-
-void	translate(t_token *code_start, int code_size);
+void					translate(t_token *code_start, int code_size);
 
 
 /*
 ** filegen.c
 */
-
 void					write_to_file(void);
 char					*newn_create(char *filename);
 
@@ -162,8 +154,8 @@ char					*newn_create(char *filename);
 /*
 ** error.c
 */
-void	errorr(char *event, int y, int x);
-void	place_write(int y, int x);
-void	free_info(void);
+void					errorr(char *event, int y, int x);
+void					place_write(int y, int x);
+void					free_info(void);
 
 #endif
