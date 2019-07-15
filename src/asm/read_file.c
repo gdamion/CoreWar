@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:40:12 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 17:15:08 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 22:08:30 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void		read_file(char *filename)
 	valid_filename(filename);
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		errorr(ERR_FOPEN, 0, 0);
-	else
-		data_init(fd);
+	data_init(fd);
 	g_data->filename = filename;
 	lexical_analyzer();
 	code = g_data->token;

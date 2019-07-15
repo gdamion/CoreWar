@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:57:52 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 20:00:08 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 21:19:15 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	errorr(char *event, int y, int x)
 	print_error(event);
 	if (g_data->fd)
 		close(g_data->fd);
-	free_info();
+	free_data(g_data);
 	exit(1);
 }
 
@@ -65,7 +65,6 @@ void	free_label(t_label *label)
 
 	while (label)
 	{
-		free(label->name);
 		temp = label;
 		label = label->next;
 		free(temp);

@@ -6,7 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
-#    Updated: 2019/07/09 15:44:34 by gdamion-         ###   ########.fr        #
+#    Updated: 2019/07/15 20:55:30 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ ASM_NAME = asm
 VM_NAME = corewar
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = #-Wall -Werror -Wextra
 
 ################# LIB #################
 LIB_DIR = ./libft/
