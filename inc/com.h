@@ -38,4 +38,8 @@
 ** realloc free perror strerror exit
 */
 
+char					g_buf[FULL_SIZE];
+t_data					*g_data;
+u_int32_t				g_bytes;
+
 #endif

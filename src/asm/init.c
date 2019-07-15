@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:22 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:14:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:10:57 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,33 @@ void		token_add(t_type type)
 	g_data->token = new;
 }
 
-void		check_duplicates(t_label *label)
+void		lable_duplicates(void)
 {
+	char	*origin;
 	t_label	*temp;
 
-	temp = label->next;
+	origin = g_data->label->point->content;
+	temp = g_data->label->next;
 	while (temp)
 	{
-		if (!ft_strcmp(label->name, temp->name))
-			; //error
+		if (!ft_strcmp(origin, temp->point->content))
+			print_error("CHECK_DUP_LAB");
 		temp = temp->next;
 	}
 }
 
-void		label_add(t_data *data, char *line, int start)
+void		label_add(void)
 {
 	t_label	*new;
 
 	if (INIT_LABEL)
-		print_error(ERR_ALLOC);	
+		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
-	new->x = g_data->x;
-	new->y = g_data->y;
 	g_data->token->type = LABEL;
+	new->point = g_data->token;
 	if (g_data->label)
 		g_data->label->prev = new;
 	new->next = g_data->label;
 	g_data->label = new;
-	check_duplicates(data->label);
+	lable_duplicates();
 }

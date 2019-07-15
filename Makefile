@@ -41,9 +41,12 @@ OBJ_DIR = obj/
 ################# ASM #################
 SRC_ASM_DIR = ./src/asm/
 SRC_ASM_LIST =	main.c \
-				read.c \
+				read_file.c \
 				init.c \
-				syntax.c
+				syntax.c \
+				lexical.c \
+				utilities.c \
+				error.c \
 
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codegen2.c                                         :+:      :+:    :+:   */
+/*   code_gen_temp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:32:59 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:33:35 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:39:10 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	write_magic(char* hex, int place)
 	while (hex[i] != '\0')
 	{
 		// if (*cursor > CHAMP_MAX_SIZE * 2)
-		// 	error(ERR_BIGEX, temp->x, temp->y);
+		// 	errorr(ERR_BIGEX, temp->x, temp->y);
 		add_zero > 0 ? (g_buf[place++] = '0') : \
 						(g_buf[place] = hex[i]);
 		place++;
@@ -66,7 +66,7 @@ char	*str_to_code(char *str)
 	i = 0;
 	len = ft_strlen(str) * 2;
 	!(res = (char*)malloc(len + 1)) ? \
-		error(ERR_ALLOC, 0, 0) : (res[len + 1] = '\0');
+		errorr(ERR_ALLOC, 0, 0) : (res[len + 1] = '\0');
 	while (i < len)
 	{
 		res[i] = (buf = *str / 16) < 10 ? \
@@ -87,11 +87,11 @@ void	write_name(char *chname, int place)
 
 	hex = str_to_code(chname);
 	len = ft_strlen(hex);
-	len > PROG_NAME_LENGTH*2 ? error(ERR_CHNAME_LEN, 0, 0) : (i = 0);
+	len > PROG_NAME_LENGTH*2 ? errorr(ERR_CHNAME_LEN, 0, 0) : (i = 0);
 	while (i < PROG_NAME_LENGTH)
 	{
 		// if (*cursor > CHAMP_MAX_SIZE * 2)
-		// 	error(ERR_BIGEX, 0, 0);
+		// 	errorr(ERR_BIGEX, 0, 0);
 		if (len > 0)
 		{
 			g_buf[place] = hex[i];
@@ -113,20 +113,64 @@ void	write_comment(char *chcomm, int place)
 
 	hex = str_to_code(chcomm);
 	len = ft_strlen(hex);
-	len > PROG_NAME_LENGTH*2 ? error(ERR_CHCOMM_LEN, 0, 0) : (i = 0);
+	len > PROG_NAME_LENGTH*2 ? errorr(ERR_CHCOMM_LEN, 0, 0) : (i = 0);
 	while (i < COMMENT_LENGTH)
 	{
 		// if (*cursor > CHAMP_MAX_SIZE * 2)
-		// 	error(ERR_BIGEX, 0, 0);
+		// 	errorr(ERR_BIGEX, 0, 0);
 		if (len > 0)
 		{
 			g_buf[place] = hex[i];
 			len--;
-		}
-		else
-			g_buf[place++] = '0';
+			write_arg(process_label(), )
 
-		i++;
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+
+
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+
+			write_arg(process_label(), )
+}
+
+void	valid_champion_info(t_token **temp)
+{
+	int i;
+	int name;
+	int comm;
+
+	name = 1;
+	comm = 1;
+	i = 2;
+	while (i)
+	{
+		if (strcmp((*temp)->content, "comment"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_name((*temp)->next->content, 8);
+				comm--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				errorr(ERR_NO_CHCOMM);
+		}
+		else if (strcmp((*temp)->content, "name"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_comment((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2);
+				name--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				errorr(ERR_NO_CHNAME);
+		}
 	}
-	free(hex);
+	(name != 0 || comm != 0) ? errorr(ERR_NAMECOM) : 1;
 }

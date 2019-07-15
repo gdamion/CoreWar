@@ -12,19 +12,17 @@
 
 #include "com.h"
 
-int			skip_whitespaces(char *line, int cursor)
+void		skip_whitespaces(char *line)
 {
-	while(SP(line[cursor]))
-		cursor++;
-	return (cursor);
+	while(SP(line[g_data->x]))
+		g_data->x++;
 }
 
-int			skip_comment(char *line, int cursor)
+void		skip_comment(char *line)
 {
-	if (line[cursor] == COMMENT_CHAR)
-		while(line[cursor] && line[cursor] != "\n")
-			cursor++;
-	return (cursor);
+	if (line[g_data->x] == COMMENT_CHAR)
+		while(line[g_data->x] && line[g_data->x] != '\n')
+			g_data->x++;
 }
 
 _Bool	is_reg(char *line, int len)

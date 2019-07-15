@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:40:12 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:40:33 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:15:08 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,25 @@
 
 void		read_file(char *filename)
 {
-	int		fd;
-	t_token	*code_start;
+	int			fd;
+	t_token		*code;
 
-	ch_fname(filename); // is name of the file correct?
-	(fd = open(filename, O_RDONLY)) == -1 ? errorr(ERR_FOPEN, 0, 0) : data_init(fd);
-	g_data->f_name = filename;
+	valid_filename(filename);
+	if ((fd = open(filename, O_RDONLY)) == -1)
+		errorr(ERR_FOPEN, 0, 0);
+	else
+		data_init(fd);
+	g_data->filename = filename;
 	lexical_analyzer();
-	code_start = valid_champion_info(); //печать имени и коммента
-	syntax_analiser(code_start);
-	translate(code_start);
-	write_to_file();
+	code = g_data->token;
+	valid_champion_info(&code);
+	// syntax_analyser(code);
+	// translate(code, g_bytes);
+	// write_to_file();
+	// free_info();
 }
 
-void	ch_fname(char *fname)
+void	valid_filename(char *fname)
 {
 	while(*fname != '\0')
 	{
@@ -35,5 +40,6 @@ void	ch_fname(char *fname)
 			break;
 		fname++;
 	}
-	ft_strcmp(fname, ".s") ? print_error(ERR_FNAME) : 1;
+	if (ft_strcmp(fname, ".s"))
+		print_error(ERR_FNAME);
 }
