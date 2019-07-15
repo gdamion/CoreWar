@@ -21,7 +21,7 @@ void	just_write(char *hex, int *place)
 	while (hex[i] != '\0')
 	{
 		// if (*place > CHAMP_MAX_SIZE * 2)
-		// 	error(ERR_BIGEX, 0, 0);
+		// 	errorr(ERR_BIGEX, 0, 0);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;

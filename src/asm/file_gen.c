@@ -19,12 +19,12 @@ void	write_file(void)
 
 	new_name = newn_create(g_data->filename);
 	if ((fd = open(new_name, O_CREAT|O_WRONLY)) == -1)
-			error(ERR_CRFHEX);
+			errorr(ERR_CRFHEX);
 	free(new_name);
 	if (write(fd, g_buf, CHAMP_MAX_SIZE) == -1)
 	{
 		close(fd);
-		error(ERR_WRFHEX);
+		errorr(ERR_WRFHEX);
 	}
 	close(fd);
 }

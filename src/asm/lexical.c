@@ -26,11 +26,11 @@ static void	get_string(char **line)
 		&& (size = get_next_line(g_data->fd, &temp)) && g_data->y++)
 		ft_catpro(&str, temp);
 	if (size == -1)
-		error(ERR_READING, g_data->x, g_data->y, g_data);
+		errorr(ERR_READING, g_data->x, g_data->y);
 	if (size == 0)
-		error(ERR_READING, g_data->x, g_data->y, g_data);
+		errorr(ERR_READING, g_data->x, g_data->y);
 	if (!len)
-		error(ERR_READING, g_data->x, g_data->y, g_data);
+		errorr(ERR_READING, g_data->x, g_data->y);
 	*line = str;
 	token_add(STRING);
 	g_data->token->content = ft_strsub(str, g_data->x, len);
@@ -45,18 +45,17 @@ static void		get_text(char *line, t_type type)
 	while (line[g_data->x] && 
 			ft_findchar(LABEL_CHARS, line[g_data->x]))
 		g_data->x++;
+	g_data->token->content = ft_strsub(line, temp, g_data->x - temp);
 	if ((g_data->x - temp) && line[g_data->x] == LABEL_CHAR)
-		label_add(line, temp);
+		label_add();
 	else if ((g_data->x - temp) && DELIMITER(line[g_data->x]))
 	{
 		if (type == INDIRECT)
 			g_data->token->type = (is_reg(line + temp, g_data->x - temp))
-											? REGISTER : INSTRUCTION;
+												? REGISTER : INSTRUCTION;
 	}
 	else
-		error("GET_TEXT", g_data->x, g_data->y, g_data);
-	g_data->token->content = ft_strsub(line, temp, g_data->x - temp);
-	g_data->label->name = g_data->token->content;
+		errorr("GET_TEXT", g_data->x, g_data->y);
 }
 
 static void		get_number(char *line, t_type type)
@@ -79,14 +78,14 @@ static void		get_number(char *line, t_type type)
 		get_text(line, INDIRECT);
 	}
 	else
-		error("GET_NUMBER", g_data->x, g_data->y, g_data);
+		errorr("GET_NUMBER", g_data->x, g_data->y);
 }
 
 static void		tokenizing(char *line)
 {
 	if (line[g_data->x] == SEPARATOR_CHAR && g_data->x++)
 		token_add(SEPARATOR);
-	else if (line[g_data->x] == "\n" && g_data->x++)
+	else if (line[g_data->x] == '\n' && g_data->x++)
 		token_add(NEW_LINE);
 	else if (line[g_data->x] == '.' && g_data->x++)
 		get_text(line, COMMAND);
@@ -114,10 +113,11 @@ void		lexical_analyzer(void)
 							&& !(g_data->x = 0)
 							&& (g_data->y++))
 	{
+		ft_printf("SOS\n");
 		while (line[g_data->x])
 		{
-			g_data->x = skip_whitespaces(line, g_data->x);
-			g_data->x = skip_comment(line, g_data->x);
+			skip_whitespaces(line);
+			skip_comment(line);
 			if (line[g_data->x])
 				tokenizing(line);
 		}

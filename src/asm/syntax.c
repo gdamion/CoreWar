@@ -29,55 +29,24 @@ static int		op_exist(char *op_name)
 }
 
 /*
-** Arg types
-** 1) Label (check existense)
-** 2) DIR
-** 3) INDIR
-*/
-
-/*
 ** Is arg valid?
 ** If it is DIRECT_LABEL - check if mark, on which we point, is exist
-** And it should return number of bytes
 */
-void		valid_arg(t_token *arg, int mask)
+void				valid_arg(int op_n, t_token *arg, int mask)
 {
 	if (arg->type != (arg->type & mask))
 		errorr(ERR_ARGTP, arg->x, arg->y);
-}
-
-void		update_bytes(int op_n)
-{
-	int		i;
-	unsigned int	types[3];
-
-	i = 0;
-	types = g_op_tab[op_n].args_types;
-	g_bytes += 1 + g_op_tab[op_n].args_types_code ? 1 : 0;
-	while (i < 3)
+	if (arg->type == T_REG)
+		g_bytes++;
+	else if (arg->type == T_IND)
+		g_bytes += 2;
+	else if (arg->type == T_DIR)
 	{
-		if (types[i] == T_REG)
-			g_bytes++;
-		else if (types[i] == T_DIR)
-			g_bytes += g_op_tab[op_n].t_dir_size;
-		else if (types[i] == T_IND)
-			g_bytes += 2;
-		i++;
+		arg->bytes = g_bytes;
+		g_bytes += g_op_tab[op_n].t_dir_size;
 	}
 }
 
-/*
-** Check operation
-** 1) Op name exists
-** 2) Right number of args
-** 3) Right format of args
-*/
-
-/*
-** Take token - operation
-** Read while !(\n)
-** \n - should NOT be skiped
-*/
 void				valid_instruction(t_token **operations)
 {
 	int				op_n;
@@ -89,18 +58,18 @@ void				valid_instruction(t_token **operations)
 	op_n = op_exist(temp->content);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
-	while ((temp = temp->prev) && 
+	g_bytes += g_op_tab[op_n].args_types_code ? 2 : 1;
+	while ((temp = temp->prev) &&
 			(temp->type < 3 || temp->type == 4) && args--)
 	{
-		valid_arg(temp, (*types)++);
+		valid_arg(op_n, temp, (*types)++);
 		if (temp->prev->type == SEPARATOR)
 			temp = temp->prev;
 		else
 			break;
 	}
-	if (args || args < 0 && temp && temp->type != NEW_LINE)
+	if ((args || args < 0) && temp && temp->type != NEW_LINE)
 		errorr(ERR_ARGNO, temp->x, temp->y);
-	update_bytes(op_n);
 	*operations = temp;
 }
 
@@ -109,10 +78,9 @@ void				valid_instruction(t_token **operations)
 ** We should run to previous elem_list
 ** Return exec code size in bytes     // Sasha
 */
-void		syntax_analiser(void)
+void				syntax_analiser(void)
 {
-	t_token	*temp;
-	t_token *op;
+	t_token			*temp;
 
 	temp = g_data->token;
 	while (temp)

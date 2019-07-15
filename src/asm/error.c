@@ -19,8 +19,9 @@ void	errorr(char *event, int y, int x)
 	place_write(y, x);
 	ft_putendl_fd(place, 2);
 	print_error(event);
-	g_data->fd ? fclose(g_data->fd) : 1;
-	free_info(g_data);
+	if (g_data->fd)
+		close(g_data->fd);
+	free_info();
 	exit(1);
 }
 
@@ -30,10 +31,10 @@ void	place_write(int y, int x)
 	ft_putnbr(y);
 	write(2, ", Col:", 6);
 	ft_putnbr(x);
-	write(2, '\n', 1);
+	write(2, "\n", 1);
 }
 
-void	free_info()
+void	free_info(void)
 {
 
 }

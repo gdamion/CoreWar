@@ -13,13 +13,8 @@
 #ifndef ASM_H
 # define ASM_H
 
-# include "com.h"
 # include "asm_error.h"
 # include "asm_ops.h"
-
-char					g_buf[CHAMP_MAX_SIZE * 2 + 1];
-t_data					*g_data;
-int						g_bytes;
 
 typedef enum			e_type
 {
@@ -50,9 +45,6 @@ typedef struct			s_token
 
 typedef struct			s_label
 {
-	int					x;
-	int					y;
-	char				*name;
 	t_token				*point;
 	struct s_label		*next;
 	struct s_label		*prev;
@@ -95,7 +87,7 @@ void					valid_filename(char *fname);
 
 void					data_init(int fd);
 void					token_add(t_type type);
-void					label_add(char *line, int start);
+void					label_add(void);
 
 
 /*
@@ -110,7 +102,7 @@ void					lexical_analyzer(void);
 
 void					syntax_analiser(void);
 void					valid_champion_info(t_token **temp);
-void					valid_arg(t_token *arg, int mask);
+void					valid_arg(int op_n, t_token *arg, int mask);
 void					valid_instruction(t_token **operations);
 
 /*
@@ -137,7 +129,7 @@ char					*arg_type_code(int arg_types[3]);
 ** buf_write.c
 */
 
-void	translate(t_token *code_start);
+void					translate(t_token *code_start);
 
 
 /*
@@ -151,8 +143,13 @@ char					*newn_create(char *filename);
 /*
 ** error.c
 */
-void	errorr(char *event, int y, int x);
-void	place_write(int y, int x);
-void	free_info(t_data *data);
+void					errorr(char *event, int y, int x);
+void					place_write(int y, int x);
+void					free_info(void);
+
+
+_Bool					is_reg(char *line, int len);
+void					skip_whitespaces(char *line);
+void					skip_comment(char *line);
 
 #endif

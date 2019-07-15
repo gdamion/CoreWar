@@ -15,16 +15,17 @@
 void		read_file(char *filename)
 {
 	int		fd;
-	t_token	*code_start;
 
 	valid_filename(filename);
-	(fd = open(filename, O_RDONLY)) == -1 ? errorr(ERR_FOPEN, 0, 0) : data_init(fd);
+	if ((fd = open(filename, O_RDONLY)) == -1)
+		errorr(ERR_FOPEN, 0, 0);
+	data_init(fd);
 	g_data->filename = filename;
 	lexical_analyzer();
-	code_start = valid_champion_info(); //печать имени и коммента
-	syntax_analiser(code_start);
-	translate(code_start);
-	write_file();
+	// valid_champion_info();
+	syntax_analiser();
+	// translate();
+	// write_file();
 }
 
 void	valid_filename(char *fname)
@@ -35,5 +36,6 @@ void	valid_filename(char *fname)
 			break;
 		fname++;
 	}
-	ft_strcmp(fname, ".s") ? print_error(ERR_FNAME) : 1;
+	if (ft_strcmp(fname, ".s"))
+		print_error(ERR_FNAME);
 }
