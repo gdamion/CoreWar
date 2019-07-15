@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 18:35:07 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 19:22:20 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_instruction(t_token **op, int *cursor, u_int8_t type)
 
 int32_t	process_label(u_int32_t bytes, char *label_name)
 {
-	int32_t move;
+	int32_t	move;
 	t_label	*temp;
 
 	temp = g_data->label;

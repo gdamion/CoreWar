@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 17:16:04 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 19:19:26 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void					valid_instruction(t_token **operations, t_op_type *op);
 ** codegen1.c
 */
 void					args_to_code(t_token **temp, int *place, int op_n);
-void					process_label(t_token *label, int byte_num, int *place);
 void					write_arg(int arg, int byte_num, int *place);
 char					*num_to_hex(int32_t dec, int dir_size);
 void					just_write(char *hex, int *place);
@@ -141,8 +140,8 @@ char					*arg_type_code(int arg_types[3]);
 /*
 ** buf_write.c
 */
-void					translate(t_token *code_start, int code_size);
-
+void					translate(t_token *code_start, u_int32_t code_size);
+int32_t					process_label(u_int32_t bytes, char *label_name);
 
 /*
 ** filegen.c

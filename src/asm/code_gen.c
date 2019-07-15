@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 18:24:15 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 19:54:17 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	just_write(char *hex, int *place)
 		i += 2;
 	while (hex[i] != '\0')
 	{
-		// if (*place > CHAMP_MAX_SIZE * 2)
-		// 	error(ERR_BIGEX, 0, 0);
+		if (*place > FULL_SIZE)
+			error(ERR_BIGEX, 0, 0);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;
@@ -30,10 +30,10 @@ void	just_write(char *hex, int *place)
 
 char					*num_to_hex(int32_t dec, int dir_size)
 {
-	char *hex;
-	int i;
-	uint8_t temp;
-	int move;
+	char		*hex;
+	int			i;
+	u_int8_t	temp;
+	int			move;
 
 	move = 0;
 	i = dir_size * 2 - 1;
@@ -43,7 +43,7 @@ char					*num_to_hex(int32_t dec, int dir_size)
 	dir_size--;
 	while (dir_size + 1)
 	{
-		temp = (uint8_t)((dec >> move) & 0xFF);
+		temp = (u_int8_t)((dec >> move) & 0xFF);
 		hex[i--] = temp % 16 + (temp % 16 > 9 ? 'a' - 10 : '0');
 		hex[i--] = temp / 16 + (temp / 16 > 9 ? 'a' - 10 : '0');
 		move += 8;
@@ -68,35 +68,114 @@ void	write_arg(int32_t arg, int byte_num, int *place)
 	free(hex);
 }
 
-void	process_label(t_token *label, int byte_num, int *place) //преобразование метки в число и печать числа
+void	valid_champion_info(t_token **temp)
 {
-	int move;
+	int i;
+	int name;
+	int comm;
 
-	move = ...;
-	write_arg(move, byte_num, place);
+	name = 1;
+	comm = 1;
+	i = 2;
+	while (i)
+	{
+		if (strcmp((*temp)->content, "comment"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_name_or_comm((*temp)->next->content, 8, 0);
+				comm--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				error(ERR_NO_CHCOMM);
+		}
+		else if (strcmp((*temp)->content, "name"))
+		{
+			if ((*temp)->next->type == STRING)
+			{
+				write_name_or_comm((*temp)->next->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2, 1);
+				name--;
+				*temp = (*temp)->next->next;
+			}
+			else
+				error(ERR_NO_CHNAME);
+		}
+	}
+	(name != 0 || comm != 0) ? error(ERR_NAMECOM) : 1;
 }
 
-void	args_to_code(t_token **temp, int *place, int op_n)
+void	write_name_or_comm(char *chname, int place, _Bool type)
 {
-	int	dir_size;
-	int	arg_n;
+	char	*hex;
+	int		len;
+	int		i;
+	int		max;
 
-	dir_size = g_op_tab[op_n].t_dir_size;
-	arg_n = g_op_tab[op_n].args_num;
-	while (arg_n)
+	hex = str_to_code(chname);
+	len = ft_strlen(hex);
+	max = (type ? PROG_NAME_LENGTH : COMMENT_LENGTH ) * 2;
+	if (type)
+		len > max ? error(ERR_CHNAME_LEN, 0, 0) : 1;
+	else
+		len > max ? error(ERR_CHCOMM_LEN, 0, 0) : 1;
+	i = 0;
+	while (i < max)
 	{
-		if ((*temp)->type == LABEL)
+		if (len > 0)
 		{
-			process_label(*temp, dir_size, place);
-			*temp = (*temp)->next;
-			arg_n--;
-		}
-		else if ((*temp)->type == T_DIR || (*temp)->type == T_IND)
-		{
-			write_arg(ft_atoi((*temp)->content), dir_size, place);
-			arg_n--;
+			g_buf[place] = hex[i];
+			len--;
 		}
 		else
-			*temp = (*temp)->next;
+			g_buf[place++] = '0';
+		i++;
 	}
+	free(hex);
+}
+
+char	*str_to_code(char *str)
+{
+	char	*res;
+	int		len;
+	int		i;
+	int		buf;
+
+	i = 0;
+	len = ft_strlen(str) * 2;
+	!(res = (char*)malloc(len + 1)) ? \
+		error(ERR_ALLOC, 0, 0) : (res[len + 1] = '\0');
+	while (i < len)
+	{
+		res[i] = (buf = *str / 16) < 10 ? \
+			('0' + buf) : ('A' + buf - 10);
+		res[i + 1] = (buf = *str % 16) < 10 ? \
+			('0' + buf) : ('A' + buf - 10);
+		str++;
+		i += 2;
+	}
+	return (res);
+}
+
+void	write_magic(char* hex, int place)
+{
+	int i;
+	int add_zero;
+
+	i = 0;
+	if (hex[0] == '0' && hex[1] == 'x')
+		i += 2;
+	add_zero = 8 - ft_strlen(&(hex[i]));
+	while (hex[i] != '\0')
+	{
+		if (place > FULL_SIZE)
+			error(ERR_BIGEX, 0, 0);
+		if (add_zero > 0)
+			g_buf[place++] = '0';
+		else
+			g_buf[place] = hex[i];
+		place++;
+		i++;
+	}
+	free(hex);
 }
