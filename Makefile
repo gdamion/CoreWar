@@ -46,7 +46,7 @@ SRC_ASM_LIST =	main.c \
 				syntax.c \
 				lexical.c \
 				utilities.c \
-				error.c
+				error.c \
 
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))

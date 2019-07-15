@@ -17,7 +17,6 @@ int		main(int ac, char **av)
 	errno = 0;
 	g_data = 0;
 	g_bytes = 0;
-	ft_bzero(g_buf, CHAMP_MAX_SIZE * 2 + 1);
 	if (ac == 2)
 		read_file(av[1]);
 	else

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 19:01:29 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:16:04 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include "asm_error.h"
 # include "asm_ops.h"
+
+# define FULL_SIZE ((4 + PROG_NAME_LENGTH + 4 + 4 \
+						+ COMMENT_LENGTH + 4 + CHAMP_MAX_SIZE) * 2 + 1)
+
 
 typedef enum			e_type
 {
@@ -37,7 +41,7 @@ typedef struct			s_token
 	int					x;
 	int					y;
 	t_type				type;
-	int					bytes;
+	uint32_t			bytes;
 	struct s_token		*next;
 	struct s_token		*prev;
 	char				*content;
@@ -77,38 +81,29 @@ typedef struct			s_data
 /*
 ** read_file.c
 */
-
 void					read_file(char *filename);
 void					valid_filename(char *fname);
 
 /*
 ** init.c
 */
-
 void					data_init(int fd);
 void					token_add(t_type type);
 void					label_add(void);
 
-
 /*
 ** lexical.c
 */
-
 void					lexical_analyzer(void);
 
 /*
 ** syntax.c
 */
-
-void					syntax_analiser(void);
-void					valid_champion_info(t_token **temp);
-void					valid_arg(int op_n, t_token *arg, int mask);
-void					valid_instruction(t_token **operations);
+void					syntax_analyser(t_token	*code_start);
 
 /*
 ** codegen1.c
 */
-
 void					args_to_code(t_token **temp, int *place, int op_n);
 void					process_label(t_token *label, int byte_num, int *place);
 void					write_arg(int arg, int byte_num, int *place);
@@ -118,26 +113,24 @@ void					just_write(char *hex, int *place);
 /*
 ** codegen2.c
 */
-
 void					write_comment(char *chcomm, int place);
 void					write_name(char *chname, int place);
 char					*str_to_code(char *str);
 void					write_magic(char* hex, int place);
 char					*arg_type_code(int arg_types[3]);
+void					valid_champion_info(t_token **temp);
 
 /*
 ** buf_write.c
 */
-
-void					translate(t_token *code_start);
+void					translate(t_token *code_start, int code_size);
 
 
 /*
 ** filegen.c
 */
-
-void					write_file(void);
-char					*newn_create(char *filename);
+void					write_to_file(void);
+char					*new_filename(char *filename);
 
 
 /*

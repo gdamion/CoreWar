@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codegen1.c                                         :+:      :+:    :+:   */
+/*   code_gen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:33:39 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:11:51 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char					*num_to_hex(int32_t dec, int dir_size)
 
 	move = 0;
 	i = dir_size * 2 - 1;
-	hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1));
+	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
+		errorr(ERR_ALLOC, 0, 0);
 	hex[dir_size] = '\0';
 	dir_size--;
 	while (dir_size + 1)
@@ -74,8 +75,6 @@ void	process_label(t_token *label, int byte_num, int *place) //преобраз�
 	move = ...;
 	write_arg(move, byte_num, place);
 }
-
-
 
 void	args_to_code(t_token **temp, int *place, int op_n)
 {

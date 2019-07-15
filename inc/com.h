@@ -38,8 +38,8 @@
 ** realloc free perror strerror exit
 */
 
-char					g_buf[CHAMP_MAX_SIZE * 2 + 1];
+char					g_buf[FULL_SIZE];
 t_data					*g_data;
-int						g_bytes;
+u_int32_t				g_bytes;
 
 #endif

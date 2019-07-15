@@ -6,33 +6,27 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:23:29 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:17:31 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-static int		op_exist(char *op_name)
+static int			op_exist(t_token *operation)
 {
-	int	i;
+	int				i;
 
 	i = 0;
 	while (i < 16)
-	{
-		if (!ft_strcmp(op_name, g_op_tab[i].name))
+		if (!ft_strcmp(operation->content, g_op_tab[i++].name))
 			break ;
-		i++;
-	}
 	if (i == 16)
-		; //error
+		errorr(ERR_OP, 0, 0);
+	operation->bytes = i;
 	return (i);
 }
 
-/*
-** Is arg valid?
-** If it is DIRECT_LABEL - check if mark, on which we point, is exist
-*/
-void				valid_arg(int op_n, t_token *arg, int mask)
+static void			valid_arg(int op_n, t_token *arg, int mask)
 {
 	if (arg->type != (arg->type & mask))
 		errorr(ERR_ARGTP, arg->x, arg->y);
@@ -47,7 +41,7 @@ void				valid_arg(int op_n, t_token *arg, int mask)
 	}
 }
 
-void				valid_instruction(t_token **operations)
+static void			valid_instruction(t_token **operations)
 {
 	int				op_n;
 	unsigned int	args;
@@ -55,10 +49,10 @@ void				valid_instruction(t_token **operations)
 	t_token			*temp;
 
 	temp = (*operations);
-	op_n = op_exist(temp->content);
+	op_n = op_exist(temp);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
-	g_bytes += g_op_tab[op_n].args_types_code ? 2 : 1;
+	g_bytes += 1 + (g_op_tab[op_n].args_types_code ? 1 : 0);
 	while ((temp = temp->prev) &&
 			(temp->type < 3 || temp->type == 4) && args--)
 	{
@@ -73,26 +67,18 @@ void				valid_instruction(t_token **operations)
 	*operations = temp;
 }
 
-/*
-** Dont forget that the g_data->token point to the last token
-** We should run to previous elem_list
-** Return exec code size in bytes     // Sasha
-*/
-void				syntax_analiser(void)
+void				syntax_analyser(t_token *token)
 {
-	t_token			*temp;
-
-	temp = g_data->token;
-	while (temp)
+	while (token)
 	{
-		if (temp->type == INSTRUCTION)
-			valid_instruction(&temp);
-		else if (temp->type == LABEL)
-			temp->bytes = g_bytes;
-		else if (temp->type == NEW_LINE)
+		if (token->type == INSTRUCTION)
+			valid_instruction(&token);
+		else if (token->type == LABEL)
+			token->bytes = g_bytes;
+		else if (token->type == NEW_LINE)
 			;
 		else
-			errorr(ERR_SYM, temp->x, temp->y);
-		temp = temp->prev;
+			errorr(ERR_SYM, token->x, token->y);
+		token = token->prev;
 	}
 }

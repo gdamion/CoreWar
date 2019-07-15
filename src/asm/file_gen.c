@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filegen.c                                          :+:      :+:    :+:   */
+/*   file_gen.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:36:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 13:23:02 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	write_file(void)
+void	write_to_file(void)
 {
 	int		fd;
 	char	*new_name;
 
 	new_name = newn_create(g_data->filename);
-	if ((fd = open(new_name, O_CREAT|O_WRONLY)) == -1)
-			errorr(ERR_CRFHEX);
+	if ((fd = open(new_name, O_CREAT | O_WRONLY)) == -1)
+			errorr(ERR_CRFHEX, 0, 0);
 	free(new_name);
-	if (write(fd, g_buf, CHAMP_MAX_SIZE) == -1)
+	if (write(fd, g_buf, FULL_SIZE) == -1)
 	{
 		close(fd);
-		errorr(ERR_WRFHEX);
+		errorr(ERR_WRFHEX, 0, 0);
 	}
 	close(fd);
 }
 
-char	*newn_create(char *filename)
+char	*new_filename(char *filename)
 {
 	int		len;
 	char	*new_name;
 	int		i;
 
 	len = ft_findchar(filename, '.');
-	new_name = (char*)malloc(len + 5);
+	if (!(new_name = (char*)malloc(len + 5)))
+		errorr(ERR_ALLOC, 0, 0);
 	new_name[len + 4] = '\0';
 	i = -1;
 	while (++i < len)

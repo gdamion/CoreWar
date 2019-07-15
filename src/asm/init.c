@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:22 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/12 18:14:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 14:10:57 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		token_add(t_type type)
 	g_data->token = new;
 }
 
-void		check_duplicates()
+void		lable_duplicates(void)
 {
 	char	*origin;
 	t_label	*temp;
@@ -59,7 +59,7 @@ void		label_add(void)
 	t_label	*new;
 
 	if (INIT_LABEL)
-		print_error(ERR_ALLOC);	
+		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
 	g_data->token->type = LABEL;
 	new->point = g_data->token;
@@ -67,5 +67,5 @@ void		label_add(void)
 		g_data->label->prev = new;
 	new->next = g_data->label;
 	g_data->label = new;
-	check_duplicates();
+	lable_duplicates();
 }
