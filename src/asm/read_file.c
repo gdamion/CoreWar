@@ -17,17 +17,17 @@ void		read_file(char *filename)
 	int		fd;
 	t_token	*code_start;
 
-	ch_fname(filename); // is name of the file correct?
+	valid_filename(filename);
 	(fd = open(filename, O_RDONLY)) == -1 ? errorr(ERR_FOPEN, 0, 0) : data_init(fd);
-	g_data->f_name = filename;
+	g_data->filename = filename;
 	lexical_analyzer();
 	code_start = valid_champion_info(); //печать имени и коммента
 	syntax_analiser(code_start);
 	translate(code_start);
-	write_to_file();
+	write_file();
 }
 
-void	ch_fname(char *fname)
+void	valid_filename(char *fname)
 {
 	while(*fname != '\0')
 	{

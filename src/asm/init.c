@@ -52,7 +52,7 @@ void		check_duplicates(t_label *label)
 	}
 }
 
-void		label_add(t_data *data, char *line, int start)
+void		label_add(char *line, int start)
 {
 	t_label	*new;
 
@@ -66,5 +66,5 @@ void		label_add(t_data *data, char *line, int start)
 		g_data->label->prev = new;
 	new->next = g_data->label;
 	g_data->label = new;
-	check_duplicates(data->label);
+	check_duplicates(g_data->label);
 }

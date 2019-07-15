@@ -12,12 +12,12 @@
 
 #include "com.h"
 
-void	write_to_file(t_data *data)
+void	write_file(void)
 {
 	int		fd;
 	char	*new_name;
 
-	new_name = newn_create(data->f_name);
+	new_name = newn_create(g_data->filename);
 	if ((fd = open(new_name, O_CREAT|O_WRONLY)) == -1)
 			error(ERR_CRFHEX);
 	free(new_name);
@@ -29,18 +29,18 @@ void	write_to_file(t_data *data)
 	close(fd);
 }
 
-char	*newn_create(char *f_name)
+char	*newn_create(char *filename)
 {
 	int		len;
 	char	*new_name;
 	int		i;
 
-	len = ft_findchar(f_name, '.');
+	len = ft_findchar(filename, '.');
 	new_name = (char*)malloc(len + 5);
 	new_name[len + 4] = '\0';
 	i = -1;
 	while (++i < len)
-		new_name[i] = f_name[i];
+		new_name[i] = filename[i];
 	ft_strcpy(&(new_name[i]), ".cor");
 	return (new_name);
 }
