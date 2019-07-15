@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:57:52 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 13:16:35 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 18:38:40 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	errorr(char *event, int y, int x)
 	ft_putendl_fd(place, 2);
 	print_error(event);
 	g_data->fd ? fclose(g_data->fd) : 1;
-	free_info(g_data);
+	//free_info();
 	exit(1);
 }
 

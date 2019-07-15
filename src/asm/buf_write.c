@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 14:46:58 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 18:35:07 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,27 @@ void	print_instruction(t_token **op, int *cursor, u_int8_t type)
 		else if ((*op)->type == INDIRECT)
 			write_arg(ft_atoi((*op)->content), IND_SIZE, cursor);
 		else if ((*op)->type == DIRECT_LABEL)
-			write_arg(process_label(), g_op_tab[type].t_dir_size, cursor);
+			write_arg(process_label((*op)->bytes, (*op)->content), g_op_tab[type].t_dir_size, cursor);
 		else if ((*op)->type == INDIRECT_LABEL)
-			write_arg(process_label(), IND_SIZE, cursor);
+			write_arg(process_label((*op)->bytes, (*op)->content), IND_SIZE, cursor);
 		*op = (*op)->next;
 	}
 }
 
-void	process_label(t_token *label, int byte_num, int *place)
+int32_t	process_label(u_int32_t bytes, char *label_name)
 {
-	int move;
+	int32_t move;
+	t_label	*temp;
 
-	move = ...;
-	write_arg(move, byte_num, place);
+	temp = g_data->label;
+	while (temp)
+	{
+		if (!(ft_strcmp(label_name, temp->name)))
+			break;
+		temp = temp->next;
+	}
+	if (!temp)
+		errorr(ERR_LABEL_EX, 0, 0);
+	move = temp->point->bytes - bytes;
+	return (move);
 }
-
-/*
-	short			arg_types[3];
-	ft_bzero(arg_types, sizeof(int) * 3);
-//операции
-	just_write(g_op_tab[op_n].code, cursor); //write code name of operation
-	g_op_tab[op_n].args_types_code ? just_write(arg_type_code(arg_types), cursor) : 1; //код типов аргументов
-	args_to_code(operations, &cursor, op_n); // печать аргументов данной операции
-*/

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 17:11:51 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 18:24:15 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char					*num_to_hex(int32_t dec, int dir_size)
 	return(hex);
 }
 
-void	write_arg(int arg, int byte_num, int *place)
+void	write_arg(int32_t arg, int byte_num, int *place)
 {
 	char	*hex;
 	int		len;
