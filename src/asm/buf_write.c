@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 19:22:20 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 20:03:42 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	translate(t_token *code_start, u_int32_t code_size)
 {
 	t_token		*temp;
 	u_int32_t	cursor;
-	t_op_type	*op_type;
 
-	op_type = g_data->op_type;
 	write_magic(num_to_hex(code_size, 4), 8 + PROG_NAME_LENGTH * 2 + 8); //размер исполняемого кода
 	write_magic(COREWAR_EXEC_MAGIC, 0); //магический заголовок
 	write_magic("", 8 + PROG_NAME_LENGTH * 2); //разделитель
