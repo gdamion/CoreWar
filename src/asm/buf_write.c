@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:59:24 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 16:09:14 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ void	translate(t_token *code_start, u_int32_t code_size)
 {
 	t_token		*temp;
 	u_int32_t	cursor;
+	char		*buf;
 
-	write_magic(num_to_hex(code_size, 4), 8 + PROG_NAME_LENGTH * 2 + 8); //размер исполняемого кода
-	write_magic((char *)COREWAR_EXEC_MAGIC, 0); //магический заголовок
-	write_magic("", 8 + PROG_NAME_LENGTH * 2); //разделитель
-	write_magic("", 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2); //разделитель
-	cursor = 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2 + 8; //cursor stays on code place
+	buf = num_to_hex(code_size, 4);
+	write_magic(buf, 8 + PROG_NAME_LENGTH * 2 + 8);
+	free(buf);
+	write_magic((char *)COREWAR_EXEC_MAGIC, 0);
+	write_magic("", 8 + PROG_NAME_LENGTH * 2);
+	write_magic("", 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2);
+	cursor = 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2 + 8;
 	temp = code_start;
 	while (temp)
 	{

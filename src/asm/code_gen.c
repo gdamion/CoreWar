@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:58:06 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 16:07:20 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	write_magic(char* hex, int place)
 		place++;
 		i++;
 	}
-	free(hex);
 }
 
 char	*num_to_hex(int32_t dec, int dir_size)
