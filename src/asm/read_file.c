@@ -37,10 +37,14 @@ void		read_file(char *filename)
 	code = g_data->token;
 	// valid_champion_info(&code);
 	// ft_printf("out\n");
-	// while (code)
+	// while (code->next)
+	// {
+	// 	code = code->next;
+	// }
+	// while (code->prev)
 	// {
 	// 	ft_printf("%s\n", code->content);
-	// 	code = code->next;
+	// 	code = code->prev;
 	// }
 	
 	// syntax_analyser(code);
