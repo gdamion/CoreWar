@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 21:50:09 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 13:08:25 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	just_write(char *hex, int *place)
 	while (hex[i] != '\0')
 	{
 		if (*place > FULL_SIZE)
-			errorr(ERR_BIGEX, 0, 0);
+			errorr(ERR_BIGEX, -1, -1);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;
@@ -56,7 +56,7 @@ void	write_magic(char* hex, int place)
 	while (hex[i] != '\0')
 	{
 		if (place > FULL_SIZE)
-			errorr(ERR_BIGEX, 0, 0);
+			errorr(ERR_BIGEX, -1, -1);
 		if (add_zero > 0)
 			g_buf[place++] = '0';
 		else
@@ -77,7 +77,7 @@ char	*num_to_hex(int32_t dec, int dir_size)
 	move = 0;
 	i = dir_size * 2 - 1;
 	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
-		errorr(ERR_ALLOC, 0, 0);
+		errorr(ERR_ALLOC, -1, -1);
 	hex[dir_size] = '\0';
 	dir_size--;
 	while (dir_size + 1)
@@ -90,5 +90,3 @@ char	*num_to_hex(int32_t dec, int dir_size)
 	}
 	return(hex);
 }
-
-

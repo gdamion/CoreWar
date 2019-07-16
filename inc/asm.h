@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 21:46:38 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 12:54:04 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,24 +113,24 @@ char					*num_to_hex(int32_t dec, int dir_size);
 ** valid_info.c
 */
 void					valid_champion_info(t_token **temp);
+void					find_info_string(t_token **temp, _Bool type);
 void					write_name_or_comm(char *chname, int place, _Bool type);
 char					*str_to_code(char *str);
 
 /*
 ** buf_write.c
 */
-void	translate(t_token *code_start, u_int32_t code_size);
-void	print_instruction(t_token **op, int *cursor, u_int8_t type);
-void	print_arg_types_code(t_token *op, int *cursor, u_int8_t n_arg);
-char	*arg_type_code(u_int8_t arg_types[3]);
-int32_t	process_label(u_int32_t bytes, char *label_name);
+void					translate(t_token *code_start, u_int32_t code_size);
+void					print_instruction(t_token **op, int *cursor, u_int8_t type);
+void					print_arg_types_code(t_token *op, int *cursor, u_int8_t n_arg);
+char					*arg_type_code(u_int8_t arg_types[3]);
+int32_t					process_label(u_int32_t bytes, char *label_name);
 
 /*
 ** filegen.c
 */
 void					write_to_file(void);
 char					*new_filename(char *filename);
-
 
 /*
 ** error.c
@@ -140,10 +140,6 @@ void					place_write(int y, int x);
 void					free_data(t_data *data);
 void					free_token(t_token *token);
 void					free_label(t_label *label);
-
-
-
-
 
 _Bool					is_reg(char *line, int len);
 void					skip_whitespaces(char *line);

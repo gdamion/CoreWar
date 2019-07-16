@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:40:12 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 22:08:30 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 12:57:18 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		read_file(char *filename)
 
 	valid_filename(filename);
 	if ((fd = open(filename, O_RDONLY)) == -1)
-		errorr(ERR_FOPEN, 0, 0);
+		errorr(ERR_FOPEN, -1, -1);
 	data_init(fd);
 	g_data->filename = filename;
 	lexical_analyzer();
@@ -40,5 +40,5 @@ void	valid_filename(char *fname)
 		fname++;
 	}
 	if (ft_strcmp(fname, ".s"))
-		print_error(ERR_FNAME);
+		errorr(ERR_FNAME, -1, -1);
 }

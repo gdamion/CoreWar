@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:57:52 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 21:19:15 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 14:04:08 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	errorr(char *event, int y, int x)
 {
 	char *place;
 
-	if (x != -1 && y != -1)
+	if (y != -1 && x != -1)
 		place_write(y, x);
 	ft_putendl_fd(place, 2);
 	print_error(event);
