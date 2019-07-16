@@ -6,7 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
-#    Updated: 2019/07/15 20:55:30 by gdamion-         ###   ########.fr        #
+#    Updated: 2019/07/16 16:01:23 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ ASM_NAME = asm
 VM_NAME = corewar
 
 CC = gcc
-FLAGS = #-Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
 ################# LIB #################
 LIB_DIR = ./libft/
@@ -48,7 +48,9 @@ SRC_ASM_LIST =	main.c \
 				utilities.c \
 				error.c \
 				code_gen.c \
-				# code_gen_temp.c
+				buf_write.c \
+				valid_info.c \
+				file_gen.c
 
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:18:14 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:58:17 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ void					syntax_analyser(t_token	*code_start);
 /*
 ** code_gen.c
 */
-void					just_write(char *hex, int *place);
-void					write_arg(int32_t arg, int byte_num, int *place);
+void					just_write(char *hex, u_int32_t *place);
+void					write_arg(int32_t arg, int byte_num, u_int32_t *place);
 void					write_magic(char *hex, int place);
 char					*num_to_hex(int32_t dec, int dir_size);
 
@@ -114,15 +114,15 @@ char					*num_to_hex(int32_t dec, int dir_size);
 */
 void					valid_champion_info(t_token **temp);
 void					find_info_string(t_token **temp, _Bool type);
-void					write_name_or_comm(char *chname, int place, _Bool type);
+void					write_name_or_comm(t_token *temp, int place, _Bool type);
 char					*str_to_code(char *str);
 
 /*
 ** buf_write.c
 */
 void					translate(t_token *code_start, u_int32_t code_size);
-void					print_instruction(t_token **op, int *cursor, u_int8_t type);
-void					print_arg_types_code(t_token *op, int *cursor, u_int8_t n_arg);
+void					print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type);
+void					print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg);
 char					*arg_type_code(u_int8_t arg_types[3]);
 int32_t					process_label(u_int32_t bytes, char *label_name);
 

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 17:17:31 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:35:22 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 static void			valid_instruction(t_token **operations)
 {
 	int				op_n;
-	unsigned int	args;
+	int32_t			args;
 	unsigned int	*types;
 	t_token			*temp;
 

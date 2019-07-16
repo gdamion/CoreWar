@@ -6,13 +6,13 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:21:55 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:58:06 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	just_write(char *hex, int *place)
+void	just_write(char *hex, u_int32_t *place)
 {
 	int i;
 
@@ -29,7 +29,7 @@ void	just_write(char *hex, int *place)
 	}
 }
 
-void	write_arg(int32_t arg, int byte_num, int *place)
+void	write_arg(int32_t arg, int byte_num, u_int32_t *place)
 {
 	int		len;
 	char	*hex;
