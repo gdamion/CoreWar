@@ -60,6 +60,7 @@ void		label_add(void)
 	if (INIT_LABEL)
 		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
+	g_data->x++;
 	g_data->token->type = LABEL;
 	new->point = g_data->token;
 	if (g_data->label)

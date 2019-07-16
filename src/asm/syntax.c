@@ -44,7 +44,7 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 static void			valid_instruction(t_token **operations)
 {
 	int				op_n;
-	unsigned int	args;
+	int32_t			args;
 	unsigned int	*types;
 	t_token			*temp;
 
