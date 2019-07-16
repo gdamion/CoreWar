@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 12:54:04 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:18:14 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void					valid_filename(char *fname);
 /*
 ** init.c
 */
-void					data_init(int fd);
+void					data_init();
 void					token_add(t_type type);
 void					label_add(void);
 
@@ -136,10 +136,7 @@ char					*new_filename(char *filename);
 ** error.c
 */
 void					errorr(char *event, int y, int x);
-void					place_write(int y, int x);
 void					free_data(t_data *data);
-void					free_token(t_token *token);
-void					free_label(t_label *label);
 
 _Bool					is_reg(char *line, int len);
 void					skip_whitespaces(char *line);

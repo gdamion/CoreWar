@@ -6,47 +6,21 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:57:52 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 14:04:08 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:17:23 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	errorr(char *event, int y, int x)
-{
-	char *place;
-
-	if (y != -1 && x != -1)
-		place_write(y, x);
-	ft_putendl_fd(place, 2);
-	print_error(event);
-	if (g_data->fd)
-		close(g_data->fd);
-	free_data(g_data);
-	exit(1);
-}
-
-void	place_write(int y, int x)
+static void	place_write(int y, int x)
 {
 	write(2, "\nLn ", 5);
-	ft_putnbr(y);
-	write(2, ", Col:", 6);
-	ft_putnbr(x);
-	write(2, "\n", 1);
+	ft_putnbr_fd(y, 2);
+	write(2, ", Col ", 6);
+	ft_putnbr_fd(x, 2);
 }
 
-void	free_data(t_data *data)
-{
-	if (data->filename)
-		free(data->filename);
-	if (data->token)
-		free_token(data->token);
-	if (data->label)
-		free_label(data->label);
-	free(data);
-}
-
-void	free_token(t_token *token)
+static void	free_token(t_token *token)
 {
 	t_token	*temp;
 
@@ -59,7 +33,7 @@ void	free_token(t_token *token)
 	}
 }
 
-void	free_label(t_label *label)
+static void	free_label(t_label *label)
 {
 	t_label	*temp;
 
@@ -71,3 +45,24 @@ void	free_label(t_label *label)
 	}
 }
 
+void		free_data(t_data *data)
+{
+	if (data->filename)
+		free(data->filename);
+	if (data->token)
+		free_token(data->token);
+	if (data->label)
+		free_label(data->label);
+	free(data);
+}
+
+void		errorr(char *event, int y, int x)
+{
+	if (x != -1 && y != -1)
+		place_write(y, x);
+	print_error(event);
+	if (g_data->fd)
+		close(g_data->fd);
+	free_data(g_data);
+	exit(1);
+}

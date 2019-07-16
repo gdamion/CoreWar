@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 13:08:25 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:21:55 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	just_write(char *hex, int *place)
 {
 	int i;
 
+	i = 0;
 	if (hex[0] == '0' && hex[1] == 'x')
 		i += 2;
 	while (hex[i] != '\0')
@@ -30,10 +31,9 @@ void	just_write(char *hex, int *place)
 
 void	write_arg(int32_t arg, int byte_num, int *place)
 {
-	char	*hex;
 	int		len;
+	char	*hex;
 	int		zeros;
-	int		i;
 
 	hex = num_to_hex(arg, byte_num);
 	len = ft_strlen(hex);
