@@ -6,7 +6,11 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/07/16 15:58:17 by gdamion-         ###   ########.fr       */
+=======
+/*   Updated: 2019/07/15 21:46:38 by gdamion-         ###   ########.fr       */
+>>>>>>> dev
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +109,13 @@ void					syntax_analyser(t_token	*code_start);
 /*
 ** code_gen.c
 */
+<<<<<<< HEAD
 void					just_write(char *hex, u_int32_t *place);
 void					write_arg(int32_t arg, int byte_num, u_int32_t *place);
+=======
+void					just_write(char *hex, int *place);
+void					write_arg(int32_t arg, int byte_num, int *place);
+>>>>>>> dev
 void					write_magic(char *hex, int place);
 char					*num_to_hex(int32_t dec, int dir_size);
 
@@ -114,18 +123,30 @@ char					*num_to_hex(int32_t dec, int dir_size);
 ** valid_info.c
 */
 void					valid_champion_info(t_token **temp);
+<<<<<<< HEAD
 void					find_info_string(t_token **temp, _Bool type);
 void					write_name_or_comm(t_token *temp, int place, _Bool type);
+=======
+void					write_name_or_comm(char *chname, int place, _Bool type);
+>>>>>>> dev
 char					*str_to_code(char *str);
 
 /*
 ** buf_write.c
 */
+<<<<<<< HEAD
 void					translate(t_token *code_start, u_int32_t code_size);
 void					print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type);
 void					print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg);
 char					*arg_type_code(u_int8_t arg_types[3]);
 int32_t					process_label(u_int32_t bytes, char *label_name);
+=======
+void	translate(t_token *code_start, u_int32_t code_size);
+void	print_instruction(t_token **op, int *cursor, u_int8_t type);
+void	print_arg_types_code(t_token *op, int *cursor, u_int8_t n_arg);
+char	*arg_type_code(u_int8_t arg_types[3]);
+int32_t	process_label(u_int32_t bytes, char *label_name);
+>>>>>>> dev
 
 /*
 ** filegen.c
@@ -136,9 +157,21 @@ char					*new_filename(char *filename);
 /*
 ** error.c
 */
+<<<<<<< HEAD
 void					errorr(char *event);
 void					error_log(char *event, char *line, int x);
 void					free_data(t_data *data);
+=======
+void					errorr(char *event, int y, int x);
+void					place_write(int y, int x);
+void					free_data(t_data *data);
+void					free_token(t_token *token);
+void					free_label(t_label *label);
+
+
+
+
+>>>>>>> dev
 
 _Bool					is_reg(char *line, int len);
 void					skip_whitespaces(char *line);

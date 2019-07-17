@@ -89,3 +89,29 @@ char	*num_to_hex(int32_t dec, int dir_size)
 	}
 	return(hex);
 }
+
+char	*num_to_hex(int32_t dec, int dir_size)
+{
+	char		*hex;
+	int			i;
+	u_int8_t	temp;
+	int			move;
+
+	move = 0;
+	i = dir_size * 2 - 1;
+	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
+		errorr(ERR_ALLOC, 0, 0);
+	hex[dir_size] = '\0';
+	dir_size--;
+	while (dir_size + 1)
+	{
+		temp = (u_int8_t)((dec >> move) & 0xFF);
+		hex[i--] = temp % 16 + (temp % 16 > 9 ? 'a' - 10 : '0');
+		hex[i--] = temp / 16 + (temp / 16 > 9 ? 'a' - 10 : '0');
+		move += 8;
+		dir_size--;
+	}
+	return(hex);
+}
+
+
