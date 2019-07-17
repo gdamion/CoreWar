@@ -19,17 +19,17 @@ static void	get_string(char **line)
 	char	*str;
 	char	*temp;
 
-	len = 0;
 	temp = 0;
 	str = *line;
-	while ((len = ft_findchar(str + g_data->x, '\"') >= 0)
-		&& (size = get_next_line(g_data->fd, &temp)) && g_data->y++)
-		ft_catpro(&str, temp);
-	if (size || !len)
-		errorr(ERR_READING, g_data->x, g_data->y);
+	while (!(len = ft_findchar(str + g_data->x, '\"'))
+		&& (size = get_next_line(g_data->fd, &temp)) && ++g_data->y)
+			ft_strmerge(&str, &temp);
+	if (!len)
+		errorr("ERR_READING", g_data->x, g_data->y);
 	*line = str;
 	token_add(STRING);
-	g_data->token->content = ft_strsub(str, g_data->x, len);
+	g_data->token->content = ft_strsub(str, g_data->x, len - 1);
+	g_data->x += len;
 }
 
 static void	get_text(char *line, t_type type)
@@ -39,7 +39,7 @@ static void	get_text(char *line, t_type type)
 	temp = g_data->x;
 	token_add(type);
 	while (line[g_data->x] && 
-			ft_findchar(LABEL_CHARS, line[g_data->x]) >= 0)
+			ft_findchar(LABEL_CHARS, line[g_data->x]))
 		g_data->x++;
 	g_data->token->content = ft_strsub(line, temp, g_data->x - temp);
 	if ((g_data->x - temp) && line[g_data->x] == LABEL_CHAR)
@@ -77,8 +77,11 @@ static void	get_number(char *line, t_type type)
 		errorr("GET_NUMBER", g_data->x, g_data->y);
 }
 
-static void	tokenizing(char *line)
+static void	tokenizing(char **str)
 {
+	char	*line;
+
+	line = *str;
 	if (line[g_data->x] == SEPARATOR_CHAR && ++g_data->x)
 		token_add(SEPARATOR);
 	else if (line[g_data->x] == '\n' && ++g_data->x)
@@ -98,6 +101,7 @@ static void	tokenizing(char *line)
 		get_text(line, INDIRECT_LABEL);
 	else
 		get_number(line, INDIRECT);
+	*str = line;
 }
 
 void		lexical_analyzer(void)
@@ -109,14 +113,12 @@ void		lexical_analyzer(void)
 							&& !(g_data->x = 0)
 							&& (++g_data->y))
 	{
-		ft_printf("{RED}%s{EOC}\n", line);
 		while (line[g_data->x])
 		{
 			skip_whitespaces(line);
 			skip_comment(line);
-			ft_printf("==%s\n", &(line[g_data->x]));
 			if (line[g_data->x])
-				tokenizing(line);
+				tokenizing(&line);
 		}
 		ft_strdel(&line);
 	}
