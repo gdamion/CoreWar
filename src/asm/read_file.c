@@ -41,7 +41,6 @@ void		read_file(char *filename)
 	while ((code->prev->type == NEW_LINE || code->prev->type == COMMAND
 			|| code->prev->type == STRING) && code->prev)
 		code = code->prev;
-	ft_printf("Token: type=%d, cont=%s\n", code->type, code->content);
 	syntax_analyser(code);
 	// translate(code, g_bytes);
 	// write_to_file();

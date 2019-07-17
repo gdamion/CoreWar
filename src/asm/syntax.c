@@ -23,7 +23,7 @@ static int			op_exist(t_token *operation)
 		else
 			i++;
 	if (i == 16)
-		errorr(ERR_OP, 0, 0);
+		log_error(ERR_OP, operation);
 	operation->bytes = i;
 	return (i);
 }
@@ -38,7 +38,7 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 	else if (arg->type == 5)
 		arg_type = 4;
 	if (arg_type != (arg_type & mask))
-		errorr(ERR_ARGTP, arg->x, arg->y);
+		log_error(ERR_ARGTP, arg);
 	if (arg_type == T_REG)
 		g_bytes++;
 	else if (arg_type == T_IND)
@@ -72,7 +72,7 @@ static void			valid_instruction(t_token **operations)
 			break;
 	}
 	if ((args != 0) && temp && temp->type != NEW_LINE)
-		errorr(ERR_ARGNO, temp->x, temp->y);
+		log_error(ERR_ARGNO, temp);
 	*operations = temp;
 }
 
@@ -89,10 +89,7 @@ void				syntax_analyser(t_token *token)
 		else if (token->type == END)
 			break ;
 		else
-		{
-			ft_printf("Token: type=%d, cont=%s\n", token->type, token->content);			
-			errorr(ERR_SYM, token->x, token->y);
-		}
+			log_error(ERR_SYM, token);
 		token = token->prev;
 	}
 }

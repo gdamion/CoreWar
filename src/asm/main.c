@@ -20,6 +20,6 @@ int		main(int ac, char **av)
 	if (ac == 2)
 		read_file(av[1]);
 	else
-		errorr(ERR_NOFILE, -1, -1);
+		errorr(ERR_NOFILE);
 	return (0);
 }

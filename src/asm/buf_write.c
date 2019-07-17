@@ -85,7 +85,7 @@ char	*arg_type_code(u_int8_t arg_types[3])
 	char	*res;
 
 	if (!(res = (char*)malloc(sizeof(char) * 3)))
-		errorr(ERR_ALLOC, 0, 0);
+		errorr(ERR_ALLOC);
 	i = 0;
 	bin = 0;
 	while (i < 3)
@@ -116,7 +116,7 @@ int32_t	process_label(u_int32_t bytes, char *label_name)
 		temp = temp->next;
 	}
 	if (!temp)
-		errorr(ERR_LABEL_EX, 0, 0);
+		errorr(ERR_LABEL_EX);
 	move = temp->point->bytes - bytes;
 	return (move);
 }
