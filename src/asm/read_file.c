@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:40:12 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/17 12:53:09 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/17 13:18:19 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void		read_file(char *filename)
 	// 	ft_printf("%s\n", code->content);
 	// 	code = code->prev;
 	// }
-	valid_champion_info(&code);
-	syntax_analyser(code);
-	translate(code, g_bytes);
-	write_to_file();
-	free_data(g_data);
+	// valid_champion_info(&code);
+	// syntax_analyser(code);
+	// translate(code, g_bytes);
+	// write_to_file();
+	// free_data(g_data);
 }

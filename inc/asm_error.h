@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:43:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/08 22:12:37 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/17 13:31:28 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define ERR_FOPEN "Can\'t open file" // sys error
 # define ERR_READING "Can\'t read file" // sys error
 # define ERR_ALLOC "Can\'t allocate memory" // sys error
+# define ERR_GET_TEXT "Can't read content token"
+# define ERR_GET_NUMBER "can't read numerical token"
 # define ERR_CHNAME_LEN "Champion\'s name is too large"
 # define ERR_NO_CHNAME "Champion\'s name doesn't exist"
 # define ERR_CHCOMM_LEN "Champion\'s comment is too large"

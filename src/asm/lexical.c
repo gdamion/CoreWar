@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:26 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 13:27:18 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/17 13:26:27 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	get_string(char **line)
 		&& (size = get_next_line(g_data->fd, &temp)) && ++g_data->y)
 			ft_strmerge(&str, &temp);
 	if (!len)
-		errorr("ERR_READING", g_data->x, g_data->y);
+		errorr(ERR_READING, g_data->x, g_data->y);
 	*line = str;
 	token_add(STRING);
 	g_data->token->content = ft_strsub(str, g_data->x, len - 1);
@@ -38,7 +38,7 @@ static void	get_text(char *line, t_type type)
 
 	temp = g_data->x;
 	token_add(type);
-	while (line[g_data->x] && 
+	while (line[g_data->x] &&
 			ft_findchar(LABEL_CHARS, line[g_data->x]))
 		g_data->x++;
 	g_data->token->content = ft_strsub(line, temp, g_data->x - temp);
@@ -51,7 +51,7 @@ static void	get_text(char *line, t_type type)
 												? REGISTER : INSTRUCTION;
 	}
 	else
-		errorr("GET_TEXT", g_data->x, g_data->y);
+		errorr(ERR_GET_TEXT, g_data->x, g_data->y);
 }
 
 static void	get_number(char *line, t_type type)
@@ -74,7 +74,7 @@ static void	get_number(char *line, t_type type)
 		get_text(line, INDIRECT);
 	}
 	else
-		errorr("GET_NUMBER", g_data->x, g_data->y);
+		errorr(ERR_GET_NUMBER, g_data->x, g_data->y);
 }
 
 static void	tokenizing(char **str)
