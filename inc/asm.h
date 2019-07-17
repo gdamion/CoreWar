@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 19:19:26 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:58:17 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ typedef enum			e_type
 {
 	REGISTER = 1,
 	DIRECT,
-	COMMAND,
+	DIRECT_LABEL,
 	INDIRECT,
+	INDIRECT_LABEL,
+	COMMAND,
 	STRING,
 	LABEL,
 	INSTRUCTION,
-	DIRECT_LABEL,
-	INDIRECT_LABEL,
 	SEPARATOR,
 	NEW_LINE,
 	END
@@ -41,7 +41,7 @@ typedef struct			s_token
 	int					x;
 	int					y;
 	t_type				type;
-	uint32_t			bytes;
+	u_int32_t			bytes;
 	struct s_token		*next;
 	struct s_token		*prev;
 	char				*content;
@@ -70,7 +70,7 @@ typedef struct			s_data
 # define R(c) (c == DIRECT_CHAR)
 # define T(c) (c == SEPARATOR_CHAR)
 # define Y(c) (c == COMMENT_CHAR)
-# define U(c) (SP(c))
+# define U(c) (SP1(c))
 
 # define DELIMITER(c) (Q(c) || W(c) || E(c) || R(c) || T(c) || Y(c) || U(c))
 
@@ -81,6 +81,7 @@ typedef struct			s_data
 /*
 ** read_file.c
 */
+int						get_line(const int fd, char **row);
 void					read_file(char *filename);
 void					valid_filename(char *fname);
 
@@ -102,27 +103,28 @@ void					lexical_analyzer(void);
 void					syntax_analyser(t_token	*code_start);
 
 /*
-** codegen1.c
+** code_gen.c
 */
-void					args_to_code(t_token **temp, int *place, int op_n);
-void					write_arg(int arg, int byte_num, int *place);
+void					just_write(char *hex, u_int32_t *place);
+void					write_arg(int32_t arg, int byte_num, u_int32_t *place);
+void					write_magic(char *hex, int place);
 char					*num_to_hex(int32_t dec, int dir_size);
-void					just_write(char *hex, int *place);
 
 /*
-** codegen2.c
+** valid_info.c
 */
-void					write_comment(char *chcomm, int place);
-void					write_name(char *chname, int place);
-char					*str_to_code(char *str);
-void					write_magic(char* hex, int place);
-char					*arg_type_code(int arg_types[3]);
 void					valid_champion_info(t_token **temp);
+void					find_info_string(t_token **temp, _Bool type);
+void					write_name_or_comm(t_token *temp, int place, _Bool type);
+char					*str_to_code(char *str);
 
 /*
 ** buf_write.c
 */
 void					translate(t_token *code_start, u_int32_t code_size);
+void					print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type);
+void					print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg);
+char					*arg_type_code(u_int8_t arg_types[3]);
 int32_t					process_label(u_int32_t bytes, char *label_name);
 
 /*
@@ -131,12 +133,12 @@ int32_t					process_label(u_int32_t bytes, char *label_name);
 void					write_to_file(void);
 char					*new_filename(char *filename);
 
-
 /*
 ** error.c
 */
-void					errorr(char *event, int y, int x);
-
+void					errorr(char *event);
+void					error_log(char *event, char *line, int x);
+void					free_data(t_data *data);
 
 _Bool					is_reg(char *line, int len);
 void					skip_whitespaces(char *line);

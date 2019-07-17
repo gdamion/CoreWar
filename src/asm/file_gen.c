@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 13:23:02 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/15 21:20:03 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	write_to_file(void)
 	int		fd;
 	char	*new_name;
 
-	new_name = newn_create(g_data->filename);
+	new_name = new_filename(g_data->filename);
 	if ((fd = open(new_name, O_CREAT | O_WRONLY)) == -1)
 			errorr(ERR_CRFHEX, 0, 0);
 	free(new_name);
