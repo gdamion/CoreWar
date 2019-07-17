@@ -22,7 +22,7 @@ void	just_write(char *hex, u_int32_t *place)
 	while (hex[i] != '\0')
 	{
 		if (*place > FULL_SIZE)
-			errorr(ERR_BIGEX, -1, -1);
+			errorr(ERR_BIGEX);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;
@@ -56,7 +56,7 @@ void	write_magic(char* hex, int place)
 	while (hex[i] != '\0')
 	{
 		if (place > FULL_SIZE)
-			errorr(ERR_BIGEX, -1, -1);
+			errorr(ERR_BIGEX);
 		if (add_zero > 0)
 			g_buf[place++] = '0';
 		else
@@ -76,7 +76,7 @@ char	*num_to_hex(int32_t dec, int dir_size)
 	move = 0;
 	i = dir_size * 2 - 1;
 	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
-		errorr(ERR_ALLOC, -1, -1);
+		errorr(ERR_ALLOC);
 	hex[dir_size] = '\0';
 	dir_size--;
 	while (dir_size + 1)

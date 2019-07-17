@@ -14,7 +14,7 @@
 
 void		skip_whitespaces(char *line)
 {
-	while(SP(line[g_data->x]))
+	while(SP1(line[g_data->x]))
 		g_data->x++;
 }
 

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:40:12 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/17 13:18:19 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 15:51:15 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,17 @@ void		read_file(char *filename)
 	data_init();
 	valid_filename(filename);
 	if ((g_data->fd = open(filename, O_RDONLY)) == -1)
-		errorr(ERR_FOPEN, 0, 0);
+		errorr(ERR_FOPEN);
 	g_data->filename = filename;
 	lexical_analyzer();
 	code = g_data->token;
-	// ft_printf("out\n");
-	// while (code->next)
-	// {
-	// 	code = code->next;
-	// }
-	// while (code->prev)
-	// {
-	// 	ft_printf("%s\n", code->content);
-	// 	code = code->prev;
-	// }
+	while (code->next)
+		code = code->next;
 	// valid_champion_info(&code);
-	// syntax_analyser(code);
+	while ((code->prev->type == NEW_LINE || code->prev->type == COMMAND
+			|| code->prev->type == STRING) && code->prev)
+		code = code->prev;
+	syntax_analyser(code);
 	// translate(code, g_bytes);
 	// write_to_file();
 	// free_data(g_data);

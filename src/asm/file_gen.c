@@ -19,13 +19,13 @@ void	write_to_file(void)
 
 	new_name = new_filename(g_data->filename);
 	if ((fd = open(new_name, O_CREAT | O_WRONLY)) == -1)
-			errorr(ERR_CRFHEX, 0, 0);
+			errorr(ERR_CRFHEX);
 	free(new_name);
 	ft_printf("Writing output program to %s\n", new_name);
 	if (write(fd, g_buf, FULL_SIZE) == -1)
 	{
 		close(fd);
-		errorr(ERR_WRFHEX, 0, 0);
+		errorr(ERR_WRFHEX);
 	}
 	close(fd);
 }
@@ -38,7 +38,7 @@ char	*new_filename(char *filename)
 
 	len = ft_findchar(filename, '.');
 	if (!(new_name = (char*)malloc(len + 5)))
-		errorr(ERR_ALLOC, 0, 0);
+		errorr(ERR_ALLOC);
 	new_name[len + 4] = '\0';
 	i = -1;
 	while (++i < len)

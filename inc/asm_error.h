@@ -23,9 +23,8 @@
 # define ERR_FNAME "Given file has wrong name format"
 # define ERR_FOPEN "Can\'t open file" // sys error
 # define ERR_READING "Can\'t read file" // sys error
-# define ERR_ALLOC "Can\'t allocate memory" // sys error
-# define ERR_GET_TEXT "Can't read content token"
-# define ERR_GET_NUMBER "Can't read numerical token"
+# define ERR_ALLOC "Can\'t allocate memory"
+# define ERR_GET_TEXT "Can\'t read token"
 # define ERR_CHNAME_LEN "Champion\'s name is too large"
 # define ERR_NO_CHNAME "Champion\'s name doesn't exist"
 # define ERR_CHCOMM_LEN "Champion\'s comment is too large"

@@ -25,6 +25,19 @@ typedef struct		s_op
 	unsigned int	t_dir_size;
 }					t_op;
 
+static char					*g_token_type[] = {
+	"REGISTER",
+	"DIRECT",
+	"DIRECT_LABEL",
+	"INDIRECT_LABEL",
+	"COMMAND",
+	"STRING",
+	"LABEL",
+	"INSTRUCTION",
+	"SEPARATOR",
+	"NEW_LINE",
+	"END",
+};
 
 static t_op			g_op_tab[16] = {
 	{

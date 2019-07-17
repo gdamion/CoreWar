@@ -22,10 +22,10 @@ static void	get_string(char **line)
 	temp = 0;
 	str = *line;
 	while (!(len = ft_findchar(str + g_data->x, '\"'))
-		&& (size = get_next_line(g_data->fd, &temp)) && ++g_data->y)
+		&& (size = get_line(g_data->fd, &temp)) && ++g_data->y)
 			ft_strmerge(&str, &temp);
 	if (!len)
-		errorr(ERR_READING, g_data->x, g_data->y);
+		error_log(ERR_READING, str, 0);
 	*line = str;
 	token_add(STRING);
 	g_data->token->content = ft_strsub(str, g_data->x, len - 1);
@@ -51,7 +51,7 @@ static void	get_text(char *line, t_type type)
 												? REGISTER : INSTRUCTION;
 	}
 	else
-		errorr(ERR_GET_TEXT, g_data->x, g_data->y);
+		error_log(ERR_GET_TEXT, line, temp);
 }
 
 static void	get_number(char *line, t_type type)
@@ -74,7 +74,7 @@ static void	get_number(char *line, t_type type)
 		get_text(line, INDIRECT);
 	}
 	else
-		errorr(ERR_GET_NUMBER, g_data->x, g_data->y);
+		error_log(ERR_GET_TEXT, line, temp);
 }
 
 static void	tokenizing(char **str)
@@ -109,9 +109,9 @@ void		lexical_analyzer(void)
 	int		size;
 	char	*line;
 
-	while ((size = get_next_line(g_data->fd, &line))
+	while ((size = get_line(g_data->fd, &line))
 							&& !(g_data->x = 0)
-							&& (++g_data->y))
+							&& ++g_data->y)
 	{
 		while (line[g_data->x])
 		{
@@ -123,6 +123,6 @@ void		lexical_analyzer(void)
 		ft_strdel(&line);
 	}
 	if (size == -1)
-		print_error(ERR_READING);
+		errorr(ERR_READING);
 	token_add(END);
 }

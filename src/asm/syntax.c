@@ -18,23 +18,32 @@ static int			op_exist(t_token *operation)
 
 	i = 0;
 	while (i < 16)
-		if (!ft_strcmp(operation->content, g_op_tab[i++].name))
+		if (!ft_strcmp(operation->content, g_op_tab[i].name))
 			break ;
+		else
+			i++;
 	if (i == 16)
-		errorr(ERR_OP, 0, 0);
+		log_error(ERR_OP, operation);
 	operation->bytes = i;
 	return (i);
 }
 
 static void			valid_arg(int op_n, t_token *arg, int mask)
 {
-	if (arg->type != (arg->type & mask))
-		errorr(ERR_ARGTP, arg->x, arg->y);
-	if (arg->type == T_REG)
+	int				arg_type;
+
+	arg_type = arg->type;
+	if (arg->type == 3)
+		arg_type = 2;
+	else if (arg->type == 5)
+		arg_type = 4;
+	if (arg_type != (arg_type & mask))
+		log_error(ERR_ARGTP, arg);
+	if (arg_type == T_REG)
 		g_bytes++;
-	else if (arg->type == T_IND)
+	else if (arg_type == T_IND)
 		g_bytes += 2;
-	else if (arg->type == T_DIR)
+	else if (arg_type == T_DIR)
 	{
 		arg->bytes = g_bytes;
 		g_bytes += g_op_tab[op_n].t_dir_size;
@@ -43,27 +52,27 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 
 static void			valid_instruction(t_token **operations)
 {
+	int				i;
 	int				op_n;
 	int32_t			args;
 	unsigned int	*types;
 	t_token			*temp;
 
+	i = 0;
 	temp = (*operations);
 	op_n = op_exist(temp);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
 	g_bytes += 1 + (g_op_tab[op_n].args_types_code ? 1 : 0);
-	while ((temp = temp->prev) &&
-			(temp->type < 3 || temp->type == 4) && args--)
+	while ((temp = temp->prev) && temp->type < 5 && args--)
 	{
-		valid_arg(op_n, temp, (*types)++);
-		if (temp->prev->type == SEPARATOR)
-			temp = temp->prev;
-		else
+		valid_arg(op_n, temp, types[i++]);
+		temp = temp->prev;
+		if (temp->type != SEPARATOR)
 			break;
 	}
-	if ((args || args < 0) && temp && temp->type != NEW_LINE)
-		errorr(ERR_ARGNO, temp->x, temp->y);
+	if ((args != 0) && temp && temp->type != NEW_LINE)
+		log_error(ERR_ARGNO, temp);
 	*operations = temp;
 }
 
@@ -77,9 +86,12 @@ void				syntax_analyser(t_token *token)
 			token->bytes = g_bytes;
 		else if (token->type == NEW_LINE)
 			;
+		else if (token->type == END)
+			break ;
 		else
-			ft_printf("SOS\n");
-			// errorr(ERR_SYM, token->x, token->y);
+			log_error(ERR_SYM, token);
 		token = token->prev;
 	}
 }
+
+//ft_printf("Token: type=%d, cont=%s\n", temp->type, temp->content);

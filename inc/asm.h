@@ -6,7 +6,6 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:58:17 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +23,13 @@ typedef enum			e_type
 {
 	REGISTER = 1,
 	DIRECT,
-	COMMAND,
+	DIRECT_LABEL,
 	INDIRECT,
+	INDIRECT_LABEL,
+	COMMAND,
 	STRING,
 	LABEL,
 	INSTRUCTION,
-	DIRECT_LABEL,
-	INDIRECT_LABEL,
 	SEPARATOR,
 	NEW_LINE,
 	END
@@ -70,7 +69,7 @@ typedef struct			s_data
 # define R(c) (c == DIRECT_CHAR)
 # define T(c) (c == SEPARATOR_CHAR)
 # define Y(c) (c == COMMENT_CHAR)
-# define U(c) (SP(c))
+# define U(c) (SP1(c))
 
 # define DELIMITER(c) (Q(c) || W(c) || E(c) || R(c) || T(c) || Y(c) || U(c))
 
@@ -84,6 +83,7 @@ typedef struct			s_data
 void					read_file(char *filename);
 void					valid_filename(char *fname);
 
+int			get_line(const int fd, char **row);
 /*
 ** init.c
 */
@@ -135,7 +135,9 @@ char					*new_filename(char *filename);
 /*
 ** error.c
 */
-void					errorr(char *event, int y, int x);
+void					errorr(char *event);
+void					error_log(char *event, char *line, int x);
+void					log_error(char *event, t_token *token);
 void					free_data(t_data *data);
 
 _Bool					is_reg(char *line, int len);
