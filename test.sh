@@ -14,11 +14,11 @@ fi
 function check_asm {
 	printf "${GREEN}Test the $file file...${NC}\n"
 	printf "\n${GREEN}Our asm:${GREEN}${CYAN}\n"
-	time ./asm "$1"
+	./asm "$1"
 	printf "\n${GREEN}Main asm:${GREEN}${CYAN}\n"
-	time ./vm_champs/asm "$1"
+	./vm_champs/asm "$1"
 	echo -e "${GREEN}"
-	printf "If the output isn't printed => ALL GOOD\n"
+	printf "If the output isn't printed => ALL GOOD\n\n"
 	read -p "Press enter to continue..."
 	echo -e "${NC}"
 	clear
@@ -28,7 +28,7 @@ if [ "$1" = "-best" ]
 then
 clear
 echo "Checking all .s files in subdirectories of ./vm_champs/champs/championships/ ..."
-for file1 in ./vm_champs/champs/championships/*
+for file1 in vm_champs/champs/championships/*
 do
 	if [ -d "$file1" ]
 	then
@@ -36,7 +36,7 @@ do
 		do
 			if [[ -f "$file" ]] && [[ $file == *".s" ]];
 			then
-				check_asm
+				check_asm $file
 			fi
 		done
 	fi
@@ -46,18 +46,18 @@ elif [ "$1" = "-ex" ]
 then
 clear
 echo "Checking all .s files in ./vm_champs/champs/examples/ ..."
-for file in ./vm_champs/champs/examples/*.s
+for file in vm_champs/champs/examples/*.s
 do
-	check_asm
+	check_asm $file
 done
 
 elif [ "$1" = "-main" ]
 then
 clear
 echo "Checking all .s files in ./vm_champs/champs/ ..."
-for file in ./vm_champs/champs/*.s
+for file in vm_champs/champs/*.s
 do
-	check_asm
+	check_asm $file
 done
 
 else

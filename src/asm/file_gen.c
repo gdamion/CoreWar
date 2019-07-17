@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 21:20:03 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/17 14:01:55 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	write_to_file(void)
 	if ((fd = open(new_name, O_CREAT | O_WRONLY)) == -1)
 			errorr(ERR_CRFHEX, 0, 0);
 	free(new_name);
+	ft_printf("Writing output program to %s\n", new_name);
 	if (write(fd, g_buf, FULL_SIZE) == -1)
 	{
 		close(fd);
