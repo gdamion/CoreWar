@@ -12,14 +12,13 @@
 
 #include "com.h"
 
-void		data_init(int fd)
+void		data_init(void)
 {
 	t_data	*temp;
 
 	if (INIT_DATA)
 		print_error(ERR_ALLOC);
 	ft_bzero(temp, sizeof(temp));
-	temp->fd = fd;
 	g_data = temp;
 }
 
@@ -61,6 +60,7 @@ void		label_add(void)
 	if (INIT_LABEL)
 		print_error(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
+	g_data->x++;
 	g_data->token->type = LABEL;
 	new->point = g_data->token;
 	if (g_data->label)

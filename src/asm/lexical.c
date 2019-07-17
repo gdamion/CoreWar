@@ -19,24 +19,20 @@ static void	get_string(char **line)
 	char	*str;
 	char	*temp;
 
-	len = 0;
 	temp = 0;
 	str = *line;
 	while (!(len = ft_findchar(str + g_data->x, '\"'))
-		&& (size = get_next_line(g_data->fd, &temp)) && g_data->y++)
-		ft_catpro(&str, temp);
-	if (size == -1)
-		errorr(ERR_READING, g_data->x, g_data->y);
-	if (size == 0)
-		errorr(ERR_READING, g_data->x, g_data->y);
+		&& (size = get_line(g_data->fd, &temp)) && ++g_data->y)
+			ft_strmerge(&str, &temp);
 	if (!len)
-		errorr(ERR_READING, g_data->x, g_data->y);
+		error_log(ERR_READING, line, temp);
 	*line = str;
 	token_add(STRING);
-	g_data->token->content = ft_strsub(str, g_data->x, len);
+	g_data->token->content = ft_strsub(str, g_data->x, len - 1);
+	g_data->x += len;
 }
 
-static void		get_text(char *line, t_type type)
+static void	get_text(char *line, t_type type)
 {
 	int		temp;
 
@@ -55,10 +51,10 @@ static void		get_text(char *line, t_type type)
 												? REGISTER : INSTRUCTION;
 	}
 	else
-		errorr("GET_TEXT", g_data->x, g_data->y);
+		error_log(ERR_GET_TEXT, line, temp);
 }
 
-static void		get_number(char *line, t_type type)
+static void	get_number(char *line, t_type type)
 {
 	int		temp;
 
@@ -78,30 +74,34 @@ static void		get_number(char *line, t_type type)
 		get_text(line, INDIRECT);
 	}
 	else
-		errorr("GET_NUMBER", g_data->x, g_data->y);
+		error_log(ERR_GET_TEXT, line, temp);
 }
 
-static void		tokenizing(char *line)
+static void	tokenizing(char **str)
 {
-	if (line[g_data->x] == SEPARATOR_CHAR && g_data->x++)
+	char	*line;
+
+	line = *str;
+	if (line[g_data->x] == SEPARATOR_CHAR && ++g_data->x)
 		token_add(SEPARATOR);
-	else if (line[g_data->x] == '\n' && g_data->x++)
+	else if (line[g_data->x] == '\n' && ++g_data->x)
 		token_add(NEW_LINE);
-	else if (line[g_data->x] == '.' && g_data->x++)
+	else if (line[g_data->x] == '.' && ++g_data->x)
 		get_text(line, COMMAND);
-	else if (line[g_data->x] == DIRECT_CHAR && g_data->x++)
+	else if (line[g_data->x] == DIRECT_CHAR && ++g_data->x)
 	{
-		if (line[g_data->x] == LABEL_CHAR && g_data->x++)
+		if (line[g_data->x] == LABEL_CHAR && ++g_data->x)
 			get_text(line, DIRECT_LABEL);
 		else
 			get_number(line, DIRECT);
 	}
-	else if (line[g_data->x] == '\"' && g_data->x++)
+	else if (line[g_data->x] == '\"' && ++g_data->x)
 		get_string(&line);
-	else if (line[g_data->x] == LABEL_CHAR && g_data->x++)
+	else if (line[g_data->x] == LABEL_CHAR && ++g_data->x)
 		get_text(line, INDIRECT_LABEL);
 	else
 		get_number(line, INDIRECT);
+	*str = line;
 }
 
 void		lexical_analyzer(void)
@@ -109,21 +109,20 @@ void		lexical_analyzer(void)
 	int		size;
 	char	*line;
 
-	while ((size = get_next_line(g_data->fd, &line))
+	while ((size = get_line(g_data->fd, &line))
 							&& !(g_data->x = 0)
-							&& (g_data->y++))
+							&& ++g_data->y)
 	{
-		ft_printf("SOS\n");
 		while (line[g_data->x])
 		{
 			skip_whitespaces(line);
 			skip_comment(line);
 			if (line[g_data->x])
-				tokenizing(line);
+				tokenizing(&line);
 		}
 		ft_strdel(&line);
 	}
 	if (size == -1)
-		print_error(ERR_READING);
+		errorr(ERR_READING);
 	token_add(END);
 }

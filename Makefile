@@ -6,7 +6,11 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
+<<<<<<< HEAD
+#    Updated: 2019/07/16 16:01:23 by gdamion-         ###   ########.fr        #
+=======
 #    Updated: 2019/07/15 20:55:30 by gdamion-         ###   ########.fr        #
+>>>>>>> dev
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +51,11 @@ SRC_ASM_LIST =	main.c \
 				lexical.c \
 				utilities.c \
 				error.c \
+				code_gen.c \
+				buf_write.c \
+				valid_info.c \
+				file_gen.c \
+				get_line.c
 
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))

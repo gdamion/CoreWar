@@ -6,34 +6,34 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/15 21:50:09 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/16 16:07:20 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	just_write(char *hex, int *place)
+void	just_write(char *hex, u_int32_t *place)
 {
 	int i;
 
+	i = 0;
 	if (hex[0] == '0' && hex[1] == 'x')
 		i += 2;
 	while (hex[i] != '\0')
 	{
 		if (*place > FULL_SIZE)
-			errorr(ERR_BIGEX, 0, 0);
+			errorr(ERR_BIGEX, -1, -1);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;
 	}
 }
 
-void	write_arg(int32_t arg, int byte_num, int *place)
+void	write_arg(int32_t arg, int byte_num, u_int32_t *place)
 {
-	char	*hex;
 	int		len;
+	char	*hex;
 	int		zeros;
-	int		i;
 
 	hex = num_to_hex(arg, byte_num);
 	len = ft_strlen(hex);
@@ -56,7 +56,7 @@ void	write_magic(char* hex, int place)
 	while (hex[i] != '\0')
 	{
 		if (place > FULL_SIZE)
-			errorr(ERR_BIGEX, 0, 0);
+			errorr(ERR_BIGEX, -1, -1);
 		if (add_zero > 0)
 			g_buf[place++] = '0';
 		else
@@ -64,7 +64,30 @@ void	write_magic(char* hex, int place)
 		place++;
 		i++;
 	}
-	free(hex);
+}
+
+char	*num_to_hex(int32_t dec, int dir_size)
+{
+	char		*hex;
+	int			i;
+	u_int8_t	temp;
+	int			move;
+
+	move = 0;
+	i = dir_size * 2 - 1;
+	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
+		errorr(ERR_ALLOC, -1, -1);
+	hex[dir_size] = '\0';
+	dir_size--;
+	while (dir_size + 1)
+	{
+		temp = (u_int8_t)((dec >> move) & 0xFF);
+		hex[i--] = temp % 16 + (temp % 16 > 9 ? 'a' - 10 : '0');
+		hex[i--] = temp / 16 + (temp / 16 > 9 ? 'a' - 10 : '0');
+		move += 8;
+		dir_size--;
+	}
+	return(hex);
 }
 
 char	*num_to_hex(int32_t dec, int dir_size)
