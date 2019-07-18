@@ -63,7 +63,7 @@ static void	get_number(char *line, t_type type)
 		g_data->x++;
 	while (ft_isdigit(line[g_data->x]))
 		g_data->x++;
-	if ((g_data->x - temp) && type == DIRECT && DELIMITER(line[g_data->x]))
+	if ((g_data->x - temp) && (type == DIRECT || DELIMITER(line[g_data->x])))
 	{
 		token_add(type);
 		g_data->token->content = ft_strsub(line, temp, g_data->x - temp);

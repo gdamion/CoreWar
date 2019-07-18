@@ -64,14 +64,15 @@ static void			valid_instruction(t_token **operations)
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
 	g_bytes += 1 + (g_op_tab[op_n].args_types_code ? 1 : 0);
-	while ((temp = temp->prev) && temp->type < 5 && args--)
+	while ((temp = temp->prev) && temp->type < 6 && args--)
 	{
 		valid_arg(op_n, temp, types[i++]);
 		temp = temp->prev;
 		if (temp->type != SEPARATOR)
 			break;
 	}
-	if ((args != 0) && temp && temp->type != NEW_LINE)
+	if ((args != 0) && temp &&
+		temp->type != NEW_LINE && temp->type != END)
 		log_error(ERR_ARGNO, temp);
 	*operations = temp;
 }
