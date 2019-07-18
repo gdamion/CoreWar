@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:57 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/09 15:00:54 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/18 21:28:56 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 ** realloc free perror strerror exit
 */
 
-char					g_buf[FULL_SIZE];
+char					g_buf[FULL_SIZE + 1];
 t_data					*g_data;
 u_int32_t				g_bytes;
 

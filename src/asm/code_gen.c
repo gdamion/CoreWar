@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 16:07:20 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/18 22:27:45 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ void	just_write(char *hex, u_int32_t *place)
 		i += 2;
 	while (hex[i] != '\0')
 	{
-		if (*place > FULL_SIZE)
+		if (*place >= FULL_SIZE)
+		{
+			ft_printf("err: max = %u | place = %d\n",FULL_SIZE - EXEC_START, *place - EXEC_START);
 			errorr(ERR_BIGEX);
+		}
+		// ft_printf("max = %d | place = %d\n",FULL_SIZE- EXEC_START, *place- EXEC_START);
 		g_buf[*place] = hex[i];
 		(*place)++;
 		hex[i]++;
@@ -55,8 +59,12 @@ void	write_magic(char* hex, int place)
 	add_zero = 8 - ft_strlen(&(hex[i]));
 	while (hex[i] != '\0')
 	{
-		if (place > FULL_SIZE)
+		if (place >= FULL_SIZE - EXEC_START)
+		{
+			ft_printf("err magic: max = %d | place = %d\n", FULL_SIZE, place);
 			errorr(ERR_BIGEX);
+		}
+		// ft_printf("magic: max = %d | place = %d\n", FULL_SIZE, place);
 		if (add_zero > 0)
 			g_buf[place++] = '0';
 		else

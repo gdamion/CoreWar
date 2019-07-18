@@ -6,17 +6,18 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
+/*   Updated: 2019/07/18 21:29:19 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
+# ifndef ASM_H
 # define ASM_H
 
 # include "asm_error.h"
 # include "asm_ops.h"
 
-# define FULL_SIZE ((4 + PROG_NAME_LENGTH + 4 + 4 \
-						+ COMMENT_LENGTH + 4 + CHAMP_MAX_SIZE) * 2 + 1)
+# define EXEC_START ((4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4) * 2)
+# define FULL_SIZE (EXEC_START + CHAMP_MAX_SIZE * 2)
 
 
 typedef enum			e_type
@@ -83,7 +84,11 @@ typedef struct			s_data
 void					read_file(char *filename);
 void					valid_filename(char *fname);
 
-int			get_line(const int fd, char **row);
+/*
+** get_line.c
+*/
+int						get_line(const int fd, char **row);
+
 /*
 ** init.c
 */
