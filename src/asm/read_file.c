@@ -14,13 +14,15 @@
 
 void	valid_filename(char *fname)
 {
-	while(*fname != '\0')
-	{
-		if (*fname == '.')
-			break;
-		fname++;
-	}
-	if (ft_strcmp(fname, ".s"))
+	int	i;
+	
+	i = 0;
+	while(fname[i])
+		i++;
+	while(fname[--i])
+		if (fname[i] == '.')
+			break ;
+	if (ft_strcmp(&fname[i], ".s"))
 		print_error(ERR_FNAME);
 }
 

@@ -37,14 +37,13 @@ void		termination1(char *massage, t_token *token)
 		perror(massage);
 	ft_putstr_fd(YELLOW, 2);
 	ft_putstr_fd("  Token type: ", 2);
-	ft_printf("%s\n", g_data->token->content);
-	ft_putendl_fd(g_token_type[g_data->token->type + 1], 2);
+	ft_putendl_fd(g_token_type[token->type + 1], 2);
 	ft_putendl_fd(EOC, 2);
-	ft_putendl_fd(" . . . ", 2);
+	ft_putstr_fd("	... ", 2);
 	ft_putstr_fd(RED, 2);
 	ft_putstr_fd(token->content, 2);
 	ft_putstr_fd(EOC, 2);
-	ft_putendl_fd(" . . . ", 2);
+	ft_putendl_fd(" ...\n", 2);
 }
 
 static void	place_write(int x, int y)
@@ -124,7 +123,7 @@ void		error_log(char *event, char *line, int x)
 void		log_error(char *event, t_token *token)
 {
 	if (token->x != -1 && token->y != -1)
-		place_write(g_data->x, g_data->y);
+		place_write(token->x, token->y);
 	termination1(event, token);
 	if (g_data->fd)
 		close(g_data->fd);
