@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:32:59 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 13:07:39 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:24:48 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	valid_champion_info(t_token **temp)
 	i = 2;
 	while (i)
 	{
+		while(*temp && (*temp)->type == NEW_LINE)
+			*temp = (*temp)->prev;
 		if (ft_strcmp((*temp)->content, "comment"))
 		{
 			find_info_string(temp, 0);
@@ -40,11 +42,12 @@ void	valid_champion_info(t_token **temp)
 
 void	find_info_string(t_token **temp, _Bool type)
 {
-	if ((*temp)->next->type == STRING)
+	*temp = (*temp)->prev;
+	if (*temp && (*temp)->type == STRING)
 	{
-		write_name_or_comm((*temp)->next, \
+		write_name_or_comm(*temp, \
 			(type ? 8 : 8 + PROG_NAME_LENGTH * 2 + 8 * 2), type);
-		*temp = (*temp)->next->next;
+		*temp = (*temp)->prev;
 	}
 	else if (type)
 		errorr(ERR_NO_CHNAME);
@@ -95,9 +98,9 @@ char	*str_to_code(char *str)
 	while (i < len)
 	{
 		res[i] = (buf = *str / 16) < 10 ? \
-			('0' + buf) : ('A' + buf - 10);
+			('0' + buf) : ('a' + buf - 10);
 		res[i + 1] = (buf = *str % 16) < 10 ? \
-			('0' + buf) : ('A' + buf - 10);
+			('0' + buf) : ('a' + buf - 10);
 		str++;
 		i += 2;
 	}

@@ -6,13 +6,13 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:57:52 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:17:23 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/18 17:15:03 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void		termination(char *massage, char *line, int x)
+void		terminate(char *massage, char *line, int x)
 {
 	if (errno == 0)
 		ft_putstr_fd(massage, 2);
@@ -29,7 +29,7 @@ void		termination(char *massage, char *line, int x)
 	ft_putendl_fd(line + g_data->x + 1, 2);
 }
 
-void		termination1(char *massage, t_token *token)
+void		terminate1(char *massage, t_token *token)
 {
 	if (errno == 0)
 		ft_putstr_fd(massage, 2);
@@ -113,7 +113,7 @@ void		error_log(char *event, char *line, int x)
 {
 	if (g_data->x != -1 && g_data->y != -1)
 		place_write(g_data->x, g_data->y);
-	termination(event, line, x);
+	terminate(event, line, x);
 	if (g_data->fd)
 		close(g_data->fd);
 	// free_data(g_data);
@@ -124,7 +124,7 @@ void		log_error(char *event, t_token *token)
 {
 	if (token->x != -1 && token->y != -1)
 		place_write(token->x, token->y);
-	termination1(event, token);
+	terminate1(event, token);
 	if (g_data->fd)
 		close(g_data->fd);
 	// free_data(g_data);

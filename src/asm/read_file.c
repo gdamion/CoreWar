@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 18:40:12 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:51:15 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:25:33 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	valid_filename(char *fname)
 {
 	int	i;
-	
+
 	i = 0;
 	while(fname[i])
 		i++;
@@ -39,10 +39,16 @@ void		read_file(char *filename)
 	code = g_data->token;
 	while (code->next)
 		code = code->next;
-	// valid_champion_info(&code);
-	while ((code->prev->type == NEW_LINE || code->prev->type == COMMAND
-			|| code->prev->type == STRING) && code->prev)
-		code = code->prev;
+	t_token *test = code;
+	// while (test->prev)
+	// {
+	// 	ft_printf("content: %s|\n", test->content);
+	// 	test = test->prev;
+	// }
+	valid_champion_info(&code);
+	// while ((code->prev->type == NEW_LINE || code->prev->type == COMMAND
+	// 		|| code->prev->type == STRING) && code->prev)
+	// 	code = code->prev;
 	syntax_analyser(code);
 	// translate(code, g_bytes);
 	// write_to_file();
