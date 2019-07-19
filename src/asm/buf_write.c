@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/18 22:58:31 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/19 14:00:13 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	translate(t_token *code_start, u_int32_t code_size)
 		// ft_printf("t3\n");
 		if (temp->type == INSTRUCTION)
 		{
-			ft_printf("New instruction: %s\n", temp->content);
+			// ft_printf("New instruction: %s\n", temp->content);
 			print_instruction(&temp, &cursor, temp->bytes);
 		}
 		temp = temp->prev;

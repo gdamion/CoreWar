@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/18 23:15:50 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/19 13:55:36 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void		read_file(char *filename)
 		// ft_printf("bytes %u\n",code->bytes);
 		code = code->next;
 	}
-	t_token *test = code;
-	while (test->prev)
-	{
-		ft_printf("content: %s|\n", test->content);
-		test = test->prev;
-	}
+	// t_token *test = code;
+	// while (test->prev)
+	// {
+	// 	ft_printf("content: %s|\n", test->content);
+	// 	test = test->prev;
+	// }
 	ft_printf("Valid info... ");
 	valid_champion_info(&code);
 	ft_printf("DONE\n");
@@ -66,7 +66,7 @@ void		read_file(char *filename)
 	ft_printf("Writing... ");
 	write_to_file();
 	ft_printf("DONE\n");
-	// ft_printf("Free data... ");
-	// free_data(g_data);
-	// ft_printf("DONE\n");
+	ft_printf("Free data... ");
+	free_data(g_data);
+	ft_printf("DONE\n");
 }

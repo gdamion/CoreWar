@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:57:52 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/18 23:01:19 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/19 13:58:32 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,11 @@ static void	free_label(t_label *label)
 
 void		free_data(t_data *data)
 {
-	// ft_printf("free 1\n");
-	if (data->filename)
-		free(data->filename);
-	// ft_printf("free 2\n");
 	if (data->token)
 		free_token(data->token);
-	// ft_printf("free 3\n");
 	if (data->label)
 		free_label(data->label);
-	// ft_printf("free 4\n");
 	free(data);
-	// ft_printf("free 5\n");
 }
 
 void		errorr(char *event)
