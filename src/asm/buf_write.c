@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 12:31:13 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 14:07:50 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	translate(t_token *code_start, u_int32_t code_size)
 	u_int32_t	cursor;
 	char		*buf;
 
+	ft_printf("Print info\n");
+	print_champion_info(g_data->token);
 	ft_printf("Write size of prog\n");
 	buf = num_to_hex(code_size, 4);
 	write_magic(buf, 8 + PROG_NAME_LENGTH * 2 + 8);

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/18 21:29:19 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 13:59:02 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ char					*num_to_hex(int32_t dec, int dir_size);
 */
 void					valid_champion_info(t_token **temp);
 void					find_info_string(t_token **temp, _Bool type);
+
+/*
+** print_info.c
+*/
+void					print_champion_info(t_token *temp);
 void					write_name_or_comm(t_token *temp, int place, _Bool type);
 char					*str_to_code(char *str);
 
