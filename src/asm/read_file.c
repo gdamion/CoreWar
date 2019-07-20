@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/19 18:15:30 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 12:58:20 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		read_file(char *filename)
 	t_token *test = code;
 	while (test->prev)
 	{
-		ft_printf("content: %s|\n", test->content);
+		// ft_printf("content: %s|\n", test->content);
 		test = test->prev;
 	}
 	ft_printf("Valid info... ");

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/19 18:54:14 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 12:58:09 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ void	just_write(char *hex, u_int32_t *place)
 	{
 		if (*place >= FULL_SIZE)
 		{
-			ft_printf("err: max = %u | place = %d\n",FULL_SIZE - EXEC_START, *place - EXEC_START);
+			ft_printf("err: max = %u | place = %d\n", FULL_SIZE - EXEC_START, *place - EXEC_START);
 			errorr(ERR_BIGEX);
 		}
 		// ft_printf("max = %d | place = %d\n",FULL_SIZE- EXEC_START, *place- EXEC_START);
 		g_buf[*place] = hex[i];
 		(*place)++;
-		hex[i]++;
+		i++;
 	}
+	ft_printf("Cursor after: %u, len of hex = %d\n", *place - EXEC_START, ft_strlen(hex));
 }
 
 void	write_arg(int32_t arg, int byte_num, u_int32_t *place)
@@ -39,16 +40,17 @@ void	write_arg(int32_t arg, int byte_num, u_int32_t *place)
 	char	*hex;
 	int		zeros;
 
-	ft_printf("wr arg = %d\n", arg);
+	ft_printf("write arg() = %d\n", arg);
 	hex = num_to_hex(arg, byte_num);
 	len = ft_strlen(hex);
+	// ft_printf("len of hex = %d\n", *place - EXEC_START, ft_strlen(hex));
 	zeros = byte_num * 2 - len;
+	ft_printf("Cursor before: %u, ", *place - EXEC_START);
 	while (zeros--)
 		g_buf[(*place)++] = '0';
-	ft_printf("wr arg2\n");
 	just_write(hex, place);
 	free(hex);
-	ft_printf("wr arg3\n");
+	ft_printf("Arg writing Done\n");
 }
 
 void	write_magic(char* hex, int place)
@@ -91,7 +93,7 @@ char	*num_to_hex(int32_t dec, int dir_size)
 	i = dir_size * 2 - 1;
 	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
 		errorr(ERR_ALLOC);
-	ft_printf("num to hex1\n");
+	// ft_printf("num to hex1\n");
 	hex[dir_size * 2] = '\0';
 	dir_size--;
 	while (dir_size + 1)
@@ -99,7 +101,7 @@ char	*num_to_hex(int32_t dec, int dir_size)
 		// a =INT32_MAX;
 		// while (a)
 			// a--;
-		ft_printf("num to hex2\n");
+		// ft_printf("num to hex2\n");
 		temp = (u_int8_t)((dec >> move) & 0xFF);
 		hex[i--] = temp % 16 + (temp % 16 > 9 ? 'a' - 10 : '0');
 		hex[i--] = temp / 16 + (temp / 16 > 9 ? 'a' - 10 : '0');

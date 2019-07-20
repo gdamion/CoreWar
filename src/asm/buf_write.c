@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/19 18:53:59 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 12:31:13 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	translate(t_token *code_start, u_int32_t code_size)
 	ft_printf("Lets go along labels\n");
 	while (temp)
 	{
-		ft_printf("Yet another token\n");
+		ft_printf("%sYet another token, cursor: %u%s\n", CYAN, cursor - EXEC_START, EOC);
 		if (temp->type == INSTRUCTION)
 		{
-			ft_printf("New instruction: %s\n", temp->content);
-			temp = temp->next;
+			ft_printf("%sNew instruction: %s, type %d%s\n", GREEN, temp->content, temp->bytes, EOC);
 			print_instruction(&temp, &cursor, temp->bytes);
 		}
 		if (temp->type == LABEL)
@@ -54,13 +53,15 @@ void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)
 	u_int8_t n_arg;
 
 	n_arg = g_op_tab[type].args_num;
+	ft_printf("%sn of args = %d%s\n", GREEN, n_arg, EOC);
 	if (g_op_tab[type].args_types_code)
 		print_arg_types_code(*op, cursor, n_arg);
+	*op = (*op)->prev;
 	while (n_arg)
 	{
 		while ((*op)->type == SEPARATOR)
 			*op = (*op)->prev;
-		ft_printf("%d th arg = %s\n", 3 - n_arg, (*op)->content);
+		ft_printf("%s%d th arg = '%s', type = %d%s\n", PURPUL, n_arg, (*op)->content, (*op)->type, EOC);
 		if ((*op)->type == REGISTER)
 			write_arg(ft_atoi((*op)->content + 1), 1, cursor);
 		else if ((*op)->type == DIRECT)
@@ -81,11 +82,10 @@ void	print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
 	u_int8_t	arg_types[3];
 	char		*hex;
 
-	ft_printf("pa1\n");
+	ft_printf("print_arg_types_code\n");
 	ft_bzero(arg_types, sizeof(u_int8_t));
 	while (n_arg)
 	{
-		ft_printf("pa1\n");
 		if (op->type == DIRECT || op->type == DIRECT_LABEL)
 			arg_types[3 - n_arg--] = T_DIR;
 		else if (op->type == INDIRECT || op->type == INDIRECT_LABEL)
@@ -94,12 +94,10 @@ void	print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
 			arg_types[3 - n_arg--] = T_REG;
 		op = op->prev;
 	}
-	ft_printf("pa3\n");
 	hex = arg_type_code(arg_types);
-	ft_printf("pa4\n");
 	just_write(hex, cursor);
 	free(hex);
-	ft_printf("pa5\n");
+	ft_printf("arg_types_code -DONE\n");
 }
 
 char	*arg_type_code(u_int8_t arg_types[3])
@@ -135,7 +133,7 @@ int32_t	process_label(u_int32_t bytes, char *label_name)
 	int32_t	move;
 	t_label	*temp;
 
-	ft_printf("Call to label '%s'", label_name);
+	ft_printf("Call to label '%s'\n", label_name);
 	temp = g_data->label;
 	while (temp)
 	{
