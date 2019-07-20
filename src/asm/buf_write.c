@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 20:21:08 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:17:35 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)
 		else if ((*op)->type == INDIRECT)
 			write_arg(ft_atoi_cor((*op)->content, IND_SIZE), IND_SIZE, cursor);
 		else if ((*op)->type == DIRECT_LABEL)
-			write_arg(process_label((*op)->bytes, (*op)->content), d_size, cursor);
+			write_arg(process_label((*op)->bytes, *op), d_size, cursor);
 		else if ((*op)->type == INDIRECT_LABEL)
-			write_arg(process_label((*op)->bytes, (*op)->content), IND_SIZE, cursor);
+			write_arg(process_label((*op)->bytes, *op), IND_SIZE, cursor);
 		*op = (*op)->prev;
 		n_arg--;
 	}
@@ -114,7 +114,7 @@ char	*arg_type_code(u_int8_t arg_types[3])
 
 	ft_printf("tp1\n");
 	if (!(res = (char*)malloc(sizeof(char) * 3)))
-		errorr(ERR_ALLOC);
+		error_event(ERR_ALLOC, 0);
 	i = 0;
 	bin = 0;
 	while (i < 3)
@@ -134,21 +134,21 @@ char	*arg_type_code(u_int8_t arg_types[3])
 	return (res);
 }
 
-int32_t	process_label(u_int32_t bytes, char *label_name)
+int32_t	process_label(u_int32_t bytes, t_token *label)
 {
 	int32_t	move;
 	t_label	*temp;
 
-	ft_printf("Call to label '%s'\n", label_name);
+	ft_printf("Call to label '%s'\n", label->content);
 	temp = g_data->label;
 	while (temp)
 	{
-		if (!(ft_strcmp(label_name, temp->point->content)))
+		if (!(ft_strcmp(label->content, temp->point->content)))
 			break;
 		temp = temp->next;
 	}
 	if (!temp)
-		errorr(ERR_LABEL_EX);
+		error_token(ERR_LABEL_EX, label);
 	move = temp->point->bytes - bytes;
 	return (move);
 }

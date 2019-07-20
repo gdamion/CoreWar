@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:43:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/17 14:04:20 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:50:45 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@
 
 # define ERR_NOFILE "./asm recieves wrong number of arguments"
 # define ERR_FNAME "Given file has wrong name format"
-# define ERR_FOPEN "Can\'t open file" // sys error
-# define ERR_READING "Can\'t read file" // sys error
+# define ERR_FOPEN "Can\'t open file"
+# define ERR_READING "Can\'t read file"
 # define ERR_ALLOC "Can\'t allocate memory"
 # define ERR_GET_TEXT "Can\'t read token"
+# define ERR_LABEL_DUB "One label name were used multiple times"
 # define ERR_CHNAME_LEN "Champion\'s name is too large"
 # define ERR_NO_CHNAME "Champion\'s name doesn't exist"
 # define ERR_CHCOMM_LEN "Champion\'s comment is too large"
 # define ERR_NO_CHCOMM "Champion\'s comment doesn't exist"
-# define ERR_NAMECOM "Wrong number of champion\'s names/comments"
+# define ERR_NAMECOM "Wrong format of champion\'s name/comment"
+# define ERR_WRTYPE "There should be .name or .comment"
 # define ERR_SYM "Wrong symbol"
 # define ERR_TOKEN "It should be sepatated char"
 # define ERR_OP "This operator doesn\'t exist"
@@ -45,5 +47,6 @@
 # define ERR_BIGEX "Executable code has size bigger than a limit"
 # define ERR_CRFHEX "Can\'t create machine-code file"
 # define ERR_WRFHEX "Can\'t write to machine-code file"
+# define ERR_STR_STOP "Can\'t find ending of the string"
 
 #endif

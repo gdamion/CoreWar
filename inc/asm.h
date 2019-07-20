@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 20:21:57 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:47:54 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void					translate(t_token *code_start, u_int32_t code_size);
 void					print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type);
 void					print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg);
 char					*arg_type_code(u_int8_t arg_types[3]);
-int32_t					process_label(u_int32_t bytes, char *label_name);
+int32_t					process_label(u_int32_t bytes, t_token *label);
 
 /*
 ** filegen.c
@@ -140,10 +140,22 @@ char					*new_filename(char *filename);
 /*
 ** error.c
 */
-void					errorr(char *event);
-void					error_log(char *event, char *line, int x);
-void					log_error(char *event, t_token *token);
-void					free_data(t_data *data);
+void					error_event(char *event, _Bool var);
+void					error_line(char *event, char *line, int x);
+void					error_token(char *event, t_token *token);
+
+/*
+** error_msgs.c
+*/
+void					print_line_error(char *message, char *line, int x);
+void					print_token_error(char *message, t_token *token);
+void					print_place(int x, int y);
+void					print_filename(void);
+
+/*
+** free_data.c
+*/
+void						free_data(t_data *data);
 
 /*
 ** utilities.c

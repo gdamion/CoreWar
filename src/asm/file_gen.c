@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 13:41:02 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:14:25 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	write_to_file(void)
 
 	new_name = new_filename(g_data->filename);
 	if ((fd = open(new_name, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-		errorr(ERR_CRFHEX);
-	// ft_printf("Writing output program to %s\n", new_name);
-	// ft_printf("Writing output program to %s, fd = %d\n", new_name, fd);
+		error_event(ERR_CRFHEX, 0);
+	ft_printf("%sWriting output program to %s%s\n", GREEN, new_name, EOC);
 	free(new_name);
 	if (write(fd, g_buf, g_bytes * 2) == -1)
 	{
 		close(fd);
-		errorr(ERR_WRFHEX);
+		error_event(ERR_WRFHEX, 0);
 	}
 	close(fd);
 }
@@ -39,7 +38,7 @@ char	*new_filename(char *filename)
 
 	len = ft_findchar(filename, '.');
 	if (!(new_name = (char*)malloc(len + 7)))
-		errorr(ERR_ALLOC);
+		error_event(ERR_ALLOC, 0);
 	new_name[len + 4] = '\0';
 	i = -1;
 	while (++i < len)

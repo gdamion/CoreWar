@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:52:13 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 14:11:52 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:14:38 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*num_to_hex(int32_t dec, int dir_size)
 	move = 0;
 	i = dir_size * 2 - 1;
 	if (!(hex = (char*)malloc(sizeof(char)*(dir_size * 2 + 1))))
-		errorr(ERR_ALLOC);
+		error_event(ERR_ALLOC, 0);
 	// ft_printf("num to hex1\n");
 	hex[dir_size * 2] = '\0';
 	dir_size--;
