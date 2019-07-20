@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/19 13:55:36 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 19:56:02 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,56 @@ void		read_file(char *filename)
 	ft_printf("Lexical analyser... ");
 	lexical_analyzer();
 	ft_printf("DONE\n");
-	// ft_printf("prog size = %u", g_data->token->bytes);
+
 	code = g_data->token;
 	while (code->next)
-	{
-		// ft_printf("bytes %u\n",code->bytes);
 		code = code->next;
-	}
+	g_data->token = code;
+
 	// t_token *test = code;
 	// while (test->prev)
 	// {
 	// 	ft_printf("content: %s|\n", test->content);
 	// 	test = test->prev;
 	// }
+
 	ft_printf("Valid info... ");
 	valid_champion_info(&code);
 	ft_printf("DONE\n");
+
 	// while ((code->prev->type == NEW_LINE || code->prev->type == COMMAND
 	// 		|| code->prev->type == STRING) && code->prev)
 	// 	code = code->prev;
+
 	ft_printf("Syntax... ");
 	syntax_analyser(code);
 	ft_printf("DONE\n");
+
+int i = 10;
+	t_token *test = g_data->token;
+	while (i--)
+	{
+		ft_printf("content: %s| type: %d\n", test->content, test->type);
+		test = test->prev;
+	}
+
+	// t_token *test1 = code;
+	// while (test1->prev)
+	// {
+	// 	ft_printf("bytes %u\n", test1->bytes);
+	// 	test1 = test1->prev;
+	// }
+	if (!(g_buf = (char*)malloc(sizeof(char) * (g_bytes * 2))))
+		errorr(ERR_ALLOC);
 	ft_printf("Translate... ");
+	ft_printf("size of prog = %u\n", g_bytes);
 	translate(code, g_bytes);
 	ft_printf("DONE\n");
+
 	ft_printf("Writing... ");
 	write_to_file();
 	ft_printf("DONE\n");
+
 	ft_printf("Free data... ");
 	free_data(g_data);
 	ft_printf("DONE\n");

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 14:34:07 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/19 14:00:13 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 20:21:08 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,58 +18,62 @@ void	translate(t_token *code_start, u_int32_t code_size)
 	u_int32_t	cursor;
 	char		*buf;
 
-	// ft_printf("t1\n");
+	ft_printf("Print info\n");
+	print_champion_info(g_data->token);
+	ft_printf("Write size of prog\n");
 	buf = num_to_hex(code_size, 4);
-	// ft_printf("t11\n");
 	write_magic(buf, 8 + PROG_NAME_LENGTH * 2 + 8);
-	// ft_printf("t12\n");
 	free(buf);
-	// ft_printf("t13\n");
+	ft_printf("Write magic header\n");
 	char *s= num_to_hex(COREWAR_EXEC_MAGIC, 3);
 	write_magic(s, 0);
 	free(s);
-	// ft_printf("t14\n");
+	ft_printf("Write empty separator\n");
 	write_magic("", 8 + PROG_NAME_LENGTH * 2);
-	// ft_printf("t15\n");
+	ft_printf("Write empty separator\n");
 	write_magic("", 8 + PROG_NAME_LENGTH * 2 + 8 * 2 + COMMENT_LENGTH * 2);
-	// ft_printf("t16\n");
 	cursor = EXEC_START;
-	// ft_printf("t17\n");
 	temp = code_start;
-	// ft_printf("t2\n");
+	ft_printf("Lets go along labels\n");
 	while (temp)
 	{
-		// ft_printf("t3\n");
+		ft_printf("%sYet another token, cursor: %u%s\n", CYAN, cursor - EXEC_START, EOC);
 		if (temp->type == INSTRUCTION)
 		{
-			// ft_printf("New instruction: %s\n", temp->content);
+			ft_printf("%sNew instruction: %s, type %d%s\n", GREEN, temp->content, temp->bytes, EOC);
 			print_instruction(&temp, &cursor, temp->bytes);
 		}
+		if (temp->type == LABEL)
+			ft_printf("New label '%s', %u bytes after start\n",  temp->content, temp->bytes);
 		temp = temp->prev;
+		ft_printf("\n");
 	}
-	// ft_printf("t4\n");
 }
 
 void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)
 {
 	u_int8_t n_arg;
+	u_int8_t d_size;
 
-	// ft_printf("p1\n");
 	n_arg = g_op_tab[type].args_num;
+	ft_printf("%sn of args = %d%s\n", GREEN, n_arg, EOC);
 	if (g_op_tab[type].args_types_code)
 		print_arg_types_code(*op, cursor, n_arg);
-	// ft_printf("p2\n");
+	*op = (*op)->prev;
 	while (n_arg)
 	{
-		// ft_printf("p3\n");
+		while ((*op)->type == SEPARATOR)
+			*op = (*op)->prev;
+		d_size = g_op_tab[type].t_dir_size;
+		ft_printf("%s%d th arg = '%s', type = %d%s\n", PURPUL, n_arg, (*op)->content, (*op)->type, EOC);
 		if ((*op)->type == REGISTER)
-			write_arg(ft_atoi((*op)->content), 1, cursor);
+			write_arg(ft_atoi_cor((*op)->content + 1, 1), 1, cursor);
 		else if ((*op)->type == DIRECT)
-			write_arg(ft_atoi((*op)->content), g_op_tab[type].t_dir_size, cursor);
+			write_arg(ft_atoi_cor((*op)->content, d_size), d_size, cursor);
 		else if ((*op)->type == INDIRECT)
-			write_arg(ft_atoi((*op)->content), IND_SIZE, cursor);
+			write_arg(ft_atoi_cor((*op)->content, IND_SIZE), IND_SIZE, cursor);
 		else if ((*op)->type == DIRECT_LABEL)
-			write_arg(process_label((*op)->bytes, (*op)->content), g_op_tab[type].t_dir_size, cursor);
+			write_arg(process_label((*op)->bytes, (*op)->content), d_size, cursor);
 		else if ((*op)->type == INDIRECT_LABEL)
 			write_arg(process_label((*op)->bytes, (*op)->content), IND_SIZE, cursor);
 		*op = (*op)->prev;
@@ -77,16 +81,17 @@ void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)
 	}
 }
 
+
+
 void	print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
 {
 	u_int8_t	arg_types[3];
 	char		*hex;
 
-	// ft_printf("pa1\n");
+	ft_printf("print_arg_types_code\n");
 	ft_bzero(arg_types, sizeof(u_int8_t));
 	while (n_arg)
 	{
-		// ft_printf("pa1\n");
 		if (op->type == DIRECT || op->type == DIRECT_LABEL)
 			arg_types[3 - n_arg--] = T_DIR;
 		else if (op->type == INDIRECT || op->type == INDIRECT_LABEL)
@@ -95,12 +100,10 @@ void	print_arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
 			arg_types[3 - n_arg--] = T_REG;
 		op = op->prev;
 	}
-	// ft_printf("pa3\n");
 	hex = arg_type_code(arg_types);
-	// ft_printf("pa4\n");
 	just_write(hex, cursor);
 	free(hex);
-	// ft_printf("pa5\n");
+	ft_printf("arg_types_code -DONE\n");
 }
 
 char	*arg_type_code(u_int8_t arg_types[3])
@@ -109,14 +112,14 @@ char	*arg_type_code(u_int8_t arg_types[3])
 	int		bin;
 	char	*res;
 
-	// ft_printf("tp1\n");
+	ft_printf("tp1\n");
 	if (!(res = (char*)malloc(sizeof(char) * 3)))
 		errorr(ERR_ALLOC);
 	i = 0;
 	bin = 0;
 	while (i < 3)
 	{
-		// ft_printf("tp2\n");
+		ft_printf("tp2\n");
 		if (arg_types[i] == T_REG)
 			bin = bin | (1 << (3 - i) * 2);
 		else if (arg_types[i] == T_DIR)
@@ -136,6 +139,7 @@ int32_t	process_label(u_int32_t bytes, char *label_name)
 	int32_t	move;
 	t_label	*temp;
 
+	ft_printf("Call to label '%s'\n", label_name);
 	temp = g_data->label;
 	while (temp)
 	{
