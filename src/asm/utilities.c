@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexical.c                                          :+:      :+:    :+:   */
+/*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:26 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/07 13:27:18 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 20:21:14 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,32 @@ _Bool	is_reg(char *line, int len)
 		return (i == len && ft_atoi(&line[1]) > 0);
 	}
 	return (FALSE);
+}
+
+int32_t		ft_atoi_cor(const char *str, u_int8_t size)
+{
+	int				neg;
+	int				i;
+	int64_t			num;
+
+	i = 0;
+	neg = 0;
+	num = 0;
+	while (SP(str[i]))
+		i++;
+	if (str[i] == '-')
+		neg = 1;
+	if ((str[i] == '-') || (str[i] == '+'))
+		i++;
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		num *= 10;
+		num += ((int)str[i] - 48);
+		i++;
+	}
+	num = (neg == 1 ? -num : num);
+	size == 1 ? (num = (u_int8_t)num) : 1;
+	size == 2 ? (num = (int16_t)num) : 1;
+	size == 4 ? (num = (int32_t)num) : 1;
+	return (num);
 }

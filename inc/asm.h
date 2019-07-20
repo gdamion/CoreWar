@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 13:59:02 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 20:21:57 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,12 @@ void					write_magic(char *hex, int place);
 char					*num_to_hex(int32_t dec, int dir_size);
 
 /*
-** valid_info.c
+** process_info.c
 */
 void					valid_champion_info(t_token **temp);
 void					find_info_string(t_token **temp, _Bool type);
-
-/*
-** print_info.c
-*/
 void					print_champion_info(t_token *temp);
-void					write_name_or_comm(t_token *temp, int place, _Bool type);
-char					*str_to_code(char *str);
+void					write_name_or_comm(char *cnt, int place, _Bool type);
 
 /*
 ** buf_write.c
@@ -150,8 +145,12 @@ void					error_log(char *event, char *line, int x);
 void					log_error(char *event, t_token *token);
 void					free_data(t_data *data);
 
+/*
+** utilities.c
+*/
 _Bool					is_reg(char *line, int len);
 void					skip_whitespaces(char *line);
 void					skip_comment(char *line);
+int32_t					ft_atoi_cor(const char *str, u_int8_t size);
 
 #endif

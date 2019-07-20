@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 14:38:56 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 19:56:02 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ void		read_file(char *filename)
 	syntax_analyser(code);
 	ft_printf("DONE\n");
 
+int i = 10;
 	t_token *test = g_data->token;
-	while (test->prev)
+	while (i--)
 	{
 		ft_printf("content: %s| type: %d\n", test->content, test->type);
 		test = test->prev;
