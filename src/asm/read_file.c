@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 19:56:02 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:29:53 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	valid_filename(char *fname)
 		if (fname[i] == '.')
 			break ;
 	if (ft_strcmp(&fname[i], ".s"))
-		print_error(ERR_FNAME);
+		error_event(ERR_FNAME, 0);
 }
 
 void		read_file(char *filename)
@@ -33,7 +33,7 @@ void		read_file(char *filename)
 	data_init();
 	valid_filename(filename);
 	if ((g_data->fd = open(filename, O_RDONLY)) == -1)
-		errorr(ERR_FOPEN);
+		error_event(ERR_FOPEN, 0);
 	g_data->filename = filename;
 	ft_printf("Lexical analyser... ");
 	lexical_analyzer();
@@ -63,9 +63,8 @@ void		read_file(char *filename)
 	syntax_analyser(code);
 	ft_printf("DONE\n");
 
-int i = 10;
 	t_token *test = g_data->token;
-	while (i--)
+	while (test)
 	{
 		ft_printf("content: %s| type: %d\n", test->content, test->type);
 		test = test->prev;
@@ -78,7 +77,7 @@ int i = 10;
 	// 	test1 = test1->prev;
 	// }
 	if (!(g_buf = (char*)malloc(sizeof(char) * (g_bytes * 2))))
-		errorr(ERR_ALLOC);
+		error_event(ERR_ALLOC, 0);
 	ft_printf("Translate... ");
 	ft_printf("size of prog = %u\n", g_bytes);
 	translate(code, g_bytes);

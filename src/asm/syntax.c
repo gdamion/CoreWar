@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/16 15:35:22 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:11:02 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int			op_exist(t_token *operation)
 		else
 			i++;
 	if (i == 16)
-		log_error(ERR_OP, operation);
+		error_token(ERR_OP, operation);
 	operation->bytes = i;
 	return (i);
 }
@@ -38,7 +38,7 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 	else if (arg->type == 5)
 		arg_type = 4;
 	if (arg_type != (arg_type & mask))
-		log_error(ERR_ARGTP, arg);
+		error_token(ERR_ARGTP, arg);
 	if (arg_type == T_REG)
 		g_bytes++;
 	else if (arg_type == T_IND)
@@ -73,7 +73,7 @@ static void			valid_instruction(t_token **operations)
 	}
 	if ((args != 0) && temp &&
 		temp->type != NEW_LINE && temp->type != END)
-		log_error(ERR_ARGNO, temp);
+		error_token(ERR_ARGNO, temp);
 	*operations = temp;
 }
 
@@ -90,7 +90,7 @@ void				syntax_analyser(t_token *token)
 		else if (token->type == END)
 			break ;
 		else
-			log_error(ERR_SYM, token);
+			error_token(ERR_SYM, token);
 		token = token->prev;
 	}
 }

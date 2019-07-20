@@ -22,7 +22,7 @@ int		main(int ac, char **av)
 	if (ac == 2)
 		read_file(av[1]);
 	else
-		errorr(ERR_NOFILE);
+		error_event(ERR_NOFILE, 0);
 	ft_printf("FINISH\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:26 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/17 13:26:27 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:12:20 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	get_string(char **line)
 		&& (size = get_line(g_data->fd, &temp)) && ++g_data->y)
 			ft_strmerge(&str, &temp);
 	if (!len)
-		error_log(ERR_READING, str, 0);
+		error_line(ERR_STR_STOP, str, 0); //think about it
 	*line = str;
 	token_add(STRING);
 	g_data->token->content = ft_strsub(str, g_data->x, len - 1);
@@ -51,7 +51,7 @@ static void	get_text(char *line, t_type type)
 												? REGISTER : INSTRUCTION;
 	}
 	else
-		error_log(ERR_GET_TEXT, line, temp);
+		error_line(ERR_GET_TEXT, line, temp);
 }
 
 static void	get_number(char *line, t_type type)
@@ -74,7 +74,7 @@ static void	get_number(char *line, t_type type)
 		get_text(line, INDIRECT);
 	}
 	else
-		error_log(ERR_GET_TEXT, line, temp);
+		error_line(ERR_GET_TEXT, line, temp);
 }
 
 static void	tokenizing(char **str)
@@ -123,6 +123,6 @@ void		lexical_analyzer(void)
 		ft_strdel(&line);
 	}
 	if (size == -1)
-		errorr(ERR_READING);
+		error_event(ERR_READING, 1);
 	token_add(END);
 }
