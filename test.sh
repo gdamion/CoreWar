@@ -14,13 +14,14 @@ fi
 function check_asm {
 	printf "${GREEN}Test the $file file...${NC}\n"
 	printf "\n${GREEN}Our asm:${GREEN}${CYAN}\n"
-	./asm "$1"
+	# ./asm "$1"
+	NAME1=$(echo $1 | cut -f1 -d-)
 	printf "\n${GREEN}Main asm:${GREEN}${CYAN}\n"
+	echo $1
 	./vm_champs/asm "$1"
 	echo -e "${GREEN}"
 	printf "If the output isn't printed => ALL GOOD\n\n"
 	read -p "Press enter to continue..."
-	echo -e "${NC}"
 	clear
 }
 
