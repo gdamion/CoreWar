@@ -6,6 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
+#    Updated: 2019/07/23 15:50:20 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -13,7 +14,7 @@ ASM_NAME = asm
 VM_NAME = corewar
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = #-Wall -Werror -Wextra
 
 ################# LIB #################
 LIB_DIR = ./libft/
@@ -39,19 +40,19 @@ HEADERS = $(addprefix $(INC_DIR), $(INC_LIST))
 OBJ_DIR = obj/
 ################# ASM #################
 SRC_ASM_DIR = ./src/asm/
-SRC_ASM_LIST =	main.c \
-				read_file.c \
-				init.c \
-				syntax.c \
-				lexical.c \
-				utilities.c \
+SRC_ASM_LIST =	buf_write.c \
+				error_msgs.c \
 				error.c \
-				code_gen.c \
-				buf_write.c \
-				valid_info.c \
 				file_gen.c \
-				get_line.c
-
+				free_data.c \
+				get_line.c \
+				init.c \
+				lexical.c \
+				main.c \
+				process_info.c \
+				read_file.c \
+				syntax.c \
+				utilities.c
 
 SRC_ASM = $(addprefix $(SRC_ASM_DIR), $(SRC_ASM_LIST))
 

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 22:29:53 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/23 13:31:37 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ void		read_file(char *filename)
 	// 	ft_printf("bytes %u\n", test1->bytes);
 	// 	test1 = test1->prev;
 	// }
-	if (!(g_buf = (char*)malloc(sizeof(char) * (g_bytes * 2))))
+	if (!(g_buf = (char*)malloc(sizeof(char) * (EXEC_START + g_bytes))))
 		error_event(ERR_ALLOC, 0);
+	ft_bzero(g_buf, EXEC_START + g_bytes);
+
 	ft_printf("Translate... ");
 	ft_printf("size of prog = %u\n", g_bytes);
 	translate(code, g_bytes);
