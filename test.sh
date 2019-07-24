@@ -10,7 +10,8 @@ BLUE="\033[0;34m"
 PURPLE="\033[0;35m"
 CYAN="\033[0;36m"
 
-make
+# make
+gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
 if [ ! -d "./vm_champs" ]
 then
 	printf "${RED}No ./vm_champs folder here. Please pull it from project page and try again\n${NC}"
@@ -20,7 +21,8 @@ fi
 function check_asm {
 	NAME1=$(echo $1 | rev | cut -c 2- | rev)mycor
 	NAME2=$(echo $1 | rev | cut -c 2- | rev)cor
-	rm -f $NAME1 $NAME2
+	rm -f $NAME1
+	# $NAME2
 
 	printf "${GREEN}1) Test the $file file...${NC}\n"
 
@@ -39,10 +41,10 @@ function check_asm {
 		# then
 
 		# fi
-			printf "\n${GREEN}My $NAME1 contains:${NC}\n"
-			cat $NAME1
-			printf "\n\n${GREEN}Original $NAME2 contains:${NC}\n"
-			cat $NAME2
+			# printf "\n${GREEN}My $NAME1 contains:${NC}\n"
+			# cat $NAME1
+			# printf "\n\n${GREEN}Original $NAME2 contains:${NC}\n"
+			# cat $NAME2
 	else
 		printf "\n${RED}2) Can't compare files $NAME1 and $NAME2, they don't exist${NC}\n"
 	fi

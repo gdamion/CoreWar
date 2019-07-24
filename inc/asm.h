@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/23 16:44:23 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/24 16:04:59 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void					write_name_or_comm(char *cnt, int place, _Bool type);
 void					translate(t_token *code_start, u_int32_t code_size);
 void					print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type);
 void					arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg);
-void					print_arg_types_code(u_int8_t arg_types[3], u_int32_t *cursor, uint8_t n_arg);
+void					print_arg_types_code(u_int8_t arg_types[3], u_int32_t *cursor, u_int8_t n_arg);
 int32_t					process_label(u_int32_t bytes, t_token *label);
 void					int_to_hex(int32_t dec, int dir_size, u_int32_t *place);
 void					uint_to_hex(u_int32_t dec, int dir_size, u_int32_t *place);
