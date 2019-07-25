@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 22:11:02 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/25 16:27:55 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 	int				arg_type;
 
 	arg_type = arg->type;
-	if (arg->type == 3)
-		arg_type = 2;
-	else if (arg->type == 5)
-		arg_type = 4;
+	if (arg->type == DIRECT_LABEL)
+		arg_type = T_DIR;
+	else if (arg->type == INDIRECT_LABEL)
+		arg_type = T_IND;
 	if (arg_type != (arg_type & mask))
 		error_token(ERR_ARGTP, arg);
 	if (arg_type == T_REG)

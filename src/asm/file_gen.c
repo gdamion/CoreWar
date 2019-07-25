@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/23 16:04:19 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/25 16:36:08 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*new_filename(char *filename)
 	char	*new_name;
 	int		i;
 
+	// fix bugs with name like Octobre_Rouge_V4.2.s , it should be readable
 	len = ft_findchar(filename, '.');
 	if (!(new_name = (char*)malloc(len + 7)))
 		error_event(ERR_ALLOC, 0);
