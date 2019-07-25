@@ -53,10 +53,6 @@
 # define LFORK_CODE	0x0f
 # define AFF_CODE	0x10
 
-/*
-** циклы до исполнения операции
-*/
-
 # define LIVE_CYCLE_CD	10
 # define LD_CYCLE_CD	5
 # define ST_CYCLE_CD	5
@@ -74,13 +70,6 @@
 # define LFORK_CYCLE_CD	1000
 # define AFF_CYCLE_CD	2
 
-/*
-** структура, в которой хранится представление бинарного файла
-** @file - массив, представляющий файл
-** @size - размер массива @file
-** @i - текущая позиция
-*/
-
 typedef struct	s_binary_r
 {
 	unsigned char	*arr;
@@ -90,23 +79,6 @@ typedef struct	s_binary_r
 	int				dump;
 	int				*used_num_names;
 }				t_binary_r;
-
-/*
-** player - хранит данные о чемпионе
-**
-** @num - номер чемпиона
-** @size - имя чемпиона
-** @comment - комментарий чемпиона
-** @exec_size - размер исполняемого кода
-** @exec - исполняемый код
-** @live_count - кол-во вызовов лайва игрока между проверками на смерть
-** @live_coord - координаты для ncurses
-** @prev_live_count - кол-во вызовов лива игрока в предыдущей проверке на смерть
-** last_live_y = live_coord << 8
-** last_live_x = live_coord
-** live_curr_y = last_live_x + 1
-** last_curr_x = last_live_x
-*/
 
 typedef	struct	s_player
 {
@@ -120,19 +92,6 @@ typedef	struct	s_player
 	int			die_player_circle;
 	int			live_coord;
 }				t_player;
-
-/*
-** carriage - данные о каретке
-**
-** num_of_carriage - номер каретки
-** carry - информация о carry 1 / 0
-** num_of_curr_key - код операции, на которой стоит каретка
-** last_live_check - цикл, в котором в последний раз была выполнена операция li
-** cycles_to_use_oper - циклов до исполнения операции, на которой стоит каретка
-** curr_position - текущая позиция
-** byte_jump - количество байт, которые нужно будет «перешагнуть», для сл. оп.
-** regs - регистры, количество которых задано в константе REG_NUMBER
-*/
 
 typedef struct	s_carriage
 {
@@ -152,11 +111,6 @@ typedef struct	s_carriage
 	struct s_carriage	*next;
 	struct s_carriage	*prev;
 }				t_carriage;
-
-/*
-** @live_checks_count - кол-во выполненных операций лайва
-** @count_of_live_checks - кол-во выполненных проверок лайва
-*/
 
 typedef struct	s_game
 {
@@ -184,17 +138,6 @@ typedef struct	s_game
 	int				carrs_count;
 	int				time;
 }				t_game;
-
-/*
-** oper - хранит данные об операции
-** @i - текущая позиция каретки
-** @j - позиция при считывании аргументов
-** @arg_byte_pos - позиция, где находится код типов аргументов
-** @arg - аргумент
-** @arg_type - тип аргумента (T_IND | T_DIR | T_REG)
-** @is_arg_set - проверяет установлен ли аргумент
-** @move_len - кол-во байтов на которое нужно сместить каретку после
-*/
 
 typedef struct	s_oper
 {
