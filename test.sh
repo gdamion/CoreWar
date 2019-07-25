@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NC="\033[0m"
-RED="\033[1;31m"
+RED="\033[5;31m"
 YELLOW="\033[1;33m"
 WHITE="\033[1;37m"
 BLACK="\033[0;30m"
@@ -10,8 +10,8 @@ BLUE="\033[0;34m"
 PURPLE="\033[0;35m"
 CYAN="\033[0;36m"
 
-# make
-gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
+make
+# gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
 if [ ! -d "./vm_champs" ]
 then
 	printf "${RED}No ./vm_champs folder here. Please pull it from project page and try again\n${NC}"
@@ -21,8 +21,7 @@ fi
 function check_asm {
 	NAME1=$(echo $1 | rev | cut -c 2- | rev)mycor
 	NAME2=$(echo $1 | rev | cut -c 2- | rev)cor
-	rm -f $NAME1
-	# $NAME2
+	rm -f $NAME1 $NAME2
 
 	printf "${GREEN}1) Test the $file file...${NC}\n"
 

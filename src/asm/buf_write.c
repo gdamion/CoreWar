@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:17:24 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/24 22:42:09 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/25 14:58:42 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,56 @@ void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)
 	}
 }
 
+// //////////////////////////
+static uint8_t	get_arg_code(int8_t type)
+{
+	if (type == T_DIR)
+		return (DIR_CODE);
+	else if (type == T_REG)
+		return (REG_CODE);
+	else
+		return (IND_CODE);
+}
+
+void			update_types_code(int8_t *types_code, int8_t type, int arg_num)
+{
+	(*types_code) |= (get_arg_code(type) << 2 * (4 - arg_num - 1));
+}
+// //////////////////////////
+
 void	arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
 {
-	u_int8_t	bin;
+	// u_int8_t	bin;
+	int8_t	bin;
+	// int		move;
+	int		arg;
 
 	ft_printf("print_arg_types_code\n");
 	bin = 0;
-	while (n_arg)
+	arg = 0;
+	// move = 3 - n_arg;
+	while (arg < n_arg)
 	{
 		if (op->type == REGISTER)
-			bin = bin | (1 << 2 * n_arg--);
+		{
+			bin |= T_REG << 2 * (3 - arg);
+			arg++;
+		}
 		else if (op->type == DIRECT || op->type == DIRECT_LABEL)
-			bin = bin | (2 << 2 * n_arg--);
+		{
+			bin |= T_DIR << 2 * (3 - arg);
+			arg++;
+		}
 		else if (op->type == INDIRECT || op->type == INDIRECT_LABEL)
-			bin = bin | (3 << 2 * n_arg--);
+		{
+			bin |= T_DIR << 2 * (3 - arg);
+			arg++;
+		}
 		op = op->prev;
 	}
-	uint_to_hex(bin, 1, cursor);
+	// uint_to_hex(bin, 1, cursor);
+	ft_printf("%d\n", bin);
+	int_to_hex(bin, 1, cursor);
 	ft_printf("arg_types_code -DONE\n");
 }
 
@@ -127,7 +160,7 @@ void	int_to_hex(int32_t dec, int dir_size, u_int32_t *place)
 	int			buf;
 
 	buf = dir_size;
-	ft_printf("int to hex, %d, dir size = %d\n", dec, dir_size);
+	ft_printf("int to hex, %d, dir size = %d, place = %u\n", dec, dir_size, *place);
 	move = 0;
 	while (dir_size)
 	{
