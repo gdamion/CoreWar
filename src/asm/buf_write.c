@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:17:24 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/25 14:58:42 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/25 15:37:23 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int32_t	process_label(u_int32_t bytes, t_token *label)
 	if (!temp)
 		error_token(ERR_LABEL_EX, label);
 	ft_printf("ref from %d to %d\n", bytes, temp->point->bytes);
-	move = temp->point->bytes - bytes;
+	move = temp->point->bytes - bytes + 1;
 	return (move);
 }
 
