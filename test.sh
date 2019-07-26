@@ -11,8 +11,8 @@ BLUE="\033[0;34m"
 PURPLE="\033[0;35m"
 CYAN="\033[0;36m"
 
-# make
-gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
+make
+# gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
 if [ ! -d "./vm_champs" ]
 then
 	printf "${RED}No ./vm_champs folder here. Please pull it from project page and try again\n${NC}"
