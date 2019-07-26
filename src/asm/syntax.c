@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/25 16:27:55 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/26 15:28:04 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int			op_exist(t_token *operation)
 	return (i);
 }
 
-static void			valid_arg(int op_n, t_token *arg, int mask)
+static void			valid_arg(int op_n, t_token *arg, int mask, u_int32_t b_start)
 {
 	int				arg_type;
 
@@ -36,7 +36,10 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 	if (arg->type == DIRECT_LABEL)
 		arg_type = T_DIR;
 	else if (arg->type == INDIRECT_LABEL)
+	{
+		arg->bytes = b_start;
 		arg_type = T_IND;
+	}
 	if (arg_type != (arg_type & mask))
 		error_token(ERR_ARGTP, arg);
 	if (arg_type == T_REG)
@@ -45,7 +48,7 @@ static void			valid_arg(int op_n, t_token *arg, int mask)
 		g_bytes += 2;
 	else if (arg_type == T_DIR)
 	{
-		arg->bytes = g_bytes;
+		arg->bytes = b_start;
 		g_bytes += g_op_tab[op_n].t_dir_size;
 	}
 }
@@ -57,16 +60,18 @@ static void			valid_instruction(t_token **operations)
 	int32_t			args;
 	unsigned int	*types;
 	t_token			*temp;
+	u_int32_t		b_start;
 
 	i = 0;
 	temp = (*operations);
 	op_n = op_exist(temp);
 	args = g_op_tab[op_n].args_num;
 	types = g_op_tab[op_n].args_types;
+	b_start = g_bytes;
 	g_bytes += 1 + (g_op_tab[op_n].args_types_code ? 1 : 0);
 	while ((temp = temp->prev) && temp->type < 6 && args--)
 	{
-		valid_arg(op_n, temp, types[i++]);
+		valid_arg(op_n, temp, types[i++], b_start);
 		temp = temp->prev;
 		if (temp->type != SEPARATOR)
 			break;

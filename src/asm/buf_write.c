@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:17:24 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/25 17:44:13 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/26 15:48:23 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,54 +80,33 @@ void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)
 	}
 }
 
-// //////////////////////////
-static uint8_t	get_arg_code(int8_t type)
-{
-	if (type == T_DIR)
-		return (DIR_CODE);
-	else if (type == T_REG)
-		return (REG_CODE);
-	else
-		return (IND_CODE);
-}
-
-void			update_types_code(int8_t *types_code, int8_t type, int arg_num)
-{
-	(*types_code) |= (get_arg_code(type) << 2 * (4 - arg_num - 1));
-}
-// //////////////////////////
-
 void	arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
 {
-	// u_int8_t	bin;
 	int8_t	bin;
-	// int		move;
 	int		arg;
 
-	ft_printf("print_arg_types_code\n");
+	ft_printf("print_arg_types_code... ");
 	bin = 0;
 	arg = 0;
-	// move = 3 - n_arg;
 	while (arg < n_arg)
 	{
 		if (op->type == REGISTER)
 		{
-			bin |= T_REG << 2 * (3 - arg);
+			bin |= 1 << 2 * (3 - arg);
 			arg++;
 		}
 		else if (op->type == DIRECT || op->type == DIRECT_LABEL)
 		{
-			bin |= T_DIR << 2 * (3 - arg);
+			bin |= 2 << 2 * (3 - arg);
 			arg++;
 		}
 		else if (op->type == INDIRECT || op->type == INDIRECT_LABEL)
 		{
-			bin |= T_DIR << 2 * (3 - arg);
+			bin |= 3 << 2 * (3 - arg);
 			arg++;
 		}
 		op = op->prev;
 	}
-	// uint_to_hex(bin, 1, cursor);
 	ft_printf("%d\n", bin);
 	int_to_hex(bin, 1, cursor);
 	ft_printf("arg_types_code -DONE\n");
@@ -150,7 +129,7 @@ int32_t	process_label(u_int32_t bytes, t_token *label)
 	if (!temp)
 		error_token(ERR_LABEL_EX, label);
 	ft_printf("ref from %d to %d\n", bytes, temp->point->bytes);
-	move = temp->point->bytes - bytes + 1;
+	move = temp->point->bytes - bytes;
 	return (move);
 }
 
@@ -170,60 +149,3 @@ void	int_to_hex(int32_t dec, int dir_size, u_int32_t *place)
 	}
 	*place += buf;
 }
-
-void	uint_to_hex(u_int32_t dec, int dir_size, u_int32_t *place)
-{
-	int			move;
-	int			buf;
-
-	buf = dir_size;
-	ft_printf("%suint to hex, %d, dir size = %d%s\n", RED, dec, dir_size, EOC);
-	move = 0;
-	while (dir_size)
-	{
-		g_buf[*place + dir_size - 1] = (u_int8_t)((dec >> move) & 0xFF);
-		move += 8;
-		dir_size--;
-	}
-	(*place) += buf;;
-}
-
-// void	arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg)
-// {
-// 	u_int8_t	arg_types[3];
-
-// 	ft_printf("print_arg_types_code\n");
-// 	ft_bzero(arg_types, sizeof(u_int8_t));
-// 	while (n_arg)
-// 	{
-// 		if (op->type == DIRECT || op->type == DIRECT_LABEL)
-// 			arg_types[3 - n_arg--] = T_DIR;
-// 		else if (op->type == INDIRECT || op->type == INDIRECT_LABEL)
-// 			arg_types[3 - n_arg--] = T_IND;
-// 		else if (op->type == REGISTER)
-// 			arg_types[3 - n_arg--] = T_REG;
-// 		op = op->prev;
-// 	}
-// 	print_arg_types_code(arg_types, cursor, n_arg);
-// 	ft_printf("arg_types_code -DONE\n");
-// }
-
-// void	print_arg_types_code(u_int8_t arg_types[3], u_int32_t *cursor, u_int8_t n_arg)
-// {
-// 	int			i;
-// 	u_int8_t	bin;
-
-// 	i = 0;
-// 	bin = 0;
-// 	while (i < 3)
-// 	{
-// 		if (arg_types[i] == T_REG)
-// 			bin = bin | (1 << (3 - i) * 2);
-// 		else if (arg_types[i] == T_DIR)
-// 			bin = bin | (2 << (3 - i) * 2);
-// 		else if (arg_types[i] == T_IND)
-// 			bin = bin | (3 << (3 - i) * 2);
-// 		i++;
-// 	}
-// 	int_to_hex(bin, 1, cursor);
-// }

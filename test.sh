@@ -1,7 +1,8 @@
 #!/bin/bash
+#!usr/bin/perl
 
 NC="\033[0m"
-RED="\033[5;31m"
+RED="\033[1;31m"
 YELLOW="\033[1;33m"
 WHITE="\033[1;37m"
 BLACK="\033[0;30m"
@@ -10,8 +11,8 @@ BLUE="\033[0;34m"
 PURPLE="\033[0;35m"
 CYAN="\033[0;36m"
 
-make
-# gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
+# make
+gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
 if [ ! -d "./vm_champs" ]
 then
 	printf "${RED}No ./vm_champs folder here. Please pull it from project page and try again\n${NC}"
@@ -31,21 +32,18 @@ function check_asm {
 	printf "\n${YELLOW}MAIN ASM COMPILER:${NC}\n"
 	./vm_champs/asm "$1"
 
-	if [[ -f "$NAME1" || -f "$NAME2" ]]
+	printf "\n2) Compare the "$NAME1" and "$NAME2" files...\n"
+	if [[ -f "$NAME1" && -f "$NAME2" ]]
 	then
-		printf "\n${GREEN}2) Compare the files${NC}\n"
 		RES=$(cmp -b $NAME1 $NAME2 | cat -e)
-		printf "${RED}$RES${NC}\n"
-		# if [ ! -z "$RES" ]
-		# then
-
-		# fi
-			# printf "\n${GREEN}My $NAME1 contains:${NC}\n"
-			# cat $NAME1
-			# printf "\n\n${GREEN}Original $NAME2 contains:${NC}\n"
-			# cat $NAME2
+		if [ -z "$RES" ]
+		then
+			printf "${GREEN}\tFiles are the same ${NC}\n"
+		else
+			printf "${RED}$RES${NC}\n"
+		fi
 	else
-		printf "\n${RED}2) Can't compare files $NAME1 and $NAME2, they don't exist${NC}\n"
+		printf "${RED}Can't compare files:\n\tThey don't exist${NC}\n"
 	fi
 
 	printf "\n\n${GREEN}"
