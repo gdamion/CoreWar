@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 16:59:13 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 17:13:50 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void		read_file(char *filename, _Bool flag)
 	ft_bzero(g_buf, EXEC_START + g_bytes);
 	translate(code, g_bytes);
 	write_to_file();
-	free_data(g_data);
+	free_data();
 	free(g_buf);
 }

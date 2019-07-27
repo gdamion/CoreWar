@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 13:22:56 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 17:13:48 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void					print_filename(void);
 /*
 ** free_data.c
 */
-void						free_data(t_data *data);
+void						free_data();
 
 /*
 ** utilities.c

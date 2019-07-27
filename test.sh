@@ -31,7 +31,7 @@ function check_asm {
 	./asm "$1" -test
 
 	printf "\n${YELLOW}MAIN ASM COMPILER:${NC}\n"
-	./vm_champs/asm "$1"
+	./vm_champs/asm_orig "$1"
 
 	printf "\n${BLUE}2) Compare the "$NAME1" and "$NAME2" files...${NC}\n"
 	if [[ -f "$NAME1" && -f "$NAME2" ]]
