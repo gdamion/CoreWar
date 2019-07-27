@@ -39,20 +39,21 @@ function check_asm {
 		RES1=$(cmp -b $NAME1 $NAME2 | cat -e)
 		if [ -z "$RES" ]
 		then
-			RES2=1
+			RES2="Good"
 			printf "${GREEN}\tFiles are the same ${NC}\n"
 		else
-			RES2=0
+			RES2=""
 			printf "${RED}$RES${NC}\n"
 		fi
 	else
 		printf "${RED}Can't compare files:\n\tThey don't exist${NC}\n"
+		RES2=""
 	fi
 
-	if [ RES2 ]
+	if [ ! -z $RES2 ]
 	then
 		printf "\n${BLUE}3) Check memory leaks of the asm with\n\t"$1" file as an argument...${NC}\n\n"
-		valgrind ./asm "$1" -test
+		valgrind --leak-check=full ./asm "$1" -test
 	fi
 
 	printf "\n\n${GREEN}"
