@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:17:24 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 13:58:23 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:25:22 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	translate(t_token *code_start, u_int32_t code_size)
 {
 	t_token		*temp;
 	u_int32_t	cursor;
-	char		*buf;
 
 	cursor = 0;
 	// ft_printf("Write magic header\n");

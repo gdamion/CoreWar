@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 14:12:12 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:43:18 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,19 @@ void	write_to_file(void)
 
 char	*new_filename(char *filename)
 {
-	u_int32_t		len;
+	u_int16_t		len;
 	char			*new_name;
-	int				i;
+	u_int16_t		i;
 
-	len = (unsigned int)(ft_strstr(filename, ".s") - filename);
-	// ft_printf("len = %u\n", len);
-	if (!(new_name = (char*)malloc(len + (g_data->test ? 6 : 5))))
+	len = -1;
+	ft_printf("Hey\n", len);
+	while (filename[++len] + 1)
+		if (filename[len] == '.' && filename[len + 1] == 's'
+								&& filename[len + 2] == '\0')
+			break ;
+	ft_printf("Hop\n", len);
+	ft_printf("len = %u\n", len);
+	if (!(new_name = (char*)malloc(len + (g_data->test ? 6 : 5) + 1)))
 		error_event(ERR_ALLOC, 0);
 	i = -1;
 	while (++i < len)
