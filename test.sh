@@ -54,6 +54,7 @@ function check_asm {
 	then
 		printf "\n${BLUE}3) Check memory leaks of the asm with\n\t"$1" file as an argument...${NC}\n\n"
 		valgrind --leak-check=full ./asm "$1" -test
+		rm -rf asm.dSYM
 	fi
 
 	printf "\n\n${GREEN}"
