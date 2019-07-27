@@ -12,14 +12,15 @@
 
 #include "com.h"
 
-static void	free_token(t_token *token)
+static void	free_token(t_token **token)
 {
 	t_token	*temp;
-
+	if (!nodes)
+			return ;
 	while (token)
 	{
-		free(token->content);
 		temp = token;
+		free(token->content);
 		token = token->prev;
 		free(temp);
 	}
@@ -27,7 +28,7 @@ static void	free_token(t_token *token)
 
 static void	free_label(t_label *label)
 {
-	t_label	*temp;
+	t_label	**temp;
 
 	while (label)
 	{
@@ -37,11 +38,11 @@ static void	free_label(t_label *label)
 	}
 }
 
-void		free_data(t_data *data)
+void		free_data(void)
 {
-	if (data->token)
-		free_token(data->token);
-	if (data->label)
-		free_label(data->label);
-	free(data);
+	if (g_data->token)
+		free_token(&g_data->token);
+	if (g_data->label)
+		free_label(&g_data->label);
+	free(g_data);
 }

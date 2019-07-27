@@ -24,10 +24,10 @@ void	error_event(char *event, _Bool var)
 	print_error(event);
 	if (g_data->fd)
 		close(g_data->fd);
-	if (g_data)
-		free_data(g_data);
 	if (g_buf)
 		free(g_buf);
+	if (g_data)
+		free_data();
 	exit(1);
 }
 
@@ -38,10 +38,10 @@ void	error_line(char *event, char *line, int x)
 	print_line_error(event, line, x);
 	if (g_data->fd)
 		close(g_data->fd);
-	if (g_data)
-		free_data(g_data);
 	if (g_buf)
 		free(g_buf);
+	if (g_data)
+		free_data();
 	exit(1);
 }
 
@@ -52,9 +52,9 @@ void	error_token(char *event, t_token *token)
 	print_token_error(event, token);
 	if (g_data->fd)
 		close(g_data->fd);
-	if (g_data)
-		free_data(g_data);
 	if (g_buf)
 		free(g_buf);
+	if (g_data)
+		free_data();
 	exit(1);
 }

@@ -25,7 +25,7 @@ static void	get_string(char **line)
 		&& (size = get_line(g_data->fd, &temp)) && ++g_data->y)
 			ft_strmerge(&str, &temp);
 	if (!len)
-		error_line(ERR_STR_STOP, str, 0); //think about it
+		error_line(ERR_STR_STOP, str, 0);
 	*line = str;
 	token_add(STRING);
 	g_data->token->content = ft_strsub(str, g_data->x, len - 1);

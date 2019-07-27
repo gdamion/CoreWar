@@ -42,7 +42,7 @@ function check_asm {
 			RES2="Good"
 			printf "${GREEN}\tFiles are the same ${NC}\n"
 		else
-			RES2=""
+			RES2="Bad"
 			printf "${RED}$RES${NC}\n"
 		fi
 	else
@@ -50,12 +50,12 @@ function check_asm {
 		RES2=""
 	fi
 
-	if [ ! -z $RES2 ]
-	then
+	# if [ $RES2 ]
+	# then
 		printf "\n${BLUE}3) Check memory leaks of the asm with\n\t"$1" file as an argument...${NC}\n\n"
 		valgrind --leak-check=full ./asm "$1" -test
 		rm -rf asm.dSYM
-	fi
+	# fi
 
 	printf "\n\n${GREEN}"
 	read -p "Press enter to continue..."

@@ -151,7 +151,7 @@ void					print_filename(void);
 /*
 ** free_data.c
 */
-void						free_data(t_data *data);
+void					free_data(void);
 
 /*
 ** utilities.c
