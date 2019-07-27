@@ -6,16 +6,17 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 21:07:21 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 21:07:33 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:58:48 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-static void	free_token(t_token **token)
+static void	free_token(t_token *token)
 {
 	t_token	*temp;
-	if (!nodes)
+
+	if (!token)
 			return ;
 	while (token)
 	{
@@ -28,7 +29,7 @@ static void	free_token(t_token **token)
 
 static void	free_label(t_label *label)
 {
-	t_label	**temp;
+	t_label	*temp;
 
 	while (label)
 	{
@@ -38,11 +39,11 @@ static void	free_label(t_label *label)
 	}
 }
 
-void		free_data(void)
+void		free_data()
 {
 	if (g_data->token)
-		free_token(&g_data->token);
+		free_token(g_data->token);
 	if (g_data->label)
-		free_label(&g_data->label);
+		free_label(g_data->label);
 	free(g_data);
 }
