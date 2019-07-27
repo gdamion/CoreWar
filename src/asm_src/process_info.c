@@ -12,11 +12,22 @@
 
 #include "com.h"
 
-void	valid_champion_info(t_token **temp)
+static void	find_info_string(t_token **temp, _Bool type)
 {
-	int i;
-	int name;
-	int comm;
+	*temp = (*temp)->prev;
+	if (*temp && (*temp)->type == STRING)
+		*temp = (*temp)->prev;
+	else if (type)
+		error_event(ERR_NO_CHNAME);
+	else
+		error_event(ERR_NO_CHCOMM);
+}
+
+void		valid_champion_info(t_token **temp)
+{
+	int		i;
+	int		name;
+	int		comm;
 
 	name = 1;
 	comm = 1;
@@ -39,18 +50,7 @@ void	valid_champion_info(t_token **temp)
 		}
 	}
 	if (name != 0 || comm != 0 || (*temp)->type != NEW_LINE)
-		error_event(ERR_NAMECOM, 0);
-}
-
-void	find_info_string(t_token **temp, _Bool type)
-{
-	*temp = (*temp)->prev;
-	if (*temp && (*temp)->type == STRING)
-		*temp = (*temp)->prev;
-	else if (type)
-		error_event(ERR_NO_CHNAME, 0);
-	else
-		error_event(ERR_NO_CHCOMM, 0);
+		error_event(ERR_NAMECOM);
 }
 
 void	print_champion_info(t_token *temp)
@@ -73,7 +73,7 @@ void	print_champion_info(t_token *temp)
 			ft_memcpy(g_buf + 4, temp->content, ft_strlen(temp->content));
 		}
 		else
-			error_event(ERR_NAMECOM, 0);
+			error_event(ERR_NAMECOM);
 		temp = temp->prev;
 		i--;
 		// ft_printf("next token\n");
@@ -108,7 +108,7 @@ void	write_name_or_comm(char *cnt, int place, _Bool type)
 			g_buf[place + i] = '0';
 	}
 	if (type && *cnt)
-		error_event(ERR_CHNAME_LEN, 0);
+		error_event(ERR_CHNAME_LEN);
 	else if (*cnt)
-		error_event(ERR_CHCOMM_LEN, 0);
+		error_event(ERR_CHCOMM_LEN);
 }

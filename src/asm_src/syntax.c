@@ -99,5 +99,3 @@ void				syntax_analyser(t_token *token)
 		token = token->prev;
 	}
 }
-
-//ft_printf("Token: type=%d, cont=%s\n", temp->type, temp->content);

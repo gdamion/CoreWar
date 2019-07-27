@@ -12,49 +12,24 @@
 
 #include "com.h"
 
-void	error_event(char *event, _Bool var)
+void	error_event(char *event)
 {
-	if (var && g_data
-		&& g_data->x != -1 && g_data->y != -1)
-		print_place(g_data->x, g_data->y);
-	else if (g_data && g_data->filename)
-		print_filename();
-	ft_putstr_fd("    ", 2);
+	free_data();
 	ft_putstr_fd(RED, 2);
 	print_error(event);
-	if (g_data->fd)
-		close(g_data->fd);
-	if (g_buf)
-		free(g_buf);
-	if (g_data)
-		free_data();
-	exit(1);
 }
 
 void	error_line(char *event, char *line, int x)
 {
-	if (g_data && g_data->x != -1 && g_data->y != -1)
-		print_place(g_data->x, g_data->y);
+	print_error_info(g_data->x, g_data->y);
 	print_line_error(event, line, x);
-	if (g_data->fd)
-		close(g_data->fd);
-	if (g_buf)
-		free(g_buf);
-	if (g_data)
-		free_data();
-	exit(1);
+	ft_strdel(&line);
+	free_data();
 }
 
 void	error_token(char *event, t_token *token)
 {
-	if (token->x != -1 && token->y != -1)
-		print_place(token->x, token->y);
+	print_error_info(token->x, token->y);
 	print_token_error(event, token);
-	if (g_data->fd)
-		close(g_data->fd);
-	if (g_buf)
-		free(g_buf);
-	if (g_data)
-		free_data();
-	exit(1);
+	free_data();
 }

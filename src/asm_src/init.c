@@ -17,7 +17,7 @@ void		data_init(void)
 	t_data	*temp;
 
 	if (INIT_DATA)
-		error_event(ERR_ALLOC, 0);
+		error_event(ERR_ALLOC);
 	ft_bzero(temp, sizeof(temp));
 	g_data = temp;
 }
@@ -27,7 +27,7 @@ void		token_add(t_type type)
 	t_token	*new;
 
 	if (INIT_TOKEN)
-		error_event(ERR_ALLOC, 0);
+		error_event(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
 	new->x = g_data->x;
 	new->y = g_data->y;
@@ -58,7 +58,7 @@ void		label_add(void)
 	t_label	*new;
 
 	if (INIT_LABEL)
-		error_event(ERR_ALLOC, 0);
+		error_event(ERR_ALLOC);
 	ft_bzero(new, sizeof(new));
 	g_data->x++;
 	g_data->token->type = LABEL;

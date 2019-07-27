@@ -12,38 +12,50 @@
 
 #include "com.h"
 
-static void	free_token(t_token *token)
+static void	free_token(t_token **token)
 {
 	t_token	*temp;
 
 	if (!token)
-			return ;
-	while (token)
+		return ;
+	if ((*token)->prev)
+		while ((*token)->prev)
+			*token = (*token)->prev;
+	while (*token)
 	{
-		temp = token;
-		free(token->content);
-		token = token->prev;
+		temp = *token;
+		*token = (*token)->next;
+		if (temp->content)
+			ft_strdel(&temp->content);
 		free(temp);
 	}
 }
 
-static void	free_label(t_label *label)
+static void	free_label(t_label **label)
 {
 	t_label	*temp;
 
-	while (label)
+	if (!label)
+		return ;
+	while (*label)
 	{
-		temp = label;
-		label = label->next;
+		temp = *label;
+		*label = (*label)->next;
 		free(temp);
 	}
 }
 
-void		free_data()
+void		free_data(void)
 {
-	if (g_data->token)
-		free_token(g_data->token);
-	if (g_data->label)
-		free_label(g_data->label);
-	free(g_data);
+	if (g_buf)
+		free(g_buf);
+	if (g_data)
+	{
+		if (g_data->fd)
+			close(g_data->fd);
+		free_label(&g_data->label);
+		free_token(&g_data->token);
+		free(g_data);
+	}
+	exit(0);
 }

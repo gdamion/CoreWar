@@ -23,31 +23,45 @@ void	valid_filename(char *fname)
 		if (fname[i] == '.')
 			break ;
 	if (ft_strcmp(&fname[i], ".s"))
-		error_event(ERR_FNAME, 0);
+		error_event(ERR_FNAME);
 }
 
-void		read_file(char *filename, _Bool flag)
+void		prepare_data(void)
 {
 	t_token		*code;
 
-	data_init();
-	valid_filename(filename);
-	g_data->test = flag;
-	if ((g_data->fd = open(filename, O_RDONLY)) == -1)
-		error_event(ERR_FOPEN, 0);
-	g_data->filename = filename;
-	lexical_analyzer();
 	code = g_data->token;
 	while (code->next)
 		code = code->next;
 	g_data->token = code;
-	valid_champion_info(&code);
-	syntax_analyser(code);
+}
+
+void		analyze(void)
+{
+	lexical_analyzer();
+	prepare_data();
+	valid_champion_info(&g_data->token);
+	syntax_analyser(g_data->token);
+}
+
+void		compilation(void)
+{
 	if (!(g_buf = (char*)malloc(sizeof(char) * (EXEC_START + g_bytes))))
-		error_event(ERR_ALLOC, 0);
+		error_event(ERR_ALLOC);
 	ft_bzero(g_buf, EXEC_START + g_bytes);
-	translate(code, g_bytes);
+	translate(g_data->token, g_bytes);
 	write_to_file();
+}
+
+void		read_file(char *filename, _Bool flag)
+{
+	data_init();
+	valid_filename(filename);
+	g_data->test = flag;
+	if ((g_data->fd = open(filename, O_RDONLY)) == -1)
+		error_event(ERR_FOPEN);
+	g_data->filename = filename;
+	analyze();
+	compilation();
 	free_data();
-	free(g_buf);
 }

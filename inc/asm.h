@@ -111,7 +111,6 @@ void					syntax_analyser(t_token	*code_start);
 ** process_info.c
 */
 void					valid_champion_info(t_token **temp);
-void					find_info_string(t_token **temp, _Bool type);
 void					print_champion_info(t_token *temp);
 void					write_name_or_comm(char *cnt, int place, _Bool type);
 
@@ -131,12 +130,11 @@ void					uint_to_hex(u_int32_t dec, int dir_size, u_int32_t *place);
 ** filegen.c
 */
 void					write_to_file(void);
-char					*new_filename(char *filename);
 
 /*
 ** error.c
 */
-void					error_event(char *event, _Bool var);
+void					error_event(char *event);
 void					error_line(char *event, char *line, int x);
 void					error_token(char *event, t_token *token);
 
@@ -145,7 +143,7 @@ void					error_token(char *event, t_token *token);
 */
 void					print_line_error(char *message, char *line, int x);
 void					print_token_error(char *message, t_token *token);
-void					print_place(int x, int y);
+void					print_error_info(int x, int y);
 void					print_filename(void);
 
 /*

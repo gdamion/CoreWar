@@ -123,6 +123,6 @@ void		lexical_analyzer(void)
 		ft_strdel(&line);
 	}
 	if (size == -1)
-		error_event(ERR_READING, 1);
+		error_event(ERR_READING);
 	token_add(END);
 }
