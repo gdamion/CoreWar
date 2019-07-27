@@ -27,7 +27,7 @@ function check_asm {
 	printf "${GREEN}1) Test the $file file...${NC}\n"
 
 	printf "\n${YELLOW}OUR ASM COMPILER${NC}\n"
-	./asm "$1"
+	./asm "$1" -test
 
 	printf "\n${YELLOW}MAIN ASM COMPILER:${NC}\n"
 	./vm_champs/asm "$1"

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/23 13:31:37 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 13:56:58 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,20 @@ void	valid_filename(char *fname)
 		error_event(ERR_FNAME, 0);
 }
 
-void		read_file(char *filename)
+void		read_file(char *filename, _Bool flag)
 {
 	t_token		*code;
 
+	// ft_printf("Read start\n");
 	data_init();
 	valid_filename(filename);
+	g_data->test = flag;
 	if ((g_data->fd = open(filename, O_RDONLY)) == -1)
 		error_event(ERR_FOPEN, 0);
 	g_data->filename = filename;
-	ft_printf("Lexical analyser... ");
+	// ft_printf("Lexical analyser... ");
 	lexical_analyzer();
-	ft_printf("DONE\n");
+	// ft_printf("DONE\n");
 
 	code = g_data->token;
 	while (code->next)
@@ -51,22 +53,22 @@ void		read_file(char *filename)
 	// 	test = test->prev;
 	// }
 
-	ft_printf("Valid info... ");
+	// ft_printf("Valid info... ");
 	valid_champion_info(&code);
-	ft_printf("DONE\n");
+	// ft_printf("DONE\n");
 
 	// while ((code->prev->type == NEW_LINE || code->prev->type == COMMAND
 	// 		|| code->prev->type == STRING) && code->prev)
 	// 	code = code->prev;
 
-	ft_printf("Syntax... ");
+	// ft_printf("Syntax... ");
 	syntax_analyser(code);
-	ft_printf("DONE\n");
+	// ft_printf("DONE\n");
 
 	t_token *test = g_data->token;
 	while (test)
 	{
-		ft_printf("content: %s| type: %d\n", test->content, test->type);
+		// ft_printf("content: %s| type: %d\n", test->content, test->type);
 		test = test->prev;
 	}
 
@@ -80,16 +82,16 @@ void		read_file(char *filename)
 		error_event(ERR_ALLOC, 0);
 	ft_bzero(g_buf, EXEC_START + g_bytes);
 
-	ft_printf("Translate... ");
-	ft_printf("size of prog = %u\n", g_bytes);
+	// ft_printf("Translate... ");
+	// ft_printf("size of prog = %u\n", g_bytes);
 	translate(code, g_bytes);
-	ft_printf("DONE\n");
+	// ft_printf("DONE\n");
 
-	ft_printf("Writing... ");
+	// ft_printf("Writing... ");
 	write_to_file();
-	ft_printf("DONE\n");
+	// ft_printf("DONE\n");
 
-	ft_printf("Free data... ");
+	// ft_printf("Free data... ");
 	free_data(g_data);
-	ft_printf("DONE\n");
+	// ft_printf("DONE\n");
 }

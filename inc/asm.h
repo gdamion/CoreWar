@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/24 16:04:59 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 13:22:56 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct			s_data
 	int					y;
 	int					fd;
 	char				*filename;
+	_Bool				test;
 	t_token				*token;
 	t_label				*label;
 }						t_data;
@@ -81,7 +82,7 @@ typedef struct			s_data
 /*
 ** read_file.c
 */
-void					read_file(char *filename);
+void					read_file(char *filename, _Bool flag);
 void					valid_filename(char *fname);
 
 /*

@@ -6,7 +6,7 @@
 #    By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/04 21:32:16 by gdamion-          #+#    #+#              #
-#    Updated: 2019/07/23 15:50:20 by gdamion-         ###   ########.fr        #
+#    Updated: 2019/07/27 14:00:32 by gdamion-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ HEADERS = $(addprefix $(INC_DIR), $(INC_LIST))
 
 OBJ_DIR = obj/
 ################# ASM #################
-SRC_ASM_DIR = ./src/asm/
+SRC_ASM_DIR = ./src/asm_src/
 SRC_ASM_LIST =	buf_write.c \
 				error_msgs.c \
 				error.c \
@@ -62,7 +62,7 @@ OBJ_ASM	= $(addprefix $(OBJ_ASM_DIR), $(OBJ_ASM_LIST))
 #######################################
 
 ################## VM #################
-SRC_VM_DIR = ./src/vm/
+SRC_VM_DIR = ./src/vm_src/
 SRC_VM_LIST =	main.c
 
 

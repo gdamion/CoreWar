@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/26 15:28:04 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 13:00:03 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ static void			valid_arg(int op_n, t_token *arg, int mask, u_int32_t b_start)
 	if (arg->type == DIRECT_LABEL)
 		arg_type = T_DIR;
 	else if (arg->type == INDIRECT_LABEL)
-	{
-		arg->bytes = b_start;
 		arg_type = T_IND;
-	}
 	if (arg_type != (arg_type & mask))
 		error_token(ERR_ARGTP, arg);
 	if (arg_type == T_REG)
 		g_bytes++;
 	else if (arg_type == T_IND)
-		g_bytes += 2;
+	{
+		g_bytes += IND_SIZE;
+		arg->bytes = b_start;
+	}
 	else if (arg_type == T_DIR)
 	{
-		arg->bytes = b_start;
 		g_bytes += g_op_tab[op_n].t_dir_size;
+		arg->bytes = b_start;
 	}
 }
 

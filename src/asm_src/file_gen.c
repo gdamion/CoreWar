@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 14:58:34 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/25 16:36:08 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 13:57:12 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ void	write_to_file(void)
 
 char	*new_filename(char *filename)
 {
-	int		len;
-	char	*new_name;
-	int		i;
+	u_int32_t		len;
+	char			*new_name;
+	int				i;
 
-	// fix bugs with name like Octobre_Rouge_V4.2.s , it should be readable
-	len = ft_findchar(filename, '.');
-	if (!(new_name = (char*)malloc(len + 7)))
+	len = (unsigned int)(ft_strstr(filename, ".s") - filename);
+	// ft_printf("len = %u\n", len);
+	if (!(new_name = (char*)malloc(len + (g_data->test ? 6 : 5))))
 		error_event(ERR_ALLOC, 0);
-	new_name[len + 4] = '\0';
 	i = -1;
 	while (++i < len)
 		new_name[i] = filename[i];
-	ft_strcpy(&(new_name[i]), "mycor");
+	ft_strcpy(&(new_name[i]), (g_data->test ? ".mycor" : ".cor"));
+	// ft_printf("newn = '%s'\n", new_name);
 	return (new_name);
 }
