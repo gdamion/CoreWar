@@ -7,10 +7,11 @@ YELLOW="\033[1;33m"
 WHITE="\033[1;37m"
 BLACK="\033[0;30m"
 GREEN="\033[0;32m"
-BLUE="\033[0;34m"
+BLUE="\033[1;34m"
 PURPLE="\033[0;35m"
 CYAN="\033[0;36m"
 
+tput reset
 make
 # gcc src/asm/*.c libft/libft.a -I./inc/ -I./libft/includes/ -o asm
 if [ ! -d "./vm_champs" ]
@@ -24,7 +25,7 @@ function check_asm {
 	NAME2=$(echo $1 | rev | cut -c 2- | rev)cor
 	rm -f $NAME1 $NAME2
 
-	printf "${GREEN}1) Test the $file file...${NC}\n"
+	printf "\n${BLUE}1) Test the $file file...${NC}\n"
 
 	printf "\n${YELLOW}OUR ASM COMPILER${NC}\n"
 	./asm "$1" -test
@@ -32,30 +33,37 @@ function check_asm {
 	printf "\n${YELLOW}MAIN ASM COMPILER:${NC}\n"
 	./vm_champs/asm "$1"
 
-	printf "\n2) Compare the "$NAME1" and "$NAME2" files...\n"
+	printf "\n${BLUE}2) Compare the "$NAME1" and "$NAME2" files...${NC}\n"
 	if [[ -f "$NAME1" && -f "$NAME2" ]]
 	then
-		RES=$(cmp -b $NAME1 $NAME2 | cat -e)
+		RES1=$(cmp -b $NAME1 $NAME2 | cat -e)
 		if [ -z "$RES" ]
 		then
+			RES2=1
 			printf "${GREEN}\tFiles are the same ${NC}\n"
 		else
+			RES2=0
 			printf "${RED}$RES${NC}\n"
 		fi
 	else
 		printf "${RED}Can't compare files:\n\tThey don't exist${NC}\n"
 	fi
 
+	if [ RES2 ]
+	then
+		printf "\n${BLUE}3) Check memory leaks of the asm with\n\t"$1" file as an argument...${NC}\n\n"
+		valgrind ./asm "$1" -test
+	fi
+
 	printf "\n\n${GREEN}"
 	read -p "Press enter to continue..."
 	printf "${EOC}"
-	clear
+	tput reset
 }
 
 if [ "$1" = "-best" ]
 then
-clear
-echo "Checking all .s files in subdirectories of ./vm_champs/champs/championships/ ..."
+printf "CHECKING ALL .s files in subdirectories of ./vm_champs/champs/championships/ ...\n"
 for file1 in vm_champs/champs/championships/*
 do
 	if [ -d "$file1" ]
@@ -72,8 +80,7 @@ done
 
 elif [ "$1" = "-ex" ]
 then
-clear
-echo "Checking all .s files in ./vm_champs/champs/examples/ ..."
+printf "CHECKING ALL .s files in ./vm_champs/champs/examples/ ...\n"
 for file in vm_champs/champs/examples/*.s
 do
 	check_asm $file
@@ -81,8 +88,7 @@ done
 
 elif [ "$1" = "-main" ]
 then
-clear
-echo "Checking all .s files in ./vm_champs/champs/ ..."
+printf "CHECKING ALL .s files in ./vm_champs/champs/ ...\n"
 for file in vm_champs/champs/*.s
 do
 	check_asm $file

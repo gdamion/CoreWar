@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:04:44 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/24 20:36:18 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/27 14:11:14 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_champion_info(t_token *temp)
 			error_event(ERR_NAMECOM, 0);
 		temp = temp->prev;
 		i--;
-		ft_printf("next token\n");
+		// ft_printf("next token\n");
 	}
 }
 			// write_name_or_comm(temp->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2, 0);
