@@ -14,9 +14,9 @@
 
 void	error_event(char *event)
 {
-	free_data();
 	ft_putstr_fd(RED, 2);
 	print_error(event);
+	free_data();
 }
 
 void	error_line(char *event, char *line, int x)

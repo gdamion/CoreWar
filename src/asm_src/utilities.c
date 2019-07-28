@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:26 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 20:21:14 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 14:55:31 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void		skip_whitespaces(char *line)
 
 void		skip_comment(char *line)
 {
-	if (line[g_data->x] == COMMENT_CHAR)
+	if (line[g_data->x] == COMMENT_CHAR
+		|| line[g_data->x] == ALT_COMMENT_CHAR)
 		while(line[g_data->x] && line[g_data->x] != '\n')
 			g_data->x++;
 }

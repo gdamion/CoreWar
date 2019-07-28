@@ -54,6 +54,7 @@ function check_asm {
 	printf "\n\n${GREEN}"
 	read -p "Press enter to continue..."
 	printf "${EOC}"
+	rm -f $NAME1 $NAME2
 	tput reset
 }
 

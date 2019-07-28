@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:04:44 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 14:11:14 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 14:45:01 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		valid_champion_info(t_token **temp)
 		error_event(ERR_NAMECOM);
 }
 
-void	print_champion_info(t_token *temp)
+t_token	*print_champion_info(t_token *temp)
 {
 	int i;
 
@@ -76,13 +76,9 @@ void	print_champion_info(t_token *temp)
 			error_event(ERR_NAMECOM);
 		temp = temp->prev;
 		i--;
-		// ft_printf("next token\n");
 	}
+	return (temp);
 }
-			// write_name_or_comm(temp->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2, 0);
-
-		// write_name_or_comm(temp->content, 8, 1);
-
 
 void	write_name_or_comm(char *cnt, int place, _Bool type)
 {

@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 13:22:56 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 14:55:54 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define EXEC_START (4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4)
 # define FULL_SIZE (EXEC_START + CHAMP_MAX_SIZE)
 
+# define ALT_COMMENT_CHAR		';'
 
 typedef enum			e_type
 {
@@ -61,8 +62,8 @@ typedef struct			s_data
 	int					fd;
 	char				*filename;
 	_Bool				test;
-	t_token				*token;
 	t_label				*label;
+	t_token				*token;
 }						t_data;
 
 # define Q(c) (c == '\0')
@@ -111,20 +112,19 @@ void					syntax_analyser(t_token	*code_start);
 ** process_info.c
 */
 void					valid_champion_info(t_token **temp);
-void					print_champion_info(t_token *temp);
+t_token					*print_champion_info(t_token *temp);
 void					write_name_or_comm(char *cnt, int place, _Bool type);
 
 /*
 ** buf_write.c
 */
-void					translate(t_token *code_start, u_int32_t code_size);
+void					translate(void);
 void					print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type);
 void					arg_types_code(t_token *op, u_int32_t *cursor, u_int8_t n_arg);
 void					print_arg_types_code(u_int8_t arg_types[3], u_int32_t *cursor, u_int8_t n_arg);
 int32_t					process_label(u_int32_t bytes, t_token *label);
 void					int_to_hex(int32_t dec, int dir_size, u_int32_t *place);
 void					uint_to_hex(u_int32_t dec, int dir_size, u_int32_t *place);
-
 
 /*
 ** filegen.c
