@@ -26,7 +26,7 @@ void	valid_filename(char *fname)
 		error_event(ERR_FNAME);
 }
 
-void		prepare_data(void)
+t_token			*prepare_data(void)
 {
 	t_token		*code;
 
@@ -34,14 +34,17 @@ void		prepare_data(void)
 	while (code->next)
 		code = code->next;
 	g_data->token = code;
+	return (code);
 }
 
 void		analyze(void)
 {
+	t_token		*code;
+
 	lexical_analyzer();
-	prepare_data();
-	valid_champion_info(&g_data->token);
-	syntax_analyser(g_data->token);
+	code = prepare_data();
+	valid_champion_info(&code);
+	syntax_analyser(code);
 }
 
 void		compilation(void)

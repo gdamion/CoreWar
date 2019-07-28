@@ -61,8 +61,8 @@ typedef struct			s_data
 	int					fd;
 	char				*filename;
 	_Bool				test;
-	t_token				*token;
 	t_label				*label;
+	t_token				*token;
 }						t_data;
 
 # define Q(c) (c == '\0')

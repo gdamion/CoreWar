@@ -19,7 +19,9 @@ void	translate(t_token *code_start, u_int32_t code_size)
 
 	cursor = 0;
 	int_to_hex(COREWAR_EXEC_MAGIC, 4, &cursor);
+	ft_printf("sos1\n");
 	print_champion_info(g_data->token);
+	ft_printf("sos2\n");
 	cursor = 4 + PROG_NAME_LENGTH + 4;
 	int_to_hex(code_size, 4, &cursor);
 	cursor = EXEC_START;

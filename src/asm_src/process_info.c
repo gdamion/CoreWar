@@ -76,13 +76,8 @@ void	print_champion_info(t_token *temp)
 			error_event(ERR_NAMECOM);
 		temp = temp->prev;
 		i--;
-		// ft_printf("next token\n");
 	}
 }
-			// write_name_or_comm(temp->content, 8 + PROG_NAME_LENGTH * 2 + 8 * 2, 0);
-
-		// write_name_or_comm(temp->content, 8, 1);
-
 
 void	write_name_or_comm(char *cnt, int place, _Bool type)
 {
