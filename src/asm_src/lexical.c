@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:26 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 22:12:20 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:24:18 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	get_string(char **line)
 	str = *line;
 	while (!(len = ft_findchar(str + g_data->x, '\"'))
 		&& (size = get_line(g_data->fd, &temp)) && ++g_data->y)
-			ft_strmerge(&str, &temp);
+		ft_strmerge(&str, &temp);
 	if (!len)
 		error_line(ERR_STR_STOP, str, 0);
 	*line = str;

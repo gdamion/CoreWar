@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/07 13:25:02 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 13:00:03 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:23:36 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int			op_exist(t_token *operation)
 	return (i);
 }
 
-static void			valid_arg(int op_n, t_token *arg, int mask, u_int32_t b_start)
+static void			valid_arg(int op_n, t_token *arg,
+								int mask, u_int32_t b_start)
 {
 	int				arg_type;
 
@@ -74,11 +75,12 @@ static void			valid_instruction(t_token **operations)
 		valid_arg(op_n, temp, types[i++], b_start);
 		temp = temp->prev;
 		if (temp->type != SEPARATOR)
-			break;
+			break ;
 	}
-	if ((args != 0) && temp &&
-		temp->type != NEW_LINE && temp->type != END)
+	if (args != 0)
 		error_token(ERR_ARGNO, temp);
+	if (temp && !(temp->type == NEW_LINE || temp->type == END))
+		error_token(ERR_NLEOF, temp);
 	*operations = temp;
 }
 

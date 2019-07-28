@@ -6,14 +6,14 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/05 14:54:46 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/25 17:56:03 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:37:58 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_OPS_H
-#define ASM_OPS_H
+# define ASM_OPS_H
 
-#include "com.h"
+# include "com.h"
 
 typedef struct		s_op
 {
@@ -24,20 +24,6 @@ typedef struct		s_op
 	unsigned int	args_types[3];
 	unsigned int	t_dir_size;
 }					t_op;
-
-static char					*g_token_type[] = {
-	"REGISTER",
-	"DIRECT",
-	"DIRECT_LABEL",
-	"INDIRECT_LABEL",
-	"COMMAND",
-	"STRING",
-	"LABEL",
-	"INSTRUCTION",
-	"SEPARATOR",
-	"NEW_LINE",
-	"END",
-};
 
 static t_op			g_op_tab[16] = {
 	{

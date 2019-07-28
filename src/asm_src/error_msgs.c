@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 21:10:58 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/20 22:47:36 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:20:21 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void	description_token(char *message, t_token *token)
 		perror(message);
 	ft_putstr_fd(YELLOW, 2);
 	ft_putstr_fd("  Token type: ", 2);
-	ft_putendl_fd(g_token_type[token->type + 1], 2);
+	ft_putendl_fd(g_token_type[token->type - 1], 2);
 	ft_putendl_fd(EOC, 2);
 }
 
-void	print_line_error(char *message, char *line, int x)
+void		print_line_error(char *message, char *line, int x)
 {
 	description_token(message, g_data->token);
 	write(2, line, x);
@@ -34,17 +34,20 @@ void	print_line_error(char *message, char *line, int x)
 	ft_putendl_fd(line + g_data->x + 1, 2);
 }
 
-void	print_token_error(char *message, t_token *token)
+void		print_token_error(char *message, t_token *token)
 {
 	description_token(message, token);
-	ft_putstr_fd("	... ", 2);
-	ft_putstr_fd(RED, 2);
-	ft_putstr_fd(token->content, 2);
-	ft_putstr_fd(EOC, 2);
-	ft_putendl_fd(" ...\n", 2);
+	if (token->content)
+	{
+		ft_putstr_fd("	... ", 2);
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd(token->content, 2);
+		ft_putstr_fd(EOC, 2);
+		ft_putendl_fd(" ...\n", 2);
+	}
 }
 
-void	print_filename(void)
+void		print_filename(void)
 {
 	if (!g_data->filename)
 		return ;
@@ -55,7 +58,7 @@ void	print_filename(void)
 	write(2, ":\n", 2);
 }
 
-void	print_error_info(int x, int y)
+void		print_error_info(int x, int y)
 {
 	if (!g_data || g_data->x == -1 || g_data->y == -1)
 		return ;

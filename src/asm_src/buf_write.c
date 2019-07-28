@@ -6,13 +6,13 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:17:24 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/28 18:01:34 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:20:45 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	translate()
+void	translate(void)
 {
 	t_token		*temp;
 	u_int32_t	cursor;
@@ -89,7 +89,7 @@ int32_t	process_label(u_int32_t bytes, t_token *label)
 	while (temp)
 	{
 		if (!(ft_strcmp(label->content, temp->point->content)))
-			break;
+			break ;
 		temp = temp->next;
 	}
 	if (!temp)

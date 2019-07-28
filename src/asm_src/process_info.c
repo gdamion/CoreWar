@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:04:44 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/28 14:45:01 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:31:58 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		valid_champion_info(t_token **temp)
 	i = 3;
 	while (--i)
 	{
-		while(*temp && (*temp)->type == NEW_LINE)
+		while (*temp && (*temp)->type == NEW_LINE)
 			*temp = (*temp)->prev;
 		if ((*temp)->type != COMMAND)
 			error_token(ERR_WRTYPE, *temp);
@@ -51,21 +51,22 @@ void		valid_champion_info(t_token **temp)
 	}
 	if (name != 0 || comm != 0 || (*temp)->type != NEW_LINE)
 		error_event(ERR_NAMECOM);
-}
+} //26 lines
 
-t_token	*print_champion_info(t_token *temp)
+t_token		*print_champion_info(t_token *temp)
 {
-	int i;
+	int		i;
 
 	i = 2;
 	while (i)
 	{
-		while(temp && temp->type == NEW_LINE)
+		while (temp && temp->type == NEW_LINE)
 			temp = temp->prev;
 		if (!ft_strcmp(temp->content, "comment"))
 		{
 			temp = temp->prev;
-			ft_memcpy(g_buf + 4 + PROG_NAME_LENGTH + 4 * 2, temp->content, ft_strlen(temp->content));
+			ft_memcpy(g_buf + 4 + PROG_NAME_LENGTH + 4 * 2,
+					temp->content, ft_strlen(temp->content));
 		}
 		else if (!ft_strcmp(temp->content, "name"))
 		{
@@ -80,13 +81,13 @@ t_token	*print_champion_info(t_token *temp)
 	return (temp);
 }
 
-void	write_name_or_comm(char *cnt, int place, _Bool type)
+void		write_name_or_comm(char *cnt, int place, _Bool type)
 {
 	int		i;
 	int		max;
 	int		buf;
 
-	max = (type ? PROG_NAME_LENGTH : COMMENT_LENGTH ) * 2;
+	max = (type ? PROG_NAME_LENGTH : COMMENT_LENGTH) * 2;
 	i = -1;
 	while (++i < max)
 	{
@@ -99,7 +100,7 @@ void	write_name_or_comm(char *cnt, int place, _Bool type)
 				g_buf[place + i] = ((buf = (*cnt) % 16) < 10 ? \
 								('0' + buf) : ('a' + buf - 10));
 			cnt++;
-		}
+		} //2 assignations
 		else
 			g_buf[place + i] = '0';
 	}
@@ -108,3 +109,4 @@ void	write_name_or_comm(char *cnt, int place, _Bool type)
 	else if (*cnt)
 		error_event(ERR_CHCOMM_LEN);
 }
+//30 lines

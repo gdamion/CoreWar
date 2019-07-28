@@ -59,7 +59,6 @@ function check_asm {
 	printf "\n${BLUE}3) Check memory leaks of the ./asm with\n\t"$1" file as an argument...${NC}\n\n"
 	valgrind --leak-check=full ./asm "$1" -test
 	rm -rf asm.dSYM
-	rm -f $NAME1 $NAME2
 
 	printf "\n\n${GREEN}"
 	read -p "Press enter to continue..."
@@ -74,7 +73,7 @@ function check_vm {
 	./asm "$1"
 	printf "\n${BLUE}Launching ./corewar withvalgrind and \n\tself-made "$NAME" file as an argument...${NC}\n\n"
 	valgrind --leak-check=full ./corewar $NAME
-
+	rm -rf corewar.dSYM
 	printf "\n\n${GREEN}"
 	read -p "Press enter to continue..."
 	printf "${EOC}"

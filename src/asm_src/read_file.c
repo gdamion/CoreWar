@@ -6,20 +6,20 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:03:47 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/28 14:43:28 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:38:54 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-void	valid_filename(char *fname)
+void			valid_filename(char *fname)
 {
-	int	i;
+	int			i;
 
 	i = 0;
-	while(fname[i])
+	while (fname[i])
 		i++;
-	while(fname[--i])
+	while (fname[--i])
 		if (fname[i] == '.')
 			break ;
 	if (ft_strcmp(&fname[i], ".s"))
