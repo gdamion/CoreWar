@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 15:17:24 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/27 16:54:14 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:39:05 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ void	translate(t_token *code_start, u_int32_t code_size)
 	u_int32_t	cursor;
 
 	cursor = 0;
+	ft_printf("tlt1\n");
 	int_to_hex(COREWAR_EXEC_MAGIC, 4, &cursor);
+	ft_printf("tlt2\n");
 	print_champion_info(g_data->token);
+	ft_printf("tlt3\n");
 	cursor = 4 + PROG_NAME_LENGTH + 4;
+	ft_printf("tlt4\n");
 	int_to_hex(code_size, 4, &cursor);
+	ft_printf("tlt5\n");
 	cursor = EXEC_START;
 	temp = code_start;
 	while (temp)
@@ -30,6 +35,7 @@ void	translate(t_token *code_start, u_int32_t code_size)
 			print_instruction(&temp, &cursor, temp->bytes);
 		temp = temp->prev;
 	}
+	ft_printf("tlt6\n");
 }
 
 void	print_instruction(t_token **op, u_int32_t *cursor, u_int8_t type)

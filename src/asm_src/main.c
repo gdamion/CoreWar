@@ -18,12 +18,13 @@ int		main(int ac, char **av)
 	g_data = 0;
 	g_bytes = 0;
 	g_buf = NULL;
-	
+	ft_printf("start\n");
 	if (ac == 2)
 		read_file(av[1], 0);
 	else if (ac == 3 && !ft_strcmp(av[2], "-test"))
 		read_file(av[1], 1);
 	else
 		error_event(ERR_NOFILE);
+	ft_printf("finish\n");
 	return (0);
 }
