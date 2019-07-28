@@ -8,3 +8,5 @@ a.out
 *.dSYM/
 asm
 corewar
+*.mycor
+*.cor
