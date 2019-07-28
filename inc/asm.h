@@ -6,7 +6,7 @@
 /*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 21:43:25 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/28 20:37:44 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/29 02:55:35 by gdamion-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void					syntax_analyser(t_token	*code_start);
 */
 void					valid_champion_info(t_token **temp);
 t_token					*print_champion_info(t_token *temp);
-void					write_name_or_comm(char *cnt, int place, _Bool type);
 
 /*
 ** buf_write.c
