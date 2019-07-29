@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdamion- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tmann <tmann@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 19:04:44 by gdamion-          #+#    #+#             */
-/*   Updated: 2019/07/29 02:58:00 by gdamion-         ###   ########.fr       */
+/*   Updated: 2019/07/29 19:21:03 by tmann            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "com.h"
 
-static void	find_info_string(t_token **temp, _Bool type, int **arg)
+static void	find_info_string(t_token **temp, _Bool type, int *arg)
 {
 	*temp = (*temp)->prev;
 	if (*temp && (*temp)->type == STRING)
